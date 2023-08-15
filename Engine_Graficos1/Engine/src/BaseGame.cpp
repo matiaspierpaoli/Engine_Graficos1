@@ -1,40 +1,49 @@
 #include "BaseGame.h"
+#include "Window.h"
 
 BaseGame::BaseGame()
 {
+    isRunning = true;
+
     /* Initialize the library */
     if (!glfwInit())
         return;
 
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
+    window = new Window(640, 480);
+    Window* tempWindow = (Window*)window;
+
+    ///* Create a windowed mode window and its OpenGL context */
+    //window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    if (!tempWindow->WindowExists())
     {
+        isRunning = false;
         glfwTerminate();
         return;
     }
-
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
 }
 
 BaseGame::~BaseGame()
 {
     glfwTerminate();
+    delete window;
 }
 
 void BaseGame::Loop()
 {
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
+    Window* tempWindow = (Window*)window;
 
-        /* Swap front and back buffers */
-        glfwSwapBuffers(window);
+    /* Render here */
+    glClear(GL_COLOR_BUFFER_BIT);
 
-        /* Poll for and process events */
-        glfwPollEvents();
-    }
+    /* Swap front and back buffers */
+    //glfwSwapBuffers((GLFWwindow*)tempWindow);
+    glfwSwapBuffers((GLFWwindow*)tempWindow->GetGLFWPointer());
+
+    /* Poll for and process events */
+    tempWindow->ProcessWindowEvents();
+}
+
+bool BaseGame::IsRunning()
+{
+    return isRunning && !((Window*)window)->WindowShouldClose();
 }

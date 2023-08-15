@@ -3,7 +3,12 @@
 int main(void)
 {
     BaseGame* baseGame = new BaseGame();
-    baseGame->Loop();
+    
+    while (baseGame->IsRunning())
+    {
+        baseGame->Loop();
+    }
+
     delete baseGame;
 
     return 0;

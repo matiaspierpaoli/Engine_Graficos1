@@ -4,12 +4,13 @@
 class BaseGame
 {
 private:
-	GLFWwindow* window;
+	void* window;
+	bool isRunning;
 
 public:
 	BaseGame();
 	~BaseGame();
 
 	void Loop();
-
+	bool IsRunning();
 };
