@@ -5,6 +5,7 @@ class BaseGame
 {
 private:
 	void* window;
+	void* renderer;
 	bool isRunning;
 
 public:

@@ -1,5 +1,6 @@
 #include "BaseGame.h"
 #include "Window.h"
+#include "Renderer.h"
 
 BaseGame::BaseGame()
 {
@@ -12,8 +13,9 @@ BaseGame::BaseGame()
     window = new Window(640, 480);
     Window* tempWindow = (Window*)window;
 
-    ///* Create a windowed mode window and its OpenGL context */
-    //window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    renderer = new Renderer(tempWindow);
+    
+
     if (!tempWindow->WindowExists())
     {
         isRunning = false;
@@ -26,18 +28,19 @@ BaseGame::~BaseGame()
 {
     glfwTerminate();
     delete window;
+    delete renderer;
 }
 
 void BaseGame::Loop()
 {
     Window* tempWindow = (Window*)window;
+    Renderer* tempRenderer = (Renderer*)renderer;
 
     /* Render here */
-    glClear(GL_COLOR_BUFFER_BIT);
+    tempRenderer->ClearScreen();
 
     /* Swap front and back buffers */
-    //glfwSwapBuffers((GLFWwindow*)tempWindow);
-    glfwSwapBuffers((GLFWwindow*)tempWindow->GetGLFWPointer());
+    tempRenderer->SwapWindowBuffers();
 
     /* Poll for and process events */
     tempWindow->ProcessWindowEvents();
