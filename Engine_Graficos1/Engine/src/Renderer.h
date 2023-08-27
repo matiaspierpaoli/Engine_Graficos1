@@ -12,5 +12,5 @@ public:
 	
 	void ClearScreen();
 	void SwapWindowBuffers();
-
+	void Draw();
 };

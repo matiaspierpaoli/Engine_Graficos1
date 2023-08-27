@@ -1,4 +1,6 @@
 #include "Window.h"
+#include <iostream>
+#include "glew/include/GL/glew.h"
 #include <glfw/include/GLFW/glfw3.h>
 
 Window::Window(float height, float width)
@@ -37,6 +39,8 @@ void Window::CreateWindow()
 		return;
 
 	glfwMakeContextCurrent((GLFWwindow*)window);
+	if (glewInit() != GLEW_OK)
+		std::cout << "Glew could not be opened\n";
 
 }
 

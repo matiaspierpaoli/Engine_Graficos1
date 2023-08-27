@@ -38,7 +38,7 @@ void BaseGame::Loop()
 
     /* Render here */
     tempRenderer->ClearScreen();
-
+    tempRenderer->Draw();
     /* Swap front and back buffers */
     tempRenderer->SwapWindowBuffers();
 
