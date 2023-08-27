@@ -39,6 +39,7 @@ void Window::CreateWindow()
 		return;
 
 	glfwMakeContextCurrent((GLFWwindow*)window);
+
 	if (glewInit() != GLEW_OK)
 		std::cout << "Glew could not be opened\n";
 
