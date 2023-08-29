@@ -7,18 +7,31 @@
 Renderer::Renderer(Window* window)
 {
 	this->window = window;
-	float positions[6] = { -0.5f, -0.5f,
-						   0.0f, 0.5f, 
-						   0.5f, -0.5f};
-	unsigned int buffer;
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+	float positions[] = { -0.5f, -0.5f,
+						   0.5f, -0.5f, 
+						   0.5f, 0.5f,
+						   -0.5f, 0.5f};
+
+	unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	unsigned int vertexBuffer;
+	glGenBuffers(1, &vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float)* 2, 0);
 
 	//glBindBuffer(GL_ARRAY_BUFFER, 0);	
+
+	unsigned int indexBuffer;
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
 
 	std::string vertexShader =
 		"#version 330 core\n"
@@ -65,7 +78,8 @@ void Renderer::SwapWindowBuffers()
 
 void Renderer::Draw()
 {
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	//glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
 
 unsigned int Renderer::CompileShader(const std::string& source, unsigned int type)
@@ -103,8 +117,8 @@ unsigned int Renderer::CreateShader(const std::string vertexShader, const std::s
 	glLinkProgram(program);
 	glValidateProgram(program);
 
-	glDeleteShader(vs);
-	glDeleteShader(fs);
+	glDeleteProgram(vs);
+	glDeleteProgram(fs);
 
 	return program;
 }
