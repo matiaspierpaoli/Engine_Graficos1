@@ -1,6 +1,6 @@
 #include "BaseGame.h"
-#include "Window.h"
-#include "Renderer.h"
+#include "Window/Window.h"
+#include "Renderer/Renderer.h"
 
 BaseGame::BaseGame()
 {

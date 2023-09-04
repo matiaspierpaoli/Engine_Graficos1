@@ -15,37 +15,45 @@
     <Filter Include="res\shaders">
       <UniqueIdentifier>{526b5b50-176b-499b-96fb-67abc2d53129}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Source.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BaseGame.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Program.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\BaseGame.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Window.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Program.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
+    <Filter Include="Archivos de encabezado\BaseGame">
+      <UniqueIdentifier>{45a56041-3226-418c-a0fb-d2214c8fa1e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Entity">
+      <UniqueIdentifier>{182ff142-9393-4698-8e1f-1258e07d55f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Entity\Entity2D">
+      <UniqueIdentifier>{f572b5e3-a300-4d50-a227-65995e1cb47e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Entity\Entity2D\Shape">
+      <UniqueIdentifier>{92c814b0-0f68-44c0-b21f-566e772fd50c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Program">
+      <UniqueIdentifier>{8a5fbfc2-e5d7-40f7-ad8e-cbf1c5df7499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Renderer">
+      <UniqueIdentifier>{a0dbed98-97bc-43a6-a874-d2a9c76fc2be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Window">
+      <UniqueIdentifier>{e2aedb09-33bf-4858-8c5f-76275c5842aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\BaseGame">
+      <UniqueIdentifier>{a4f9a7b6-2374-452a-b1e5-5d3c49332b8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Entity">
+      <UniqueIdentifier>{d7933b28-854d-4a7f-83f1-7b29dd4c6800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Entity\Entity2D">
+      <UniqueIdentifier>{53958464-1859-4bf9-9005-e09186739efd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Program">
+      <UniqueIdentifier>{7de803a6-cd74-4cac-962d-b8e249827cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Renderer">
+      <UniqueIdentifier>{9af04e4f-c999-4c58-9dbc-23f3bc9dcff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Window">
+      <UniqueIdentifier>{2723fa5f-bc34-4aef-860a-fc1ca31e8c86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\fragmentShader.shader">
@@ -54,5 +62,36 @@
     <None Include="res\vertexShader.shader">
       <Filter>res\shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\BaseGame\BaseGame.h">
+      <Filter>Archivos de encabezado\BaseGame</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window\Window.h">
+      <Filter>Archivos de encabezado\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Renderer.h">
+      <Filter>Archivos de encabezado\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Program\Program.h">
+      <Filter>Archivos de encabezado\Program</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Window\Window.cpp">
+      <Filter>Archivos de origen\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Renderer.cpp">
+      <Filter>Archivos de origen\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Program\Program.cpp">
+      <Filter>Archivos de origen\Program</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Source.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BaseGame\BaseGame.cpp">
+      <Filter>Archivos de origen\BaseGame</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
