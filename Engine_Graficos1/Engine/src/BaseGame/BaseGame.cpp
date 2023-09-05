@@ -27,7 +27,8 @@ BaseGame::BaseGame()
     RendererSingleton::SetRenderer(new Renderer(tempWindow));
     renderer = RendererSingleton::GetRenderer();
 
-    entity = new Square();
+    square = new Square();
+    triangle = new Triangle();
 }
 
 BaseGame::~BaseGame()
@@ -36,7 +37,8 @@ BaseGame::~BaseGame()
     delete window;
     delete renderer;
     
-    delete entity;
+    delete square;
+    delete triangle;
 }
 
 void BaseGame::Loop()
@@ -47,9 +49,10 @@ void BaseGame::Loop()
     /* Render here */
     tempRenderer->ClearScreen();
     
-   /* tempRenderer->Draw();*/
+    /*tempRenderer->Draw();*/
 
-    entity->Draw();
+    //square->Draw();
+    triangle->Draw();
 
     /* Swap front and back buffers */
     tempRenderer->SwapWindowBuffers();

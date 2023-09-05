@@ -2,6 +2,7 @@
 #include <glfw/include/GLFW/glfw3.h>
 
 #include "Entity/Entity2D/Shape/Square/Square.h"
+#include "Entity/Entity2D/Shape/Triangle/Triangle.h"
 
 class BaseGame
 {
@@ -10,7 +11,8 @@ private:
 	void* renderer;
 	bool isRunning;
 
-	Entity* entity;
+	Entity* square;
+	Entity* triangle;
 
 public:
 	BaseGame();
