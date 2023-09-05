@@ -14,5 +14,8 @@ public:
 	
 	void ClearScreen();
 	void SwapWindowBuffers();
-	void Draw();
+	void Draw(unsigned int vertexBuffer, unsigned int indexBuffer);
+
+	unsigned int SetNewVertexBuffer(const void* data, unsigned int size  );
+	unsigned int SetNewIndexBuffer(const void* indices, unsigned int count);
 };

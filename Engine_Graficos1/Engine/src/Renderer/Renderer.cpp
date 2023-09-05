@@ -10,7 +10,7 @@ Renderer::Renderer(Window* window)
 	
 	program = Program();
 
-	float positions[] = { -0.5f, -0.5f,
+	/*float positions[] = { -0.5f, -0.5f,
 						   0.5f, -0.5f, 
 						   0.5f, 0.5f,
 						   -0.5f, 0.5f};
@@ -19,22 +19,22 @@ Renderer::Renderer(Window* window)
 		0, 1, 2,
 		2, 3, 0,
 
-	};
+	};*/
 
-	unsigned int vertexBuffer;
+	/*unsigned int vertexBuffer;
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), data, GL_STATIC_DRAW);*/
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float)* 2, 0);
+	/*glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float)* 2, 0);*/
 
 	//glBindBuffer(GL_ARRAY_BUFFER, 0);	
 
-	unsigned int indexBuffer;
+	/*unsigned int indexBuffer;
 	glGenBuffers(1, &indexBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);*/
 
 	unsigned int shader = program.CreateShader(program.ReadFile("res/vertexShader.shader"), program.ReadFile("res/fragmentShader.shader"));
 	glUseProgram(shader);
@@ -58,8 +58,31 @@ void Renderer::SwapWindowBuffers()
 	glfwSwapBuffers((GLFWwindow*) window->GetGLFWPointer());
 }
 
-void Renderer::Draw()
+void Renderer::Draw(unsigned int vertexBuffer, unsigned int indexBuffer)
 {
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+}
+
+unsigned int Renderer::SetNewVertexBuffer(const void* data, unsigned int size)
+{
+	unsigned int vertexBuffer;
+	glGenBuffers(1, &vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0); 
+
+	return vertexBuffer;
+}
+
+unsigned int Renderer::SetNewIndexBuffer(const void* data, unsigned int count)
+{
+	unsigned int indexBuffer;
+	glGenBuffers(1, &indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW);
+
+	return indexBuffer;
 }

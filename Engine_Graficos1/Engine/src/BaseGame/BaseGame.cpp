@@ -1,6 +1,7 @@
 #include "BaseGame.h"
 #include "Window/Window.h"
-#include "Renderer/Renderer.h"
+//#include "Renderer/Renderer.h"
+#include "RendererSingleton.h"
 
 BaseGame::BaseGame()
 {
@@ -13,7 +14,7 @@ BaseGame::BaseGame()
     window = new Window(640, 480);
     Window* tempWindow = (Window*)window;
 
-    renderer = new Renderer(tempWindow);
+    //renderer = new Renderer(tempWindow);
     
 
     if (!tempWindow->WindowExists())
@@ -22,6 +23,11 @@ BaseGame::BaseGame()
         glfwTerminate();
         return;
     }
+
+    RendererSingleton::SetRenderer(new Renderer(tempWindow));
+    renderer = RendererSingleton::GetRenderer();
+
+    entity = new Square();
 }
 
 BaseGame::~BaseGame()
@@ -29,6 +35,8 @@ BaseGame::~BaseGame()
     glfwTerminate();
     delete window;
     delete renderer;
+    
+    delete entity;
 }
 
 void BaseGame::Loop()
@@ -38,7 +46,11 @@ void BaseGame::Loop()
 
     /* Render here */
     tempRenderer->ClearScreen();
-    tempRenderer->Draw();
+    
+   /* tempRenderer->Draw();*/
+
+    entity->Draw();
+
     /* Swap front and back buffers */
     tempRenderer->SwapWindowBuffers();
 
