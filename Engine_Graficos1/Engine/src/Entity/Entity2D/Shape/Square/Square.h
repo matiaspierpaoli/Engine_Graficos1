@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity/Entity2D/Shape/Shape.h"
 
-class Square : public Shape
+class  __declspec(dllexport) Square : public Shape
 {
 public:
 	Square();

@@ -4,7 +4,7 @@
 #include "Entity/Entity2D/Shape/Square/Square.h"
 #include "Entity/Entity2D/Shape/Triangle/Triangle.h"
 
-class BaseGame
+class __declspec(dllexport) BaseGame
 {
 private:
 	void* window;

@@ -3,7 +3,7 @@
 #pragma once
 #include "Entity/Entity2D/Shape/Shape.h"
 
-class Triangle : public Shape
+class  __declspec(dllexport) Triangle : public Shape
 {
 public:
 	Triangle();
