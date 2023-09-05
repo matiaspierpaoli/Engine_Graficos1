@@ -1,15 +1,15 @@
-#include "BaseGame/BaseGame.h"
-
-int main(void)
-{
-    BaseGame* baseGame = new BaseGame();
-    
-    while (baseGame->IsRunning())
-    {
-        baseGame->Loop();
-    }
-
-    delete baseGame;
-
-    return 0;
-}
+//#include "BaseGame/BaseGame.h"
+//
+//int main(void)
+//{
+//    BaseGame* baseGame = new BaseGame();
+//    
+//    while (baseGame->IsRunning())
+//    {
+//        baseGame->Loop();
+//    }
+//
+//    delete baseGame;
+//
+//    return 0;
+//}

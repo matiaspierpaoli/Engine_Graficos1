@@ -27,8 +27,8 @@ BaseGame::BaseGame()
     RendererSingleton::SetRenderer(new Renderer(tempWindow));
     renderer = RendererSingleton::GetRenderer();
 
-    square = new Square();
-    triangle = new Triangle();
+    //square = new Square();
+    //triangle = new Triangle();
 }
 
 BaseGame::~BaseGame()
@@ -36,9 +36,9 @@ BaseGame::~BaseGame()
     glfwTerminate();
     delete window;
     delete renderer;
-    
-    delete square;
-    delete triangle;
+    //
+    //delete square;
+    //delete triangle;
 }
 
 void BaseGame::Loop()
@@ -52,7 +52,7 @@ void BaseGame::Loop()
     /*tempRenderer->Draw();*/
 
     //square->Draw();
-    triangle->Draw();
+    //triangle->Draw();
 
     /* Swap front and back buffers */
     tempRenderer->SwapWindowBuffers();

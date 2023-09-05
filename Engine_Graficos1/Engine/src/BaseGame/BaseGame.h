@@ -11,8 +11,8 @@ private:
 	void* renderer;
 	bool isRunning;
 
-	Entity* square;
-	Entity* triangle;
+	//Entity* square;
+	//Entity* triangle;
 
 public:
 	BaseGame();
