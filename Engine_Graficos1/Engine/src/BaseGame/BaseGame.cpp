@@ -1,15 +1,20 @@
 #include "BaseGame.h"
 #include "Window/Window.h"
-//#include "Renderer/Renderer.h"
 #include "RendererSingleton.h"
+//#include "Renderer/Renderer.h"
+
+#include <glfw/include/GLFW/glfw3.h>
+#include <iostream>
 
 BaseGame::BaseGame()
 {
-    isRunning = true;
-
     /* Initialize the library */
     if (!glfwInit())
+    {
+        std::cout << "ENGINE ERROR: GLFW Init failed" << std::endl;
+        isRunning = false;
         return;
+    }
 
     window = new Window(640, 480);
     Window* tempWindow = (Window*)window;
@@ -19,6 +24,7 @@ BaseGame::BaseGame()
 
     if (!tempWindow->WindowExists())
     {
+        std::cout << "ENGINE ERROR: Window Init failed" << std::endl;
         isRunning = false;
         glfwTerminate();
         return;

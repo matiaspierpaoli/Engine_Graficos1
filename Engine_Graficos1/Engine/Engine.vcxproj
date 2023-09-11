@@ -40,13 +40,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -104,7 +104,24 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)libs\glew\lib;$(ProjectDir)libs\glfw\lib-vc2019</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
+    <PostBuildEvent>
+      <Command>REM Copy Library files to Game lib
+MKDIR "$(SolutionDir)Game\libs\Engine_Pierpaoli_Gonzalez"
+COPY "$(TargetDir)$(TargetName).dll" "$(SolutionDir)Game\libs\Engine_Pierpaoli_Gonzalez\$(TargetName).dll"
+COPY "$(TargetDir)$(TargetName).lib" "$(SolutionDir)Game\libs\Engine_Pierpaoli_Gonzalez\$(TargetName).lib"
+REM Copy Library Header to Game lib
+REM MKDIR "$(SolutionDir)Game\libs\Engine_Pierpaoli_Gonzalez\include"
+REM xcopy "$(ProjectDir)ApplicationFiles" "$(TargetDir)ApplicationFiles" /e /y /i /r
+REM COPY "$(ProjectDir)src\Application.h" "$(SolutionDir)Game\lib\Engine\include\Application.h"
+REM COPY "$(ProjectDir)src\API\EngineAPI.h" "$(SolutionDir)Game\lib\Engine\include\API\EngineAPI.h"
+REM Copy shaders to game
+MKDIR "$(SolutionDir)Game\shaders"
+xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -127,6 +144,21 @@
       <EntryPointSymbol>
       </EntryPointSymbol>
     </Link>
+    <PostBuildEvent>
+      <Command>REM Copy Library files to Game lib
+MKDIR "$(SolutionDir)Game\libs\Engine_Pierpaoli_Gonzalez"
+COPY "$(TargetDir)$(TargetName).dll" "$(SolutionDir)Game\libs\Engine_Pierpaoli_Gonzalez\$(TargetName).dll"
+COPY "$(TargetDir)$(TargetName).lib" "$(SolutionDir)Game\libs\Engine_Pierpaoli_Gonzalez\$(TargetName).lib"
+REM Copy Library Header to Game lib
+REM MKDIR "$(SolutionDir)Game\libs\Engine_Pierpaoli_Gonzalez\include"
+REM xcopy "$(ProjectDir)ApplicationFiles" "$(TargetDir)ApplicationFiles" /e /y /i /r
+REM COPY "$(ProjectDir)src\Application.h" "$(SolutionDir)Game\lib\Engine\include\Application.h"
+REM COPY "$(ProjectDir)src\API\EngineAPI.h" "$(SolutionDir)Game\lib\Engine\include\API\EngineAPI.h"
+REM Copy shaders to game
+MKDIR "$(SolutionDir)Game\shaders"
+xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

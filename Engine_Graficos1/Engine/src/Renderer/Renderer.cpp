@@ -36,7 +36,7 @@ Renderer::Renderer(Window* window)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);*/
 
-	unsigned int shader = program.CreateShader(program.ReadFile("res/vertexShader.shader"), program.ReadFile("res/fragmentShader.shader"));
+	unsigned int shader = program.CreateShader(program.ReadFile("shaders/vertexShader.shader"), program.ReadFile("shaders/fragmentShader.shader"));
 	glUseProgram(shader);
 }
 
