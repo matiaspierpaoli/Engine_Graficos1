@@ -9,6 +9,6 @@ public:
 	Triangle();
 	~Triangle();
 
-	void Draw() override;
+	void Draw();
 };
 

@@ -6,12 +6,13 @@
 class Game : public BaseGame
 {
 private:
-	Entity *triangle;
-	Entity *square;
+	//Triangle *triangle;
+	Square *square;
 
 public:
 	Game();
 	~Game();
 	bool IsRunning();
 	void Loop();
+	void Draw() override;
 };

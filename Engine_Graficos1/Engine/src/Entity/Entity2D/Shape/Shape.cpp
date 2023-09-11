@@ -9,7 +9,3 @@ Shape::Shape()
 Shape::~Shape()
 {
 }
-
-void Shape::Draw()
-{
-}

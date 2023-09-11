@@ -11,7 +11,3 @@ Entity::~Entity()
 	delete vBuffer;
 	delete iBuffer;
 }
-
-void Entity::Draw()
-{
-}

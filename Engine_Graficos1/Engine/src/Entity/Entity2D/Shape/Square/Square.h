@@ -7,5 +7,5 @@ public:
 	Square();
 	~Square();
 
-	void Draw() override;
+	void Draw();
 };

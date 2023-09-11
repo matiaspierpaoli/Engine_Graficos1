@@ -6,6 +6,4 @@ class  __declspec(dllexport) Shape : public Entity2D
 public:
 	Shape();
 	~Shape();
-
-	void Draw() override;
 };

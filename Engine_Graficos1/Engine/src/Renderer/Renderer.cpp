@@ -8,7 +8,7 @@ Renderer::Renderer(Window* window)
 {
 	this->window = window;
 	
-	program = Program();
+	program = new Program();
 
 	/*float positions[] = { -0.5f, -0.5f,
 						   0.5f, -0.5f, 
@@ -36,13 +36,14 @@ Renderer::Renderer(Window* window)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);*/
 
-	unsigned int shader = program.CreateShader(program.ReadFile("shaders/vertexShader.shader"), program.ReadFile("shaders/fragmentShader.shader"));
-	glUseProgram(shader);
+	unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShader.shader"), program->ReadFile("shaders/fragmentShader.shader"));
+	glUseProgram(shader); 
 }
 
 Renderer::~Renderer()
 {
 	delete window;
+	delete program;
 }
 
 void Renderer::ClearScreen()

@@ -8,6 +8,3 @@ Entity2D::~Entity2D()
 {
 }
 
-void Entity2D::Draw()
-{
-}

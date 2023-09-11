@@ -8,7 +8,5 @@ public:
 
 	unsigned int* vBuffer;
 	unsigned int* iBuffer;
-
-	virtual void Draw();
 };
 

@@ -6,6 +6,8 @@
 #include <glfw/include/GLFW/glfw3.h>
 #include <iostream>
 
+#include "Entity/Entity2D/Shape/Square/Square.h"
+
 BaseGame::BaseGame()
 {
     /* Initialize the library */
@@ -32,9 +34,6 @@ BaseGame::BaseGame()
 
     RendererSingleton::SetRenderer(new Renderer(tempWindow));
     renderer = RendererSingleton::GetRenderer();
-
-    //square = new Square();
-    //triangle = new Triangle();
 }
 
 BaseGame::~BaseGame()
@@ -42,9 +41,6 @@ BaseGame::~BaseGame()
     glfwTerminate();
     delete window;
     delete renderer;
-    //
-    //delete square;
-    //delete triangle;
 }
 
 void BaseGame::Loop()
@@ -57,8 +53,7 @@ void BaseGame::Loop()
     
     /*tempRenderer->Draw();*/
 
-    //square->Draw();
-    //triangle->Draw();
+    Draw();
 
     /* Swap front and back buffers */
     tempRenderer->SwapWindowBuffers();
@@ -70,4 +65,9 @@ void BaseGame::Loop()
 bool BaseGame::IsRunning()
 {
     return isRunning && !((Window*)window)->WindowShouldClose();
+}
+
+void BaseGame::Draw()
+{
+
 }

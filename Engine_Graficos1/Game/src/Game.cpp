@@ -2,13 +2,13 @@
 
 Game::Game()
 {
-	triangle = new Triangle();
+	//triangle = new Triangle();
 	square = new Square();
 }
 
 Game::~Game()
 {
-	delete triangle;
+	//delete triangle;
 	delete square;
 }
 
@@ -20,4 +20,10 @@ bool Game::IsRunning()
 void Game::Loop()
 {
 	BaseGame::Loop();
+}
+
+void Game::Draw()
+{
+	//triangle->Draw();
+	square->Draw();
 }

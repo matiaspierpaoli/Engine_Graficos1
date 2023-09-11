@@ -7,7 +7,7 @@ class Renderer
 {
 private:
 	Window* window;
-	Program program;
+	Program* program;
 public:
 	Renderer(Window* window);
 	~Renderer();
