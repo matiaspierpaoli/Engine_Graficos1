@@ -109,6 +109,9 @@
     <ClInclude Include="src\Entity\Entity2D\Shape\Triangle\Triangle.h">
       <Filter>Archivos de encabezado\Entity\Entity2D\Shape\Triangle</Filter>
     </ClInclude>
+    <ClInclude Include="src\Vector2.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Window\Window.cpp">

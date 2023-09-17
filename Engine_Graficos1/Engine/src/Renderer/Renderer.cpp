@@ -59,8 +59,9 @@ void Renderer::SwapWindowBuffers()
 	glfwSwapBuffers((GLFWwindow*) window->GetGLFWPointer());
 }
 
-void Renderer::Draw(unsigned int vertexBuffer, unsigned int indexBuffer)
+void Renderer::Draw(unsigned int vertexBuffer, unsigned int indexBuffer, unsigned int modelId)
 {
+	program->SetUniformMat4F("transform", models[modelId]);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
@@ -86,4 +87,17 @@ unsigned int Renderer::SetNewIndexBuffer(const void* data, unsigned int count)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW);
 
 	return indexBuffer;
+}
+
+unsigned int Renderer::GetNewModelId(glm::mat4 model)
+{
+	unsigned int newModelId = models.size();
+	models.push_back(model);
+
+	return newModelId;
+}
+
+void Renderer::SetModel(glm::mat4 model, unsigned int modelId)
+{
+	models[modelId] = model;
 }

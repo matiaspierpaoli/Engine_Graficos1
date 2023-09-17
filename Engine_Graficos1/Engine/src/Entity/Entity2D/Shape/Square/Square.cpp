@@ -27,5 +27,5 @@ Square::~Square()
 
 void Square::Draw()
 {
-	RendererSingleton::GetRenderer()->Draw(*vBuffer, *iBuffer);
+	RendererSingleton::GetRenderer()->Draw(*vBuffer, *iBuffer, modelId);
 }

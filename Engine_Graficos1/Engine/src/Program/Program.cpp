@@ -11,6 +11,11 @@ Program::~Program()
 {
 }
 
+int Program::GetUniformLocation(const std::string& varName)
+{
+	return glGetUniformLocation(id, varName.c_str());
+}
+
 std::string Program::ReadFile(std::string filePath)
 {
 	try
@@ -43,19 +48,19 @@ std::string Program::ReadFile(std::string filePath)
 
 unsigned int Program::CreateShader(const std::string vertexShader, const std::string fragmentShader)
 {
-	unsigned int program = glCreateProgram();
+	id = glCreateProgram();
 	unsigned int vs = CompileShader(vertexShader, GL_VERTEX_SHADER);
 	unsigned int fs = CompileShader(fragmentShader, GL_FRAGMENT_SHADER);
 
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
-	glLinkProgram(program);
-	glValidateProgram(program);
+	glAttachShader(id, vs);
+	glAttachShader(id, fs);
+	glLinkProgram(id);
+	glValidateProgram(id);
 
 	glDeleteProgram(vs);
 	glDeleteProgram(fs);
 
-	return program;
+	return id;
 }
 
 unsigned int Program::CompileShader(const std::string& source, unsigned int type)
@@ -80,4 +85,9 @@ unsigned int Program::CompileShader(const std::string& source, unsigned int type
 	}
 
 	return id;
+}
+
+void Program::SetUniformMat4F(const std::string& varName, const glm::mat4& matrix)
+{
+	glUniformMatrix4fv(GetUniformLocation(varName), 1, GL_FALSE, &matrix[0][0]);
 }
