@@ -10,6 +10,8 @@ private:
 	Window* window;
 	Program* program;
 	std::vector<glm::mat4> models;
+	glm::mat4 view;
+	glm::mat4 proj;
 
 public:
 	Renderer(Window* window);

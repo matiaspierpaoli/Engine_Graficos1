@@ -16,4 +16,6 @@ public:
 	bool WindowShouldClose();
 	void ProcessWindowEvents();
 	void* GetGLFWPointer();
+	float GetHeight();
+	float GetWidth();
 };

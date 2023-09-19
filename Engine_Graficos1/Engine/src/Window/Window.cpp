@@ -49,3 +49,13 @@ void* Window::GetGLFWPointer()
 {
 	return window;
 }
+
+float Window::GetHeight()
+{
+	return height;
+}
+
+float Window::GetWidth()
+{
+	return width;
+}

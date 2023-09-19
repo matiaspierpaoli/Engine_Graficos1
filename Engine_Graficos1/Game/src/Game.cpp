@@ -4,6 +4,8 @@ Game::Game()
 {
 	triangle = new Triangle();
 	//square = new Square();
+
+	//triangle->Scale(100, 100);
 	
 }
 
@@ -21,8 +23,8 @@ bool Game::IsRunning()
 void Game::Loop()
 {
 	BaseGame::Loop();
-	triangle->Rotate(0.2);
 	triangle->Scale(0.01, 0.01);
+	triangle->Rotate(3);
 }
 
 void Game::Draw()

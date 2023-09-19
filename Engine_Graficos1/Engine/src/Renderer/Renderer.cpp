@@ -3,6 +3,9 @@
 #include "Renderer.h"
 #include "glew/include/GL/glew.h"
 #include <glfw/include/GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
 
 Renderer::Renderer(Window* window)
 {
@@ -10,31 +13,8 @@ Renderer::Renderer(Window* window)
 	
 	program = new Program();
 
-	/*float positions[] = { -0.5f, -0.5f,
-						   0.5f, -0.5f, 
-						   0.5f, 0.5f,
-						   -0.5f, 0.5f};
-
-	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0,
-
-	};*/
-
-	/*unsigned int vertexBuffer;
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), data, GL_STATIC_DRAW);*/
-
-	/*glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float)* 2, 0);*/
-
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);	
-
-	/*unsigned int indexBuffer;
-	glGenBuffers(1, &indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);*/
+	proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+	view = glm::lookAt(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShader.shader"), program->ReadFile("shaders/fragmentShader.shader"));
 	glUseProgram(shader); 
@@ -61,7 +41,7 @@ void Renderer::SwapWindowBuffers()
 
 void Renderer::Draw(unsigned int vertexBuffer, unsigned int indexBuffer, unsigned int modelId)
 {
-	program->SetUniformMat4F("transform", models[modelId]);
+	program->SetUniformMat4F("mvp", proj * view * models[modelId]);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
