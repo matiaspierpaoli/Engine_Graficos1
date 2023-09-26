@@ -3,16 +3,13 @@
 Game::Game()
 {
 	triangle = new Triangle();
-	//square = new Square();
-
-	//triangle->Scale(100, 100);
-	
+	//triangle->Translate(300, 300);
+	triangle->Scale(100, 100);
 }
 
 Game::~Game()
 {
 	delete triangle;
-	//delete square;
 }
 
 bool Game::IsRunning()
@@ -23,12 +20,15 @@ bool Game::IsRunning()
 void Game::Loop()
 {
 	BaseGame::Loop();
-	triangle->Scale(0.01, 0.01);
-	triangle->Rotate(3);
+
+	if (triangle->GetTranslation().x <= 480 && triangle->GetTranslation().y <= 480)
+	{
+		triangle->Rotate(3);
+		triangle->Translate(5, 5);
+	}
 }
 
 void Game::Draw()
 {
 	triangle->Draw();
-	//square->Draw();
 }

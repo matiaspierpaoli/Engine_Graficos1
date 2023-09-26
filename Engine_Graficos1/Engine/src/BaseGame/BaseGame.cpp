@@ -18,7 +18,7 @@ BaseGame::BaseGame()
         return;
     }
 
-    window = new Window(640, 480);
+    window = new Window(480, 480);
     Window* tempWindow = (Window*)window;
 
     //renderer = new Renderer(tempWindow);
