@@ -123,9 +123,6 @@
     <ClCompile Include="src\Program\Program.cpp">
       <Filter>Archivos de origen\Program</Filter>
     </ClCompile>
-    <ClCompile Include="src\Source.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\BaseGame\BaseGame.cpp">
       <Filter>Archivos de origen\BaseGame</Filter>
     </ClCompile>

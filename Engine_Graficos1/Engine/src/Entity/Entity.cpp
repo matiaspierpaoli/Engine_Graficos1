@@ -10,7 +10,7 @@ Entity::Entity()
 	iBuffer = new unsigned int;
 	translation = { 0,0 };
 	rotation = 0;
-	scale = { 1,1 };
+	scale = { 640,480 };
 	UpdateModel(false);
 }
 
