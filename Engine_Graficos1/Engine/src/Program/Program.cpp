@@ -5,6 +5,7 @@
 
 Program::Program()
 {
+
 }
 
 Program::~Program()
@@ -60,6 +61,7 @@ unsigned int Program::CreateShader(const std::string vertexShader, const std::st
 	glDeleteProgram(vs);
 	glDeleteProgram(fs);
 
+
 	return id;
 }
 
@@ -90,4 +92,9 @@ unsigned int Program::CompileShader(const std::string& source, unsigned int type
 void Program::SetUniformMat4F(const std::string& varName, const glm::mat4& matrix)
 {
 	glUniformMatrix4fv(GetUniformLocation(varName), 1, GL_FALSE, &matrix[0][0]);
+}
+
+void Program::SetUniform4f(const std::string& varName, float v1, float v2, float v3, float v4)
+{
+	glUniform4f(GetUniformLocation(varName), v1, v2, v3, v4);
 }

@@ -203,6 +203,10 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseGame\BaseGame.h" />
+    <ClInclude Include="src\Buffers\IndexBuffer.h" />
+    <ClInclude Include="src\Buffers\VertexBuffer.h" />
+    <ClInclude Include="src\Buffers\VertexBufferElement.h" />
+    <ClInclude Include="src\Buffers\VertexBufferLayout.h" />
     <ClInclude Include="src\Entity\Entity.h" />
     <ClInclude Include="src\Entity\Entity2D\Entity2D.h" />
     <ClInclude Include="src\Entity\Entity2D\Shape\Shape.h" />
@@ -213,10 +217,15 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClInclude Include="src\RendererSingleton.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Vector2.h" />
+    <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BaseGame\BaseGame.cpp" />
+    <ClCompile Include="src\Buffers\IndexBuffer.cpp" />
+    <ClCompile Include="src\Buffers\VertexBuffer.cpp" />
+    <ClCompile Include="src\Buffers\VertexBufferElement.cpp" />
+    <ClCompile Include="src\Buffers\VertexBufferLayout.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Entity\Entity2D\Entity2D.cpp" />
     <ClCompile Include="src\Entity\Entity2D\Shape\Shape.cpp" />
@@ -224,6 +233,7 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClCompile Include="src\Entity\Entity2D\Shape\Triangle\Triangle.cpp" />
     <ClCompile Include="src\Program\Program.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

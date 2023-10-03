@@ -9,4 +9,6 @@ int main()
 	game->DeInit();
 
 	delete game;
+
+	return 0;
 }

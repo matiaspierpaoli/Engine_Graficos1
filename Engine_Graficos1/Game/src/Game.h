@@ -6,8 +6,11 @@
 class Game : public BaseGame
 {
 private:
-	Triangle *triangle;
-	//Square *square;
+	//Triangle *triangle;
+	Square* square;
+	Square* square2;
+	/*Triangle* triangle;
+	Triangle* triangle2;*/
 
 public:
 	Game();

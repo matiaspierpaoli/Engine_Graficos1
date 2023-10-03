@@ -5,7 +5,7 @@
 class  GraficosEngine_API Square : public Shape
 {
 public:
-	Square();
+	Square(float vertexCol[4][4]);
 	~Square();
 
 	void Draw();

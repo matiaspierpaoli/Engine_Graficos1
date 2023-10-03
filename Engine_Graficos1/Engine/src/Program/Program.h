@@ -18,4 +18,5 @@ public:
 	unsigned int CreateShader(const std::string vertexShader, const std::string fragmentShader);
 	unsigned int CompileShader(const std::string& source, unsigned int type);
 	void SetUniformMat4F(const std::string& varName, const glm::mat4& matrix);
+	void SetUniform4f(const std::string& varName, float v1, float v2, float v3, float v4);
 };

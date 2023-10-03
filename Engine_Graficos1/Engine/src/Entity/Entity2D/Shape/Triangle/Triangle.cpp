@@ -17,8 +17,8 @@ Triangle::Triangle()
 		0, 1, 2		
 	};
 
-	*vBuffer = RendererSingleton::GetRenderer()->SetNewVertexBuffer(positions, 6 * (sizeof(float) + sizeof(float) * 4));
-	*iBuffer = RendererSingleton::GetRenderer()->SetNewIndexBuffer(tempIndices, 3);
+	*vBuffer = RendererSingleton::GetRenderer()->GetNewVertexBuffer(positions, 6 * (sizeof(float) + sizeof(float) * 4));
+	*iBuffer = RendererSingleton::GetRenderer()->GetNewIndexBuffer(tempIndices, 3);
 
 }
 

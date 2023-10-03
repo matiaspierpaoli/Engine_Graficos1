@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Renderer.h"
+#include "Buffers/IndexBuffer.h"
 #include "glew/include/GL/glew.h"
 #include <glfw/include/GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -18,12 +19,21 @@ Renderer::Renderer(Window* window)
 
 	unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShader.shader"), program->ReadFile("shaders/fragmentShader.shader"));
 	glUseProgram(shader); 
+
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
 }
 
 Renderer::~Renderer()
 {
 	delete window;
 	delete program;
+
+	for (int i = 0; i < vertexArrays.size(); i++)	
+		delete vertexArrays[i];
+	for (int i = 0; i < indexBuffers.size(); i++)
+		delete indexBuffers[i];
+	
 }
 
 void Renderer::ClearScreen()
@@ -41,32 +51,49 @@ void Renderer::SwapWindowBuffers()
 
 void Renderer::Draw(unsigned int vertexBuffer, unsigned int indexBuffer, unsigned int modelId)
 {
+	VertexBuffer* vb = vertexBuffers[vertexBuffer];
+	IndexBuffer* ib = indexBuffers[indexBuffer];
+	VertexArray* va = vertexArrays[vertexBuffer];
+
+	vb->Bind();
+	va->Bind();
+	ib->Bind();
+
 	program->SetUniformMat4F("mvp", proj * view * models[modelId]);
+	//program->SetUniform4f("uColor", 1.0f, 0.0f, 0.0f, 1.0f);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+
+
+	glDrawElements(GL_TRIANGLES, ib->GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
-unsigned int Renderer::SetNewVertexBuffer(const void* data, unsigned int size)
+unsigned int Renderer::GetNewVertexBuffer(const void* data, unsigned int size)
 {
-	unsigned int vertexBuffer;
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+	unsigned int bufferID = vertexArrays.size();
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0); 
+	VertexBuffer* vb = new VertexBuffer(data, size, true);
+	vertexBuffers.push_back(vb);
 
-	return vertexBuffer;
+	VertexBufferLayout layout;
+	layout.Push<float>(2); //Position
+	layout.Push<float>(4); //Color
+
+	VertexArray* va = new VertexArray();
+	va->AddBuffer(vb, layout);
+
+	vertexArrays.push_back(va);
+
+	return bufferID;
 }
 
-unsigned int Renderer::SetNewIndexBuffer(const void* data, unsigned int count)
+unsigned int Renderer::GetNewIndexBuffer(unsigned int* indices, unsigned int indexAmmount)
 {
-	unsigned int indexBuffer;
-	glGenBuffers(1, &indexBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW);
+	unsigned int bufferID = indexBuffers.size();
 
-	return indexBuffer;
+	IndexBuffer* ib = new IndexBuffer(indices, indexAmmount);
+	indexBuffers.push_back(ib);
+
+	return bufferID;
 }
 
 unsigned int Renderer::GetNewModelId(glm::mat4 model)

@@ -69,6 +69,12 @@
     <Filter Include="Archivos de origen\Entity\Entity2D\Shape\Square">
       <UniqueIdentifier>{7a9099df-7de9-43fe-bb35-d511f9c1c3f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\Buffers">
+      <UniqueIdentifier>{45966129-361d-457e-ad12-aa67d91c150d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Buffers">
+      <UniqueIdentifier>{c68e245e-d2fd-4a8a-9fff-6a9562b8d5aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\fragmentShader.shader">
@@ -115,6 +121,21 @@
     <ClInclude Include="src\Exports.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\VertexArray.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\IndexBuffer.h">
+      <Filter>Archivos de encabezado\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\VertexBufferLayout.h">
+      <Filter>Archivos de encabezado\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\VertexBufferElement.h">
+      <Filter>Archivos de encabezado\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Buffers\VertexBuffer.h">
+      <Filter>Archivos de encabezado\Buffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Window\Window.cpp">
@@ -143,6 +164,21 @@
     </ClCompile>
     <ClCompile Include="src\Entity\Entity2D\Shape\Triangle\Triangle.cpp">
       <Filter>Archivos de origen\Entity\Entity2D\Shape\Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VertexArray.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\IndexBuffer.cpp">
+      <Filter>Archivos de origen\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\VertexBufferLayout.cpp">
+      <Filter>Archivos de origen\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\VertexBuffer.cpp">
+      <Filter>Archivos de origen\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffers\VertexBufferElement.cpp">
+      <Filter>Archivos de origen\Buffers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
