@@ -1,14 +1,25 @@
+#include <glfw/include/GLFW/glfw3.h>
+#include <iostream>
+#include <string>
+
 #include "BaseGame.h"
 #include "Window/Window.h"
 #include "RendererSingleton.h"
-//#include "Renderer/Renderer.h"
-
-#include <glfw/include/GLFW/glfw3.h>
-#include <iostream>
-
 #include "Entity/Entity2D/Shape/Square/Square.h"
 
 BaseGame::BaseGame()
+{    
+   
+}
+
+BaseGame::~BaseGame()
+{
+    glfwTerminate();
+    delete window;
+    delete renderer;
+}
+
+void BaseGame::OnStart(float height, float width, const char* programName)
 {
     /* Initialize the library */
     if (!glfwInit())
@@ -18,11 +29,11 @@ BaseGame::BaseGame()
         return;
     }
 
-    window = new Window(640, 480);
+    window = new Window(height, width, programName);
     Window* tempWindow = (Window*)window;
 
-    //renderer = new Renderer(tempWindow);
-    
+    renderer = new Renderer(tempWindow);
+
 
     if (!tempWindow->WindowExists())
     {
@@ -36,38 +47,31 @@ BaseGame::BaseGame()
     renderer = RendererSingleton::GetRenderer();
 }
 
-BaseGame::~BaseGame()
-{
-    glfwTerminate();
-    delete window;
-    delete renderer;
-}
-
 void BaseGame::Loop()
-{
+{   
     Window* tempWindow = (Window*)window;
     Renderer* tempRenderer = (Renderer*)renderer;
-
-    /* Render here */
-    tempRenderer->ClearScreen();
     
-    /*tempRenderer->Draw();*/
+    //Init(); // Call children methods
 
-    Draw();
+    while (IsRunning())
+    {
+        /* Render here */
+        tempRenderer->ClearScreen();
 
-    /* Swap front and back buffers */
-    tempRenderer->SwapWindowBuffers();
+        Update(); // Call children methods
 
-    /* Poll for and process events */
-    tempWindow->ProcessWindowEvents();
+        /* Swap front and back buffers */
+        tempRenderer->SwapWindowBuffers();
+
+        /* Poll for and process events */
+        tempWindow->ProcessWindowEvents();
+    }
+     
+    DeInit(); // Call children methods
 }
 
 bool BaseGame::IsRunning()
 {
     return isRunning && !((Window*)window)->WindowShouldClose();
-}
-
-void BaseGame::Draw()
-{
-
 }

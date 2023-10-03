@@ -1,13 +1,12 @@
-#include "..\..\Game\src\Game.h"
+#include "Game.h"
 
 int main()
 {
 	Game* game = new Game();
-
-	while (game->IsRunning())
-	{
-		game->Loop();
-	}
+	
+	game->Init();
+	game->BaseGame::Loop();
+	game->DeInit();
 
 	delete game;
 }

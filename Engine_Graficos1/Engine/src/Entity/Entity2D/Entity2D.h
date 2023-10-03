@@ -1,7 +1,8 @@
 #pragma once
 #include "Entity/Entity.h"
+#include "Exports.h"
 
-class  __declspec(dllexport) Entity2D : public Entity
+class  GraficosEngine_API Entity2D : public Entity
 {
 public:
 	Entity2D();

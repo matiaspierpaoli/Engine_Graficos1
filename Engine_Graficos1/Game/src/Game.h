@@ -1,7 +1,7 @@
 #pragma once
-#include "..\..\Engine\src\BaseGame\BaseGame.h"
-#include "..\..\Engine\src\Entity\Entity2D\Shape\Square\Square.h"
-#include "..\..\Engine\src\Entity\Entity2D\Shape\Triangle\Triangle.h"
+#include "BaseGame/BaseGame.h"
+#include "Entity\Entity2D\Shape\Square\Square.h"
+#include "Entity\Entity2D\Shape\Triangle\Triangle.h"
 
 class Game : public BaseGame
 {
@@ -12,7 +12,8 @@ private:
 public:
 	Game();
 	~Game();
-	bool IsRunning();
-	void Loop();
-	void Draw() override;
+
+	void Init() override;
+	void Update() override;
+	void DeInit() override;
 };

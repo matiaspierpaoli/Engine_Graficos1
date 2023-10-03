@@ -6,10 +6,11 @@ private:
 	void* window;
 	int height;
 	int width;
+	const char* programName;
 	void CreateWindow();
 
 public:
-	Window(float height, float width);
+	Window(float height, float width, const char* programName);
 	~Window();
 
 	bool WindowExists();

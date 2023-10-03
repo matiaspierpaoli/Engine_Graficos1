@@ -112,6 +112,9 @@
     <ClInclude Include="src\Vector2.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\Exports.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Window\Window.cpp">
@@ -122,9 +125,6 @@
     </ClCompile>
     <ClCompile Include="src\Program\Program.cpp">
       <Filter>Archivos de origen\Program</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Source.cpp">
-      <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\BaseGame\BaseGame.cpp">
       <Filter>Archivos de origen\BaseGame</Filter>

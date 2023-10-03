@@ -1,8 +1,9 @@
 #pragma once
-#include "Window/Window.h"
-#include "Program/Program.h"
 #include <string>
 #include <vector>
+
+#include "Window/Window.h"
+#include "Program/Program.h"
 
 class Renderer
 {

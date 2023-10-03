@@ -1,7 +1,8 @@
 #pragma once
 #include "Entity/Entity2D/Shape/Shape.h"
+#include "Exports.h"
 
-class  __declspec(dllexport) Square : public Shape
+class  GraficosEngine_API Square : public Shape
 {
 public:
 	Square();

@@ -3,7 +3,6 @@
 #include <fstream>
 #include <glm/glm.hpp>
 
-
 class Program
 {
 

@@ -94,7 +94,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;_DEBUG;_CONSOLE;GraficosEngine_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)libs\;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(ProjectDir)src;</AdditionalUsingDirectories>
@@ -129,7 +129,7 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;NDEBUG;_CONSOLE;GraficosEngine_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)libs\;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>$(ProjectDir)src;</AdditionalUsingDirectories>
@@ -208,6 +208,7 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClInclude Include="src\Entity\Entity2D\Shape\Shape.h" />
     <ClInclude Include="src\Entity\Entity2D\Shape\Square\Square.h" />
     <ClInclude Include="src\Entity\Entity2D\Shape\Triangle\Triangle.h" />
+    <ClInclude Include="src\Exports.h" />
     <ClInclude Include="src\Program\Program.h" />
     <ClInclude Include="src\RendererSingleton.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
@@ -223,7 +224,6 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClCompile Include="src\Entity\Entity2D\Shape\Triangle\Triangle.cpp" />
     <ClCompile Include="src\Program\Program.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

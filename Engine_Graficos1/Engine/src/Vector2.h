@@ -1,6 +1,7 @@
 #pragma once
+#include "Exports.h"
 
-struct __declspec(dllexport) Vector2
+struct GraficosEngine_API Vector2
 {
 	float x;
 	float y;

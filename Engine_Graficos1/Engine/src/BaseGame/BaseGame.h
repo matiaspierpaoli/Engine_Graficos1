@@ -1,6 +1,7 @@
 #pragma once
+#include "Exports.h"
 
-class __declspec(dllexport) BaseGame
+class GraficosEngine_API BaseGame
 {
 private:
 	void* window;
@@ -11,8 +12,11 @@ public:
 	BaseGame();
 	~BaseGame();
 
-	void Loop();
-	bool IsRunning();
+	void OnStart(float height, float width, const char* programName);
 
-	virtual void Draw();
+	void Loop();
+	virtual void Init() = 0;
+	virtual void Update() = 0;
+	virtual void DeInit() = 0;
+	bool IsRunning();
 };

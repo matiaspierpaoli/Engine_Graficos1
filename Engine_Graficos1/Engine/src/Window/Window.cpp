@@ -1,12 +1,14 @@
 #include "Window.h"
 #include <iostream>
+
 #include "glew/include/GL/glew.h"
 #include <glfw/include/GLFW/glfw3.h>
 
-Window::Window(float height, float width)
+Window::Window(float height, float width, const char* programName)
 {
 	this->height = height;
 	this->width = width;
+	this->programName = programName;
 	CreateWindow();
 }
 
@@ -33,7 +35,7 @@ bool Window::WindowShouldClose()
 
 void Window::CreateWindow()
 {
-	window = glfwCreateWindow(height, width, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(height, width, programName, NULL, NULL);
 
 	if (!window)
 		return;

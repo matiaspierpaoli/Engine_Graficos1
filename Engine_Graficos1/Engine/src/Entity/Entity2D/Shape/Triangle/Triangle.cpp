@@ -4,9 +4,13 @@
 Triangle::Triangle()
 {
 	float positions[4][2] = {
-		-0.5f, -0.5f,
+		/*-0.5f, -0.5f,
 		 0.5f, -0.5f,
-		 0.5f, 0.5f
+		 0.5f, 0.5f*/
+
+		-0.5f, -0.5f,
+		 0.0f, 0.5f,
+		 0.5f, -0.5f
 	};
 
 	unsigned int tempIndices[3] = {

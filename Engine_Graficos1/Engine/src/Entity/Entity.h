@@ -1,7 +1,8 @@
 #pragma once
 #include "Vector2.h"
+#include "Exports.h"
 
-class __declspec(dllexport) Entity
+class GraficosEngine_API Entity
 {
 private:
 	Vector2 translation;
