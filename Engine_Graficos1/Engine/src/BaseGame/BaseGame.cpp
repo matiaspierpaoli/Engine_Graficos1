@@ -6,6 +6,7 @@
 #include "Window/Window.h"
 #include "RendererSingleton.h"
 #include "Entity/Entity2D/Shape/Square/Square.h"
+#include "Input/InputManager.h"
 
 BaseGame::BaseGame()
 {    
@@ -17,6 +18,7 @@ BaseGame::~BaseGame()
     glfwTerminate();
     delete window;
     delete renderer;
+    delete inputManager;
 }
 
 void BaseGame::OnStart(float height, float width, const char* programName)
@@ -34,6 +36,8 @@ void BaseGame::OnStart(float height, float width, const char* programName)
 
     renderer = new Renderer(tempWindow);
 
+    GLFWwindow* tempGLFWwindow = ((GLFWwindow*)tempWindow->GetGLFWPointer());
+    inputManager = new InputManager(tempGLFWwindow);
 
     if (!tempWindow->WindowExists())
     {
@@ -45,6 +49,8 @@ void BaseGame::OnStart(float height, float width, const char* programName)
 
     RendererSingleton::SetRenderer(new Renderer(tempWindow));
     renderer = RendererSingleton::GetRenderer();
+
+    time = new Time();
 }
 
 void BaseGame::Loop()
@@ -52,6 +58,8 @@ void BaseGame::Loop()
     Window* tempWindow = (Window*)window;
     Renderer* tempRenderer = (Renderer*)renderer;
     
+    time->Update();
+
     //Init(); // Call children methods
 
     while (IsRunning())
@@ -74,4 +82,9 @@ void BaseGame::Loop()
 bool BaseGame::IsRunning()
 {
     return isRunning && !((Window*)window)->WindowShouldClose();
+}
+
+bool BaseGame::IsKeyPressed(unsigned int keyCode)
+{
+    return ((InputManager*)inputManager)->IsKeyPressed(keyCode);
 }

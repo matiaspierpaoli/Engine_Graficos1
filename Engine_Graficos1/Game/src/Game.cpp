@@ -1,5 +1,14 @@
 #include "Game.h"
 
+#pragma region keyCodes
+
+#define KEY_W 87
+#define KEY_A 65
+#define KEY_S 83
+#define KEY_D 68
+
+#pragma endregion
+
 Game::Game()
 {
 	
@@ -30,6 +39,7 @@ void Game::Init()
 	square->Scale(100, 100);
 	square->Translate(120, 120);
 
+
 	float vertexCol2[4][4] =
 	{
 		 0.0f,  0.0f, 1.0f, 1.0f,
@@ -53,11 +63,8 @@ void Game::Init()
 
 void Game::DeInit()
 {
-	//delete triangle;
 	delete square;
 	delete square2;
-	/*delete triangle;
-	delete triangle2;*/
 }
 
 void Game::Update()
@@ -65,10 +72,26 @@ void Game::Update()
 	/*triangle->Scale(1, 1);
 	triangle->Rotate(3);*/
 	
+	if (IsKeyPressed(KEY_W)) 
+	{
+		square->Translate(0, 0.1f * time->GetDeltaTime());
+	}
+
+	if (IsKeyPressed(KEY_S)) 
+	{
+		square->Translate(0, -0.1f * time->GetDeltaTime());
+	}
+
+	if (IsKeyPressed(KEY_A)) 
+	{
+		square->Translate(-0.1 * time->GetDeltaTime(), 0);
+	}
+	
+	if (IsKeyPressed(KEY_D))
+	{
+		square->Translate(0.1 * time->GetDeltaTime(), 0);
+	}
+
 	square->Draw();
 	square2->Draw();
-	/*triangle->Draw();
-	triangle2->Draw();*/
-
-	//triangle->Draw();
 }

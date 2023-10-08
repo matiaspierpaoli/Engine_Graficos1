@@ -213,9 +213,11 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClInclude Include="src\Entity\Entity2D\Shape\Square\Square.h" />
     <ClInclude Include="src\Entity\Entity2D\Shape\Triangle\Triangle.h" />
     <ClInclude Include="src\Exports.h" />
+    <ClInclude Include="src\Input\InputManager.h" />
     <ClInclude Include="src\Program\Program.h" />
     <ClInclude Include="src\RendererSingleton.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
+    <ClInclude Include="src\Time\Time.h" />
     <ClInclude Include="src\Vector2.h" />
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\Window\Window.h" />
@@ -231,8 +233,10 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClCompile Include="src\Entity\Entity2D\Shape\Shape.cpp" />
     <ClCompile Include="src\Entity\Entity2D\Shape\Square\Square.cpp" />
     <ClCompile Include="src\Entity\Entity2D\Shape\Triangle\Triangle.cpp" />
+    <ClCompile Include="src\Input\InputManager.cpp" />
     <ClCompile Include="src\Program\Program.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Time\Time.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
   </ItemGroup>

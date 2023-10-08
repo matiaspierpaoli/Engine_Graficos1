@@ -75,6 +75,12 @@
     <Filter Include="Archivos de encabezado\Buffers">
       <UniqueIdentifier>{c68e245e-d2fd-4a8a-9fff-6a9562b8d5aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\Input">
+      <UniqueIdentifier>{d7e88d80-7239-4f47-991f-50b09d4d8220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Input">
+      <UniqueIdentifier>{26e4eacc-e9a8-46d0-b0c1-d583c3cfbea7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\fragmentShader.shader">
@@ -136,6 +142,12 @@
     <ClInclude Include="src\Buffers\VertexBuffer.h">
       <Filter>Archivos de encabezado\Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="src\Input\InputManager.h">
+      <Filter>Archivos de encabezado\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Time\Time.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Window\Window.cpp">
@@ -179,6 +191,12 @@
     </ClCompile>
     <ClCompile Include="src\Buffers\VertexBufferElement.cpp">
       <Filter>Archivos de origen\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\InputManager.cpp">
+      <Filter>Archivos de origen\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Time\Time.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
