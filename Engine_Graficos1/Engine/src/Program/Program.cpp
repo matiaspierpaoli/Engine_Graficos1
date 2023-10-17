@@ -98,3 +98,8 @@ void Program::SetUniform4f(const std::string& varName, float v1, float v2, float
 {
 	glUniform4f(GetUniformLocation(varName), v1, v2, v3, v4);
 }
+
+void Program::SetUniform1i(const std::string& varName, int value)
+{
+	glUniform1i(GetUniformLocation(varName), value);
+}

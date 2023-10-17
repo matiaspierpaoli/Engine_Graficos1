@@ -19,4 +19,5 @@ public:
 	unsigned int CompileShader(const std::string& source, unsigned int type);
 	void SetUniformMat4F(const std::string& varName, const glm::mat4& matrix);
 	void SetUniform4f(const std::string& varName, float v1, float v2, float v3, float v4);
+	void SetUniform1i(const std::string& varName, int value);
 };

@@ -7,21 +7,25 @@
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <stb_image.h>
 
 Renderer::Renderer(Window* window)
 {
 	this->window = window;
-	
+
 	program = new Program();
 
 	proj = glm::ortho(0.0f, window->GetHeight(), 0.0f, window->GetWidth(), -1.0f, 1.0f);
 	view = glm::lookAt(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShader.shader"), program->ReadFile("shaders/fragmentShader.shader"));
-	glUseProgram(shader); 
+	glUseProgram(shader);
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
+
+
+	SetUniversalSpriteSettings();
 }
 
 Renderer::~Renderer()
@@ -29,11 +33,11 @@ Renderer::~Renderer()
 	delete window;
 	delete program;
 
-	for (int i = 0; i < vertexArrays.size(); i++)	
+	for (int i = 0; i < vertexArrays.size(); i++)
 		delete vertexArrays[i];
 	for (int i = 0; i < indexBuffers.size(); i++)
 		delete indexBuffers[i];
-	
+
 }
 
 void Renderer::ClearScreen()
@@ -46,7 +50,7 @@ void Renderer::SwapWindowBuffers()
 	if (!window || !window->WindowExists())
 		std::cout << "RENDERER ERROR: Window does not exist" << std::endl;
 
-	glfwSwapBuffers((GLFWwindow*) window->GetGLFWPointer());
+	glfwSwapBuffers((GLFWwindow*)window->GetGLFWPointer());
 }
 
 void Renderer::Draw(unsigned int vertexBuffer, unsigned int indexBuffer, unsigned int modelId)
@@ -64,6 +68,9 @@ void Renderer::Draw(unsigned int vertexBuffer, unsigned int indexBuffer, unsigne
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 
 
+	/*texture->Bind();*/
+	program->SetUniform1i("uTexture", 0);
+
 	glDrawElements(GL_TRIANGLES, ib->GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
@@ -76,7 +83,8 @@ unsigned int Renderer::GetNewVertexBuffer(const void* data, unsigned int size)
 
 	VertexBufferLayout layout;
 	layout.Push<float>(2); //Position
-	layout.Push<float>(4); //Color
+	layout.Push<float>(2); // UV 
+	//layout.Push<float>(4); //Color
 
 	VertexArray* va = new VertexArray();
 	va->AddBuffer(vb, layout);
@@ -107,4 +115,72 @@ unsigned int Renderer::GetNewModelId(glm::mat4 model)
 void Renderer::SetModel(glm::mat4 model, unsigned int modelId)
 {
 	models[modelId] = model;
+}
+
+void Renderer::GetNewSprite(std::string imgPath, int* imgWidth, int* imgHeight, int* bpp, unsigned int* imageID)
+{
+	unsigned char* localBuffer = nullptr;
+
+	stbi_set_flip_vertically_on_load(1);
+
+	//bpp = Bits per Pixel
+	localBuffer = stbi_load(imgPath.c_str(), imgWidth, imgHeight, bpp, 4);
+
+	//https://docs.gl/gl4/glGenTextures
+	glGenTextures(1, imageID);
+
+	//https://docs.gl/gl4/glBindTexture
+	glBindTexture(GL_TEXTURE_2D, *imageID);
+
+	//If image didn't load exit
+	if (!localBuffer) return;
+
+	//https://docs.gl/gl4/glTexImage2D
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, *imgWidth, *imgHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, localBuffer);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//Free buffer/image from stbi
+	stbi_image_free(localBuffer);
+}
+
+void Renderer::SetSprite(unsigned int value)
+{
+	program->SetUniform1i("u_Sprite", value);
+}
+
+void Renderer::DeleteSprite(unsigned int* spriteID)
+{
+	glDeleteTextures(1, spriteID);
+}
+
+void Renderer::BindSprite(unsigned int slot, unsigned int spriteID)
+{
+	glActiveTexture(GL_TEXTURE0 + slot);
+	glBindTexture(GL_TEXTURE_2D, spriteID);
+}
+
+void Renderer::UnbindSprite()
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Renderer::SetUniversalSpriteSettings()
+{
+	//https://docs.gl/gl4/glTexParameteri
+	///SET MIPMAPPING //vaRS
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	///SET WRAPPING //vaRS
+	//Repeat: repeats image in empty space
+	//Mirror Repeat: repeats image, but mirroring it
+	//Clamp Border: stretches image to edge of screen
+	//Clamp Edge: fills empty space left by image with color
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+
+	//Enable blending, so images with transparency can be draw
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }

@@ -81,6 +81,12 @@
     <Filter Include="Archivos de origen\Input">
       <UniqueIdentifier>{26e4eacc-e9a8-46d0-b0c1-d583c3cfbea7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\Sprite">
+      <UniqueIdentifier>{63d5e3ea-24e0-4ba8-b973-463c4ddd9ea9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Sprite">
+      <UniqueIdentifier>{e944f017-268c-44a0-a3c7-5019d141ec18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\fragmentShader.shader">
@@ -148,6 +154,12 @@
     <ClInclude Include="src\Time\Time.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\Sprite\Sprite.h">
+      <Filter>Archivos de encabezado\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stb_image.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Window\Window.cpp">
@@ -196,6 +208,12 @@
       <Filter>Archivos de origen\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Time\Time.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sprite\Sprite.cpp">
+      <Filter>Archivos de origen\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stb_image.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

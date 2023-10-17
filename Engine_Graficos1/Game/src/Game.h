@@ -2,15 +2,13 @@
 #include "BaseGame/BaseGame.h"
 #include "Entity\Entity2D\Shape\Square\Square.h"
 #include "Entity\Entity2D\Shape\Triangle\Triangle.h"
+#include "Sprite/Sprite.h"
 
 class Game : public BaseGame
 {
 private:
-	//Triangle *triangle;
-	Square* square;
-	Square* square2;
-	/*Triangle* triangle;
-	Triangle* triangle2;*/
+	Sprite* sprite1;
+	Sprite* sprite2;
 
 public:
 	Game();
