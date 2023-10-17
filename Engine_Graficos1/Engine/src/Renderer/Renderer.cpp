@@ -82,7 +82,8 @@ unsigned int Renderer::GetNewVertexBuffer(const void* data, unsigned int size)
 	vertexBuffers.push_back(vb);
 
 	VertexBufferLayout layout;
-	layout.Push<float>(2); //Position
+	layout.Push<float>(2); // Position
+	layout.Push<float>(4); // Color
 	layout.Push<float>(2); // UV 
 	//layout.Push<float>(4); //Color
 

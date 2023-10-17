@@ -13,10 +13,10 @@ private:
 	int mWidth;
 	int mHeight;
 	int mBPP;
-	float vertices[4][4];
+	float vertices[4][8];
 
 public:
-	Sprite(const std::string& path);
+	Sprite(const std::string& path, float vertexCol[4][4]);
 	~Sprite();
 
 	void Bind(unsigned int slot = 0) const;

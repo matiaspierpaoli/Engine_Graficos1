@@ -7,8 +7,8 @@
 class Game : public BaseGame
 {
 private:
-	Sprite* sprite1;
-	Sprite* sprite2;
+	Entity2D* player1;
+	Entity2D* player2;
 
 public:
 	Game();

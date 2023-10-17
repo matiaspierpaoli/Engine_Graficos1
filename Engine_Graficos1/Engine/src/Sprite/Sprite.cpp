@@ -1,7 +1,7 @@
 #include "Sprite.h"
 #include "RendererSingleton.h"
 
-Sprite::Sprite(const std::string& path) : mRendererID(0), mFilePath(path), mLocalBuffer(nullptr), mWidth(0), mHeight(0), mBPP(0)
+Sprite::Sprite(const std::string& path, float vertexCol[4][4]) : mRendererID(0), mFilePath(path), mLocalBuffer(nullptr), mWidth(0), mHeight(0), mBPP(0)
 {
 	mRendererID = 0;
 	mFilePath = path;
@@ -19,6 +19,7 @@ Sprite::Sprite(const std::string& path) : mRendererID(0), mFilePath(path), mLoca
 		{1, 1},
 		{-1, 1}
 	};
+
 	float uvPos[4][2] =
 	{
 		{0, 0}, //bot left
@@ -38,15 +39,20 @@ Sprite::Sprite(const std::string& path) : mRendererID(0), mFilePath(path), mLoca
 		{
 			vertices[i][j] = vertexPos[i][j];
 		}
-		for (unsigned short j = 2; j < 4; j++)
+		for (unsigned short j = 2; j < 6; j++)
 		{
-			vertices[i][j] = uvPos[i][j - 2];
+			vertices[i][j] = vertexCol[i][j - 2];
+		}
+		for (unsigned short j = 6; j < 8; j++)
+		{			
+			vertices[i][j] = uvPos[i][j - 6];
 		}
 	}
 
 	Bind();
 
-	*vBuffer = RendererSingleton::GetRenderer()->GetNewVertexBuffer(vertices, 4 * (sizeof(float) * 2 + sizeof(float) * 2));
+	//*vBuffer = RendererSingleton::GetRenderer()->GetNewVertexBuffer(vertices, 4 * (sizeof(float) * 2 + sizeof(float) * 2));
+	*vBuffer = RendererSingleton::GetRenderer()->GetNewVertexBuffer(vertices, 4 * (2 * sizeof(float) + 4 * sizeof(float) + 2 * sizeof(float)));
 	*iBuffer = RendererSingleton::GetRenderer()->GetNewIndexBuffer(indices, 6);
 
 	Unbind();

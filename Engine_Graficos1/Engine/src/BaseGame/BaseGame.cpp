@@ -74,9 +74,7 @@ void BaseGame::Loop()
 
         /* Poll for and process events */
         tempWindow->ProcessWindowEvents();
-    }
-     
-    DeInit(); // Call children methods
+    }   
 }
 
 bool BaseGame::IsRunning()
