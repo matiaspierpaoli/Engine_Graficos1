@@ -207,6 +207,7 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClInclude Include="src\Buffers\VertexBuffer.h" />
     <ClInclude Include="src\Buffers\VertexBufferElement.h" />
     <ClInclude Include="src\Buffers\VertexBufferLayout.h" />
+    <ClInclude Include="src\Collisions\CollisionManager.h" />
     <ClInclude Include="src\Entity\Entity.h" />
     <ClInclude Include="src\Entity\Entity2D\Entity2D.h" />
     <ClInclude Include="src\Entity\Entity2D\Shape\Shape.h" />
@@ -230,6 +231,7 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClCompile Include="src\Buffers\VertexBuffer.cpp" />
     <ClCompile Include="src\Buffers\VertexBufferElement.cpp" />
     <ClCompile Include="src\Buffers\VertexBufferLayout.cpp" />
+    <ClCompile Include="src\Collisions\CollisionManager.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Entity\Entity2D\Entity2D.cpp" />
     <ClCompile Include="src\Entity\Entity2D\Shape\Shape.cpp" />

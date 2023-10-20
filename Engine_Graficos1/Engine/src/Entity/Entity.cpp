@@ -74,5 +74,4 @@ void Entity::UpdateModel(bool isModelCreated)
 	{
 		modelId = RendererSingleton::GetRenderer()->GetNewModelId(model);
 	}
-
 }

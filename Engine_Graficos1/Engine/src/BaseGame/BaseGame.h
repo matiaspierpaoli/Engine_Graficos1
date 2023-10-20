@@ -1,17 +1,19 @@
 #pragma once
 #include "Exports.h"
 #include "Time/Time.h"
+#include "Collisions/CollisionManager.h"
 
 class GraficosEngine_API BaseGame
 {
 private:
-	void* window;
 	void* renderer;
 	bool isRunning = true;
 	void* inputManager;
 
 protected:
+	void* window;
 	Time* time;
+	CollisionManager* collisionManager;
 
 public:
 	BaseGame();

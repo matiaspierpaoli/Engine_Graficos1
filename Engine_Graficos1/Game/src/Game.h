@@ -9,6 +9,10 @@ class Game : public BaseGame
 private:
 	Entity2D* player1;
 	Entity2D* player2;
+	float traslateX;
+	float traslateY;
+	float defaultTranslation;
+	void checkCollisions(Entity2D* player);
 
 public:
 	Game();

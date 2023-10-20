@@ -19,6 +19,7 @@ BaseGame::~BaseGame()
     delete window;
     delete renderer;
     delete inputManager;
+    delete collisionManager;
 }
 
 void BaseGame::OnStart(float height, float width, const char* programName)
@@ -38,6 +39,8 @@ void BaseGame::OnStart(float height, float width, const char* programName)
 
     GLFWwindow* tempGLFWwindow = ((GLFWwindow*)tempWindow->GetGLFWPointer());
     inputManager = new InputManager(tempGLFWwindow);
+
+    collisionManager = new CollisionManager();
 
     if (!tempWindow->WindowExists())
     {
