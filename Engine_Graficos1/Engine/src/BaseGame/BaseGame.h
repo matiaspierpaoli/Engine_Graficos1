@@ -1,6 +1,6 @@
 #pragma once
 #include "Exports.h"
-#include "Time/Time.h"
+#include "TimeSingleton.h"
 #include "Collisions/CollisionManager.h"
 
 class GraficosEngine_API BaseGame

@@ -61,7 +61,6 @@ unsigned int Program::CreateShader(const std::string vertexShader, const std::st
 	glDeleteProgram(vs);
 	glDeleteProgram(fs);
 
-
 	return id;
 }
 

@@ -23,6 +23,8 @@
 
 #pragma endregion
 
+float timer = 0;
+
 Game::Game()
 {
 
@@ -39,40 +41,20 @@ void Game::Init()
 
 	traslateX = 0.f;
 	traslateY = 0.f;
-	defaultTranslation = 0.1f;
+	defaultTranslation = 10.0f;
 
-	float vertexCol1[4][4] = // White - no modification for sprites
-	{
-		 1.0f,  1.0f, 1.0f, 1.0f,
-		 1.0f,  1.0f, 1.0f, 1.0f,
-		 1.0f,  1.0f, 1.0f, 1.0f,
-		 1.0f,  1.0f, 1.0f, 1.0f,
-	};
-
-	float vertexCol2[4][4] = // Green
-	{
-		 0.0f,  1.0f, 0.0f, 1.0f,
-		 0.0f,  1.0f, 0.0f, 1.0f,
-		 0.0f,  1.0f, 0.0f, 1.0f,
-		 0.0f,  1.0f, 0.0f, 1.0f,
-	};
-
-	/*player1 = new Square(vertexCol1);
-	player1->Scale(100, 100);
-	player1->Translate(360, 360);
-
-	player2 = new Square(vertexCol2);
-	player2->Scale(100, 100);
-	player2->Translate(100, 100);*/
-	
-	player1 = new Sprite("Worry-Lines-Autho.png", vertexCol1);
+	player1 = new Sprite("res/linkAnimationBackward.png", 9, 0);
 	player1->Scale(100, 100);
 	player1->Translate(150, 200);
 
-	player2 = new Sprite("Worry-Lines-Autho.png", vertexCol1);
-	player2->Scale(150, 150);
+	player2 = new Sprite("res/linkAnimationForward.png", 9, 0);
+	player2->Scale(100, 100);
 	player2->Translate(300, 300);
 
+	Animation* linkWalkAnim = new Animation(1, 9);
+	Animation* linkBackAnim = new Animation(1, 9);
+	static_cast<Sprite*>(player1)->SetAnim(linkBackAnim);
+	static_cast<Sprite*>(player2)->SetAnim(linkWalkAnim);
 }
 
 void Game::DeInit()
@@ -82,10 +64,11 @@ void Game::DeInit()
 }
 
 void Game::Update()
-{
-	/*triangle->Scale(1, 1);
-	triangle->Rotate(3);*/
-	
+{	
+	static_cast<Sprite*>(player2)->UpdateFrame();
+
+	if (timer > 0) timer -= time->GetDeltaTime();
+
 	#pragma region Input
 	// Player 1 input
 	if (IsKeyPressed(KEY_W))
@@ -94,6 +77,7 @@ void Game::Update()
 		traslateY = defaultTranslation;
 		player1->Translate(traslateX, traslateY * time->GetDeltaTime());
 		checkCollisions(player1);
+		static_cast<Sprite*>(player1)->UpdateFrame();
 	}
 
 	if (IsKeyPressed(KEY_S))
@@ -102,6 +86,7 @@ void Game::Update()
 		traslateY = -defaultTranslation;
 		player1->Translate(traslateX, traslateY * time->GetDeltaTime());
 		checkCollisions(player1);
+		static_cast<Sprite*>(player1)->UpdateFrame();
 	}
 
 	if (IsKeyPressed(KEY_A))
@@ -110,6 +95,7 @@ void Game::Update()
 		traslateY = 0.f;
 		player1->Translate(traslateX * time->GetDeltaTime(), traslateY);
 		checkCollisions(player1);
+		static_cast<Sprite*>(player1)->UpdateFrame();
 	}
 
 	if (IsKeyPressed(KEY_D))
@@ -118,6 +104,7 @@ void Game::Update()
 		traslateY = 0.f;
 		player1->Translate(traslateX * time->GetDeltaTime(), traslateY);
 		checkCollisions(player1);
+		static_cast<Sprite*>(player1)->UpdateFrame();
 	}
 
 	if (IsKeyPressed(KEY_Q))
@@ -190,7 +177,6 @@ void Game::checkCollisions(Entity2D* player)
 {
 	while (collisionManager->checkEntityToEntityCollision(player1, player2))
 	{
-		//std::cout << "colission\n";
 		player->Translate(-traslateX, -traslateY);
 	}
 

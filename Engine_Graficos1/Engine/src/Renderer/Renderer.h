@@ -20,8 +20,7 @@ private:
 	std::vector<VertexBuffer*> vertexBuffers;
 	std::vector<IndexBuffer*> indexBuffers;
 	std::vector<VertexArray*> vertexArrays;
-
-	unsigned int vao;
+	//unsigned int vao;
 
 public:
 	Renderer(Window* window);
@@ -32,6 +31,7 @@ public:
 	void Draw(unsigned int vertexBuffer, unsigned int indexBuffer, unsigned int modelId);
 
 	unsigned int GetNewVertexBuffer(const void* data, unsigned int size);
+	void GetNewVertexBuffer(unsigned int bufferID, const void* data, unsigned int dataSize);
 	unsigned int GetNewIndexBuffer(unsigned int* indices, unsigned int count);
 
 	unsigned int GetNewModelId(glm::mat4 model);

@@ -2,12 +2,12 @@
 #include <vector>
 #include "VertexBufferElement.h"
 
-
 class VertexBufferLayout
 {
 private:
 	std::vector<VertexBufferElement> elements;
 	unsigned int stride;
+
 public:
 	VertexBufferLayout() : stride(0) {}
 

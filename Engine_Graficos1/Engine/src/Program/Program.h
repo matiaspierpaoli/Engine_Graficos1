@@ -5,7 +5,6 @@
 
 class Program
 {
-
 private:
 	unsigned int id;
 	int GetUniformLocation(const std::string& varName);

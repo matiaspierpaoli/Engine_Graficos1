@@ -58,9 +58,68 @@ Sprite::Sprite(const std::string& path, float vertexCol[4][4]) : mRendererID(0),
 	Unbind();
 }
 
+Sprite::Sprite(const std::string& path, int spriteQuantity, int spriteNumber)
+{
+	mRendererID = 0;
+	mFilePath = path;
+	mWidth = 0;
+	mHeight = 0;
+	mBPP = 0;
+	spriteQty = spriteQuantity;
+
+	Renderer* tempRenderer = RendererSingleton::GetRenderer();
+	tempRenderer->GetNewSprite(path, &mWidth, &mHeight, &mBPP, &mRendererID);
+
+	imageID = mRendererID - 1;
+
+	float vertexPos[4][2] =
+	{
+		{-1, -1},
+		{1, -1},
+		{1, 1},
+		{-1, 1}
+	};
+
+	float leftX = (float)spriteNumber / spriteQuantity;
+	float rightX = (float)(spriteNumber + 1) / spriteQuantity;
+
+	float uvPos[4][2] =
+	{
+		{leftX, 0}, //bot left
+		{rightX, 0}, //bot right
+		{rightX, 1}, //top right
+		{leftX, 1}  //top left
+	};
+	unsigned int indices[6] =
+	{
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	for (unsigned short i = 0; i < 4; i++)
+	{
+		for (unsigned short j = 0; j < 2; j++)
+		{
+			vertices[i][j] = vertexPos[i][j];
+		}
+		for (unsigned short j = 2; j < 4; j++)
+		{
+			vertices[i][j] = uvPos[i][j - 2];
+		}
+	}
+
+	*vBuffer = tempRenderer->GetNewVertexBuffer(vertices, 4 * (sizeof(float) * 2 + sizeof(float) * 2));
+	*iBuffer = tempRenderer->GetNewIndexBuffer(indices, 6);
+
+	Bind();
+}
+
 Sprite::~Sprite()
 {
 	RendererSingleton::GetRenderer()->DeleteSprite(&mRendererID);
+
+	if (anim)
+		delete anim;
 }
 
 void Sprite::Bind(unsigned int slot) const
@@ -74,14 +133,106 @@ void Sprite::Unbind()
 	RendererSingleton::GetRenderer()->UnbindSprite();
 }
 
-int Sprite::GetWidth()
+unsigned int Sprite::GetImageID()
 {
-	return mWidth;
+	return imageID;
 }
 
-int Sprite::GetHeight()
+void Sprite::ChangeSprite(float leftU, float rightU)
 {
-	return mHeight;
+	float uvPos[4][2] =
+	{
+		{leftU, 0}, //bot left
+		{rightU, 0}, //bot right
+		{rightU, 1}, //top right
+		{leftU, 1}  //top left
+	};
+
+	//ONLY CHANGES TEX COORD FROM EACH VERTEX
+	for (unsigned short i = 0; i < 4; i++)
+	{
+		//for (unsigned short j = 0; j < 2; j++)
+		//{
+		//	vertices[i][j] = vertices[i][j];
+		//}
+		for (unsigned short j = 2; j < 4; j++)
+		{
+			vertices[i][j] = uvPos[i][j - 2];
+		}
+	}
+
+	RendererSingleton::GetRenderer()->GetNewVertexBuffer(*vBuffer, vertices, 4 * (sizeof(float) * 2 + sizeof(float) * 2));
+
+	Bind();
+
+	//UnBind();
+}
+
+void Sprite::ChangeSprite(int spriteQuantity, int spriteNumber)
+{
+	float widthHeightRatio = mWidth / mHeight;
+	float adjustedX = 0.5f * widthHeightRatio;
+
+	float vertexPos[4][2] =
+	{
+		{-adjustedX, -1},
+		{adjustedX, -1},
+		{adjustedX, 1},
+		{-adjustedX, 1}
+	};
+
+	float leftX = (float)spriteNumber / spriteQuantity;
+	float rightX = (float)(spriteNumber + 1) / spriteQuantity;
+
+	float uvPos[4][2] =
+	{
+		{leftX, 0},  //bot left
+		{rightX, 0}, //bot right
+		{rightX, 1}, //top right
+		{leftX, 1}   //top left
+	};
+
+	for (unsigned short i = 0; i < 4; i++)
+	{
+		//for (unsigned short j = 0; j < 2; j++)
+		//{
+		//	vertices[i][j] = vertices[i][j];
+		//}
+		for (unsigned short j = 2; j < 4; j++)
+		{
+			vertices[i][j] = uvPos[i][j - 2];
+		}
+	}
+
+	Bind();
+
+	RendererSingleton::GetRenderer()->GetNewVertexBuffer(*vBuffer, vertices, 4 * (sizeof(float) * 2 + sizeof(float) * 2));
+	//Singleton::GetRenderer()->SetNewIndexBuffer(indices, 6);
+
+	Unbind();
+}
+
+void Sprite::SetAnim(Animation* _anim)
+{
+	anim = _anim;
+}
+
+void Sprite::UpdateFrame()
+{
+	//Get old coords
+	Vector2 oldCoords = anim->GetCurrentFrame();
+
+	//Update animation timer
+	anim->Update();
+
+	//Get new coords
+	Vector2 uCoords = anim->GetCurrentFrame();
+
+	//If frame didn't change, exit
+	if (oldCoords.x == uCoords.x) return;
+
+	//If it's in new frame, update sprite
+	ChangeSprite(uCoords.x, uCoords.y);
 }
 
 void Sprite::Draw()

@@ -54,6 +54,7 @@ void BaseGame::OnStart(float height, float width, const char* programName)
     renderer = RendererSingleton::GetRenderer();
 
     time = new Time();
+    TimeSingleton::SetTime(time);
 }
 
 void BaseGame::Loop()
@@ -61,12 +62,11 @@ void BaseGame::Loop()
     Window* tempWindow = (Window*)window;
     Renderer* tempRenderer = (Renderer*)renderer;
     
-    time->Update();
-
     //Init(); // Call children methods
 
     while (IsRunning())
     {
+        time->Update();
         /* Render here */
         tempRenderer->ClearScreen();
 

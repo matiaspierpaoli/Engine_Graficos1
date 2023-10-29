@@ -21,9 +21,8 @@ Renderer::Renderer(Window* window)
 	unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShader.shader"), program->ReadFile("shaders/fragmentShader.shader"));
 	glUseProgram(shader);
 
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
+	//glGenVertexArrays(1, &vao);
+	//glBindVertexArray(vao);
 
 	SetUniversalSpriteSettings();
 }
@@ -37,7 +36,6 @@ Renderer::~Renderer()
 		delete vertexArrays[i];
 	for (int i = 0; i < indexBuffers.size(); i++)
 		delete indexBuffers[i];
-
 }
 
 void Renderer::ClearScreen()
@@ -67,9 +65,8 @@ void Renderer::Draw(unsigned int vertexBuffer, unsigned int indexBuffer, unsigne
 	//program->SetUniform4f("uColor", 1.0f, 0.0f, 0.0f, 1.0f);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 
-
-	/*texture->Bind();*/
-	program->SetUniform1i("uTexture", 0);
+	//texture->Bind();
+	//program->SetUniform1i("uTexture", 0);
 
 	glDrawElements(GL_TRIANGLES, ib->GetCount(), GL_UNSIGNED_INT, nullptr);
 }
@@ -83,7 +80,7 @@ unsigned int Renderer::GetNewVertexBuffer(const void* data, unsigned int size)
 
 	VertexBufferLayout layout;
 	layout.Push<float>(2); // Position
-	layout.Push<float>(4); // Color
+	//layout.Push<float>(4); // Color
 	layout.Push<float>(2); // UV 
 	//layout.Push<float>(4); //Color
 
@@ -93,6 +90,16 @@ unsigned int Renderer::GetNewVertexBuffer(const void* data, unsigned int size)
 	vertexArrays.push_back(va);
 
 	return bufferID;
+}
+
+void Renderer::GetNewVertexBuffer(unsigned int bufferID, const void* data, unsigned int dataSize)
+{
+	VertexBuffer* vb = vertexBuffers[bufferID];
+
+	vb->Bind();
+	vb->SetBuffer(data, dataSize);
+
+	vertexArrays[bufferID]->SetBuffer(bufferID);
 }
 
 unsigned int Renderer::GetNewIndexBuffer(unsigned int* indices, unsigned int indexAmmount)
@@ -127,10 +134,7 @@ void Renderer::GetNewSprite(std::string imgPath, int* imgWidth, int* imgHeight, 
 	//bpp = Bits per Pixel
 	localBuffer = stbi_load(imgPath.c_str(), imgWidth, imgHeight, bpp, 4);
 
-	//https://docs.gl/gl4/glGenTextures
 	glGenTextures(1, imageID);
-
-	//https://docs.gl/gl4/glBindTexture
 	glBindTexture(GL_TEXTURE_2D, *imageID);
 
 	//If image didn't load exit
