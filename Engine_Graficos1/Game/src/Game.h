@@ -9,14 +9,19 @@ class Game : public BaseGame
 private:
 	Entity2D* player1;
 	Entity2D* player2;
+	Entity2D* player3;
 	float traslateX;
 	float traslateY;
+	float scaleX;
+	float scaleY;
 	Vector2 defaultTranslation;
 	float defaultRotation;
 	Vector2 defaultScale;
 	Vector2 moveVectorPlayer1;
 	Vector2 moveVectorPlayer2;
-	void checkCollisions(Entity2D* player);
+	float scaleVectorPlayer1;
+	float scaleVectorPlayer2;
+	void checkCollisions(Entity2D* player1, Entity2D* player2);
 
 public:
 	Game();

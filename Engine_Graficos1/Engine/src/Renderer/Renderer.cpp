@@ -174,8 +174,8 @@ void Renderer::SetUniversalSpriteSettings()
 {
 	//https://docs.gl/gl4/glTexParameteri
 	///SET MIPMAPPING //vaRS
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	///SET WRAPPING //vaRS
 	//Repeat: repeats image in empty space

@@ -40,8 +40,8 @@ void Game::Init()
 	traslateX = 0.f;
 	traslateY = 0.f;
 	
-	defaultTranslation.x = 10.0f;
-	defaultTranslation.y = 10.0f; 
+	defaultTranslation.x = 50.0f;
+	defaultTranslation.y = 50.0f; 
 
 	defaultRotation = 10.0f;
 
@@ -54,12 +54,18 @@ void Game::Init()
 
 	player2 = new Sprite("res/linkAnimationForward.png", 9, 0);
 	player2->Scale(100, 100);
-	player2->Translate(300, 300);
+	player2->Translate(300, 200);
+
+	player3 = new Sprite("res/wario_32x32A.png", 5, 0);
+	player3->Scale(100, 100);
+	player3->Translate(250, 400);
 
 	Animation* linkWalkAnim = new Animation(1, 9);
 	Animation* linkBackAnim = new Animation(1, 9);
+	Animation* sonicIdleAnim = new Animation(5, 5);
 	static_cast<Sprite*>(player1)->SetAnim(linkBackAnim);
 	static_cast<Sprite*>(player2)->SetAnim(linkWalkAnim);
+	static_cast<Sprite*>(player3)->SetAnim(sonicIdleAnim);
 }
 
 void Game::DeInit()
@@ -70,6 +76,8 @@ void Game::DeInit()
 
 void Game::Update()
 {	
+	static_cast<Sprite*>(player3)->UpdateFrame();
+
 	#pragma region Input
 
 	// Player 1 
@@ -94,10 +102,11 @@ void Game::Update()
 		player1->Rotate(-defaultRotation * time->GetDeltaTime());
 
 	if (IsKeyPressed(KEY_X))
-		player1->Scale(defaultScale.x * time->GetDeltaTime(), defaultScale.y * time->GetDeltaTime());
-
-	if (IsKeyPressed(KEY_Z))
-		player1->Scale(-defaultScale.x * time->GetDeltaTime(), -defaultScale.y * time->GetDeltaTime());
+		scaleVectorPlayer1 = 1;
+	else if (IsKeyPressed(KEY_Z))
+		scaleVectorPlayer1 = -1;
+	else
+		scaleVectorPlayer1 = 0;
 
 	// Player 2 
 	if (IsKeyPressed(KEY_I))	
@@ -121,11 +130,12 @@ void Game::Update()
 	if (IsKeyPressed(KEY_O))
 		player2->Rotate(-defaultRotation * time->GetDeltaTime());
 
-	if (IsKeyPressed(KEY_M))
-		player2->Scale(defaultScale.x * time->GetDeltaTime(), defaultScale.y * time->GetDeltaTime());
-
-	if (IsKeyPressed(KEY_N))
-		player2->Scale(-defaultScale.x * time->GetDeltaTime(), -defaultScale.y * time->GetDeltaTime());
+	if (IsKeyPressed(KEY_M))	
+		scaleVectorPlayer2 = 1;
+	else if (IsKeyPressed(KEY_N))
+		scaleVectorPlayer2 = -1;
+	else
+		scaleVectorPlayer2 = 0;
 
 	#pragma endregion
 
@@ -137,7 +147,18 @@ void Game::Update()
 		traslateY = moveVectorPlayer1.y * defaultTranslation.y * time->GetDeltaTime();
 
 		player1->Translate(traslateX, traslateY);
-		checkCollisions(player1);
+		checkCollisions(player1, player2);
+		checkCollisions(player1, player3);
+	}
+
+	if (!scaleVectorPlayer1 == 0)
+	{
+		scaleX = scaleVectorPlayer1 * defaultScale.x * time->GetDeltaTime();
+		scaleY = scaleVectorPlayer1 * defaultScale.y * time->GetDeltaTime();
+
+		player1->Scale(scaleX, scaleY);
+		checkCollisions(player1, player2);
+		checkCollisions(player1, player3);
 	}
 
 	if (!moveVectorPlayer2.x == 0 || !moveVectorPlayer2.y == 0)
@@ -148,22 +169,54 @@ void Game::Update()
 		traslateY = moveVectorPlayer2.y * defaultTranslation.y * time->GetDeltaTime();
 
 		player2->Translate(traslateX, traslateY);
-		checkCollisions(player2);
+		checkCollisions(player2, player1);
+		checkCollisions(player2, player3);
+	}
+
+	if (!scaleVectorPlayer2 == 0)
+	{
+		scaleX = scaleVectorPlayer2 * defaultScale.x * time->GetDeltaTime();
+		scaleY = scaleVectorPlayer2 * defaultScale.y * time->GetDeltaTime();
+
+		player2->Scale(scaleX, scaleY);
+		checkCollisions(player2, player1);
+		checkCollisions(player2, player3);
 	}
 
 	static_cast<Sprite*>(player1)->Draw();
 	static_cast<Sprite*>(player2)->Draw();
+	static_cast<Sprite*>(player3)->Draw();
 }
 
-void Game::checkCollisions(Entity2D* player)
+void Game::checkCollisions(Entity2D* player1, Entity2D* player2)
 {
 	while (collisionManager->checkEntityToEntityCollision(player1, player2))
 	{
-		player->Translate(-traslateX, -traslateY);
+		if (!moveVectorPlayer1.x == 0 || !moveVectorPlayer1.y == 0 ||
+			!moveVectorPlayer2.x == 0 || !moveVectorPlayer2.y == 0)
+			player1->Translate(-traslateX, -traslateY);
+
+		if (!scaleVectorPlayer1 == 0 || !scaleVectorPlayer2 == 0)
+			player1->Scale(-scaleX, -scaleY);
 	}
 
-	while (collisionManager->checkEntityToWindowCollision(player, (Window*)window))
+	//while (collisionManager->checkEntityToEntityCollision(player, player3))
+	//{
+	//	if (!moveVectorPlayer1.x == 0 || !moveVectorPlayer1.y == 0 || 
+	//		!moveVectorPlayer2.x == 0 || !moveVectorPlayer2.y == 0)
+	//		player->Translate(-traslateX, -traslateY);
+
+	//	if (!scaleVectorPlayer1 == 0 || !scaleVectorPlayer2 == 0)
+	//		player->Scale(-scaleX, -scaleY);
+	//}
+
+	while (collisionManager->checkEntityToWindowCollision(player1, (Window*)window))
 	{
-		player->Translate(-traslateX, -traslateY);
+		if (!moveVectorPlayer1.x == 0 || !moveVectorPlayer1.y == 0 ||
+			!moveVectorPlayer2.x == 0 || !moveVectorPlayer2.y == 0)
+			player1->Translate(-traslateX, -traslateY);
+		
+		if (!scaleVectorPlayer1 == 0 || !scaleVectorPlayer2 == 0)
+			player1->Scale(-scaleX, -scaleY);
 	}
 }
