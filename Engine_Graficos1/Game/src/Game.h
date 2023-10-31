@@ -11,7 +11,11 @@ private:
 	Entity2D* player2;
 	float traslateX;
 	float traslateY;
-	float defaultTranslation;
+	Vector2 defaultTranslation;
+	float defaultRotation;
+	Vector2 defaultScale;
+	Vector2 moveVectorPlayer1;
+	Vector2 moveVectorPlayer2;
 	void checkCollisions(Entity2D* player);
 
 public:

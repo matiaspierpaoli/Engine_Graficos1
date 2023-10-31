@@ -23,8 +23,6 @@
 
 #pragma endregion
 
-float timer = 0;
-
 Game::Game()
 {
 
@@ -41,7 +39,14 @@ void Game::Init()
 
 	traslateX = 0.f;
 	traslateY = 0.f;
-	defaultTranslation = 10.0f;
+	
+	defaultTranslation.x = 10.0f;
+	defaultTranslation.y = 10.0f; 
+
+	defaultRotation = 10.0f;
+
+	defaultScale.x = 10.0f;
+	defaultScale.y = 10.0f;
 
 	player1 = new Sprite("res/linkAnimationBackward.png", 9, 0);
 	player1->Scale(100, 100);
@@ -65,109 +70,86 @@ void Game::DeInit()
 
 void Game::Update()
 {	
-	static_cast<Sprite*>(player2)->UpdateFrame();
-
-	if (timer > 0) timer -= time->GetDeltaTime();
-
 	#pragma region Input
-	// Player 1 input
-	if (IsKeyPressed(KEY_W))
-	{
-		traslateX = 0.f;
-		traslateY = defaultTranslation;
-		player1->Translate(traslateX, traslateY * time->GetDeltaTime());
-		checkCollisions(player1);
-		static_cast<Sprite*>(player1)->UpdateFrame();
-	}
 
-	if (IsKeyPressed(KEY_S))
-	{
-		traslateX = 0.f;
-		traslateY = -defaultTranslation;
-		player1->Translate(traslateX, traslateY * time->GetDeltaTime());
-		checkCollisions(player1);
-		static_cast<Sprite*>(player1)->UpdateFrame();
-	}
+	// Player 1 
+	if (IsKeyPressed(KEY_W))	
+		moveVectorPlayer1.y = 1;
+	else if (IsKeyPressed(KEY_S))
+		moveVectorPlayer1.y = -1;	
+	else 
+		moveVectorPlayer1.y = 0;
 
-	if (IsKeyPressed(KEY_A))
-	{
-		traslateX = -defaultTranslation;
-		traslateY = 0.f;
-		player1->Translate(traslateX * time->GetDeltaTime(), traslateY);
-		checkCollisions(player1);
-		static_cast<Sprite*>(player1)->UpdateFrame();
-	}
-
-	if (IsKeyPressed(KEY_D))
-	{
-		traslateX = defaultTranslation;
-		traslateY = 0.f;
-		player1->Translate(traslateX * time->GetDeltaTime(), traslateY);
-		checkCollisions(player1);
-		static_cast<Sprite*>(player1)->UpdateFrame();
-	}
-
+	if (IsKeyPressed(KEY_A))	
+		moveVectorPlayer1.x = -1;	
+	else if (IsKeyPressed(KEY_D))	
+		moveVectorPlayer1.x = 1;	
+	else	
+		moveVectorPlayer1.x = 0;
+	
 	if (IsKeyPressed(KEY_Q))
-		player1->Rotate(0.1f * time->GetDeltaTime());
+		player1->Rotate(defaultRotation * time->GetDeltaTime());
 
-	if (IsKeyPressed(KEY_E))	
-		player1->Rotate(-0.1f * time->GetDeltaTime());
+	if (IsKeyPressed(KEY_E))
+		player1->Rotate(-defaultRotation * time->GetDeltaTime());
 
-	if (IsKeyPressed(KEY_X))	
-		player1->Scale(0.2 * time->GetDeltaTime(), 0.2 * time->GetDeltaTime());
+	if (IsKeyPressed(KEY_X))
+		player1->Scale(defaultScale.x * time->GetDeltaTime(), defaultScale.y * time->GetDeltaTime());
 
-	if (IsKeyPressed(KEY_Z))	
-		player1->Scale(-0.2 * time->GetDeltaTime(), -0.2 * time->GetDeltaTime());	
+	if (IsKeyPressed(KEY_Z))
+		player1->Scale(-defaultScale.x * time->GetDeltaTime(), -defaultScale.y * time->GetDeltaTime());
 
-	// Player 2 input
-	if (IsKeyPressed(KEY_I))
-	{
-		traslateX = 0.f;
-		traslateY = defaultTranslation;
-		player2->Translate(traslateX, traslateY * time->GetDeltaTime());
-		checkCollisions(player2);
-	}
-
-	if (IsKeyPressed(KEY_K))
-	{
-		traslateX = 0.f;
-		traslateY = -defaultTranslation;
-		player2->Translate(traslateX, traslateY * time->GetDeltaTime());
-		checkCollisions(player2);
-	}
-
-	if (IsKeyPressed(KEY_J))
-	{
-		traslateX = -defaultTranslation;
-		traslateY = 0.f;
-		player2->Translate(traslateX * time->GetDeltaTime(), traslateY);
-		checkCollisions(player2);
-	}
-
-	if (IsKeyPressed(KEY_L))
-	{
-		traslateX = defaultTranslation;
-		traslateY = 0.f;
-		player2->Translate(traslateX * time->GetDeltaTime(), traslateY);
-		checkCollisions(player2);
-	}
+	// Player 2 
+	if (IsKeyPressed(KEY_I))	
+		moveVectorPlayer2.y = 1;	
+	else if (IsKeyPressed(KEY_K))
+		moveVectorPlayer2.y = -1;	
+	else	
+		moveVectorPlayer2.y = 0;
+	
+	if (IsKeyPressed(KEY_J))	
+		moveVectorPlayer2.x = -1;	
+	else if (IsKeyPressed(KEY_L))
+		moveVectorPlayer2.x = 1;
+	else	
+		moveVectorPlayer2.x = 0;
+	
 
 	if (IsKeyPressed(KEY_U))
-		player2->Rotate(0.1f * time->GetDeltaTime());
+		player2->Rotate(defaultRotation * time->GetDeltaTime());
 
 	if (IsKeyPressed(KEY_O))
-		player2->Rotate(-0.1f * time->GetDeltaTime());
+		player2->Rotate(-defaultRotation * time->GetDeltaTime());
 
 	if (IsKeyPressed(KEY_M))
-		player2->Scale(0.2 * time->GetDeltaTime(), 0.2 * time->GetDeltaTime());
+		player2->Scale(defaultScale.x * time->GetDeltaTime(), defaultScale.y * time->GetDeltaTime());
 
 	if (IsKeyPressed(KEY_N))
-		player2->Scale(-0.2 * time->GetDeltaTime(), -0.2 * time->GetDeltaTime());
+		player2->Scale(-defaultScale.x * time->GetDeltaTime(), -defaultScale.y * time->GetDeltaTime());
 
 	#pragma endregion
 
-	/*static_cast<Square*>(player1)->Draw();
-	static_cast<Square*>(player2)->Draw();*/
+	if (!moveVectorPlayer1.x == 0 || !moveVectorPlayer1.y == 0)
+	{
+		static_cast<Sprite*>(player1)->UpdateFrame();
+
+		traslateX = moveVectorPlayer1.x * defaultTranslation.x * time->GetDeltaTime();
+		traslateY = moveVectorPlayer1.y * defaultTranslation.y * time->GetDeltaTime();
+
+		player1->Translate(traslateX, traslateY);
+		checkCollisions(player1);
+	}
+
+	if (!moveVectorPlayer2.x == 0 || !moveVectorPlayer2.y == 0)
+	{
+		static_cast<Sprite*>(player2)->UpdateFrame();
+
+		traslateX = moveVectorPlayer2.x * defaultTranslation.x * time->GetDeltaTime();
+		traslateY = moveVectorPlayer2.y * defaultTranslation.y * time->GetDeltaTime();
+
+		player2->Translate(traslateX, traslateY);
+		checkCollisions(player2);
+	}
 
 	static_cast<Sprite*>(player1)->Draw();
 	static_cast<Sprite*>(player2)->Draw();
