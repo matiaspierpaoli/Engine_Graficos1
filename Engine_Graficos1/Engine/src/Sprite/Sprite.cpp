@@ -1,6 +1,16 @@
 #include "Sprite.h"
 #include "RendererSingleton.h"
 
+Sprite::Sprite(const std::string& path)
+{
+	mRendererID = 0;
+	mFilePath = path;
+	mWidth = 0;
+	mHeight = 0;
+	mBPP = 0;
+	imageID = mRendererID - 1;
+}
+
 Sprite::Sprite(const std::string& path, float vertexCol[4][4]) : mRendererID(0), mFilePath(path), mLocalBuffer(nullptr), mWidth(0), mHeight(0), mBPP(0)
 {
 	mRendererID = 0;
@@ -10,7 +20,7 @@ Sprite::Sprite(const std::string& path, float vertexCol[4][4]) : mRendererID(0),
 	mBPP = 0;
 	imageID = mRendererID - 1;
 
-	RendererSingleton::GetRenderer()->GetNewSprite(path, &mWidth, &mHeight, &mBPP, &mRendererID);
+	RendererSingleton::GetRenderer()->GetNewSprite(mFilePath, &mWidth, &mHeight, &mBPP, &mRendererID);
 
 	float vertexPos[4][2] =
 	{
@@ -68,7 +78,7 @@ Sprite::Sprite(const std::string& path, int spriteQuantity, int spriteNumber)
 	spriteQty = spriteQuantity;
 
 	Renderer* tempRenderer = RendererSingleton::GetRenderer();
-	tempRenderer->GetNewSprite(path, &mWidth, &mHeight, &mBPP, &mRendererID);
+	tempRenderer->GetNewSprite(mFilePath, &mWidth, &mHeight, &mBPP, &mRendererID);
 
 	imageID = mRendererID - 1;
 
@@ -120,6 +130,68 @@ Sprite::~Sprite()
 
 	if (anim)
 		delete anim;
+}
+
+void Sprite::SetCustomFrames(int frameQuantity, int spriteWidth, int spriteHeight, std::vector<Frame>& frameData)
+{
+	Renderer* tempRenderer = RendererSingleton::GetRenderer();
+	tempRenderer->GetNewSprite(mFilePath, &mWidth, &mHeight, &mBPP, &mRendererID);
+
+	imageID = mRendererID - 1;
+
+	std::vector<float> allVertices;
+
+	float vertexPos[4][2] =
+	{
+		{-1, -1},
+		{1, -1},
+		{1, 1},
+		{-1, 1}
+	};
+
+	unsigned int indices[6] =
+	{
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	for (int frameNumber = 0; frameNumber < frameQuantity; ++frameNumber)
+	{
+		if (frameNumber >= frameData.size())		
+			break; 	
+
+
+		// Calculate UV coordinates for the specified frame
+		float leftU = frameData[frameNumber].GetLeftU() / spriteHeight;
+		float rightU = frameData[frameNumber].GetRightU() / spriteHeight;
+		float topV = frameData[frameNumber].GetTopV() / spriteWidth;
+		float bottomV = frameData[frameNumber].GetBotV() / spriteWidth;
+
+		float uvPos[4][2] =
+		{
+			{leftU, topV},      // top left
+			{rightU, topV},     // top right
+			{rightU, bottomV},  // bottom right
+			{leftU, bottomV}    // bottom left
+		};
+
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				allVertices.push_back(vertexPos[i][j]);
+			}
+			for (int j = 2; j < 4; j++)
+			{
+				allVertices.push_back(uvPos[i][j - 2]);
+			}
+		}
+	}
+
+	*vBuffer = RendererSingleton::GetRenderer()->GetNewVertexBuffer(allVertices.data(), 4 * (sizeof(float) * 2 + sizeof(float) * 2));
+	*iBuffer = tempRenderer->GetNewIndexBuffer(indices, 6);
+
+	Bind();
 }
 
 void Sprite::Bind(unsigned int slot) const

@@ -3,6 +3,7 @@
 #include "Entity/Entity2D/Entity2D.h"
 #include "Exports.h"
 #include "Animation/Animation.h"
+#include "Frame/Frame.h"
 
 class GraficosEngine_API Sprite : public Entity2D
 {
@@ -23,10 +24,12 @@ private:
 	void Unbind();
 
 public:
+	Sprite(const std::string& path);
 	Sprite(const std::string& path, float vertexCol[4][4]);
 	Sprite(const std::string& path, int spriteQuantity, int spriteNumber);
 	~Sprite();
 
+	void SetCustomFrames(int frameQuantity, int spriteWidth, int spriteHeight, std::vector<Frame>& frameData);
 	unsigned int GetImageID();
 	inline int GetSpriteQty() const { return spriteQty; }
 	inline int GetImgWidth() const { return mWidth; }

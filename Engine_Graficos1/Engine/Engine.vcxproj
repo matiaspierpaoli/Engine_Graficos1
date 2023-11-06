@@ -215,6 +215,7 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClInclude Include="src\Entity\Entity2D\Shape\Square\Square.h" />
     <ClInclude Include="src\Entity\Entity2D\Shape\Triangle\Triangle.h" />
     <ClInclude Include="src\Exports.h" />
+    <ClInclude Include="src\Frame\Frame.h" />
     <ClInclude Include="src\Input\InputManager.h" />
     <ClInclude Include="src\Program\Program.h" />
     <ClInclude Include="src\RendererSingleton.h" />

@@ -56,13 +56,40 @@ void Game::Init()
 	player2->Scale(100, 100);
 	player2->Translate(300, 200);
 
-	player3 = new Sprite("res/wario_32x32A.png", 5, 0);
+	/*player3 = new Sprite("res/wario_32x32A.png", 5, 0);*/
+	//player3 = new Sprite("res/sonicSpriteSheet.png", 5, 0);
+
+	
+	std::vector<Frame> frames = std::vector<Frame>();
+	
+	Frame frame = Frame(20, 190, 270, 400); // (270 - 20)  x1
+	frames.push_back(frame);				// (400 - 190) x2
+
+	frame = Frame(20, 190, 420, 550);
+	frames.push_back(frame);
+
+	frame = Frame(20, 190, 545, 669);
+	frames.push_back(frame);
+
+	frame = Frame(20, 190, 669, 780);
+	frames.push_back(frame);
+
+	frame = Frame(20, 190, 780, 895);
+	frames.push_back(frame);
+
+	frame = Frame(20, 190, 895, 1015);
+	frames.push_back(frame);
+
+	player3 = new Sprite("res/sonicSpriteSheet.png");
+	static_cast<Sprite*>(player3)->SetCustomFrames(6, 1200, 1020, frames);
+
 	player3->Scale(100, 100);
 	player3->Translate(250, 400);
 
 	Animation* linkWalkAnim = new Animation(1, 9);
 	Animation* linkBackAnim = new Animation(1, 9);
-	Animation* sonicIdleAnim = new Animation(5, 5);
+	Animation* sonicIdleAnim = new Animation(5, 6);
+	
 	static_cast<Sprite*>(player1)->SetAnim(linkBackAnim);
 	static_cast<Sprite*>(player2)->SetAnim(linkWalkAnim);
 	static_cast<Sprite*>(player3)->SetAnim(sonicIdleAnim);
@@ -72,11 +99,12 @@ void Game::DeInit()
 {
 	delete player1;
 	delete player2;
+	delete player3;
 }
 
 void Game::Update()
 {	
-	static_cast<Sprite*>(player3)->UpdateFrame();
+	//static_cast<Sprite*>(player3)->UpdateFrame();
 
 	#pragma region Input
 
