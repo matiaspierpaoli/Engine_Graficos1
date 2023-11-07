@@ -4,20 +4,21 @@
 class  GraficosEngine_API Frame
 {
 private:
-	float leftU;
-	float rightU;
-	float topV;
-	float botV;
+	float leftX;
+	float rightX;
+	float topY;
+	float botY;
 
 public:
-	Frame(int mleftU, int mrightU, int mtopV, int mbotV) { leftU  = mleftU;
-														   rightU = mrightU;
-														   topV   = mtopV;
-														   botV   = mbotV;
+	Frame(int mLeftX, int mRightX, int mBotY, int mTopY) {
+		leftX = mLeftX;
+		rightX = mRightX;
+		botY = mTopY; // Due to OpenGL coordinates
+		topY = mBotY; // Due to OpenGL coordinates
 	}
 
-	float GetLeftU()  { return leftU; }
-	float GetRightU() { return rightU; }
-	float GetTopV()   { return topV; }
-	float GetBotV()   { return botV; }
+	float GetLeftX()  { return leftX; }
+	float GetRightX() { return rightX; }
+	float GetTopY()   { return topY; }
+	float GetBotY()   { return botY; }
 };

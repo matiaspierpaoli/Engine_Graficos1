@@ -56,33 +56,30 @@ void Game::Init()
 	player2->Scale(100, 100);
 	player2->Translate(300, 200);
 
-	/*player3 = new Sprite("res/wario_32x32A.png", 5, 0);*/
-	//player3 = new Sprite("res/sonicSpriteSheet.png", 5, 0);
-
-	
 	std::vector<Frame> frames = std::vector<Frame>();
-	
-	Frame frame = Frame(20, 190, 270, 400); // (270 - 20)  x1
-	frames.push_back(frame);				// (400 - 190) x2
 
-	frame = Frame(20, 190, 420, 550);
+#pragma region Horizontal Sprites
+
+	Frame frame = Frame(275, 410, 830, 1000);
 	frames.push_back(frame);
 
-	frame = Frame(20, 190, 545, 669);
+	frame = Frame(410, 545, 830, 1000);
 	frames.push_back(frame);
 
-	frame = Frame(20, 190, 669, 780);
+	frame = Frame(545, 670, 830, 1000);
 	frames.push_back(frame);
 
-	frame = Frame(20, 190, 780, 895);
+	frame = Frame(670, 780, 830, 1000);
 	frames.push_back(frame);
 
-	frame = Frame(20, 190, 895, 1015);
+	frame = Frame(780, 890, 830, 1000);
 	frames.push_back(frame);
 
-	player3 = new Sprite("res/sonicSpriteSheet.png");
-	static_cast<Sprite*>(player3)->SetCustomFrames(6, 1200, 1020, frames);
+	frame = Frame(895, 1005, 830, 1000); 
+	frames.push_back(frame);
+#pragma endregion
 
+	player3 = new Sprite("res/sonicSpriteSheet.png", 6, 1200, 1020, frames);
 	player3->Scale(100, 100);
 	player3->Translate(250, 400);
 

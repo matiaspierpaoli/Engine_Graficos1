@@ -19,7 +19,7 @@ private:
 	Animation* anim;
 	unsigned int spriteQty;
 
-	void ChangeSprite(float leftU, float rightU);
+	void ChangeSprite(float leftU, float rightX);
 	void Bind(unsigned int slot = 0) const;
 	void Unbind();
 
@@ -27,9 +27,9 @@ public:
 	Sprite(const std::string& path);
 	Sprite(const std::string& path, float vertexCol[4][4]);
 	Sprite(const std::string& path, int spriteQuantity, int spriteNumber);
+	Sprite(const std::string& path, int frameQuantity, int spriteWidth, int spriteHeight, std::vector<Frame>& frameData);
 	~Sprite();
 
-	void SetCustomFrames(int frameQuantity, int spriteWidth, int spriteHeight, std::vector<Frame>& frameData);
 	unsigned int GetImageID();
 	inline int GetSpriteQty() const { return spriteQty; }
 	inline int GetImgWidth() const { return mWidth; }
