@@ -16,18 +16,17 @@ private:
 	int mHeight;
 	int mBPP;
 	float vertices[4][4];
-	Animation* anim;
+	std::vector<Animation*>* animations;
 	unsigned int spriteQty;
 
-	void ChangeSprite(float leftU, float rightX);
+	void ChangeSprite(Coord coord);
 	void Bind(unsigned int slot = 0) const;
 	void Unbind();
 
 public:
 	Sprite(const std::string& path);
 	Sprite(const std::string& path, float vertexCol[4][4]);
-	Sprite(const std::string& path, int spriteQuantity, int spriteNumber);
-	Sprite(const std::string& path, int frameQuantity, int spriteWidth, int spriteHeight, std::vector<Frame>& frameData);
+	Sprite(const std::string& path, int spriteQuantity, Frame firstFrame);
 	~Sprite();
 
 	unsigned int GetImageID();
@@ -37,9 +36,8 @@ public:
 	inline int GetWidth()const { return mWidth / spriteQty; }
 	inline int GetHeight()const { return mHeight; }
 
-	void ChangeSprite(int spriteQuantity, int spriteNumber);
-	void SetAnim(Animation* _anim);
-	void UpdateFrame();
+	void AddAnimation(Animation* _anim);
+	void UpdateFrame(int frameIndex);
 
 	void Draw();
 };

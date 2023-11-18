@@ -2,18 +2,23 @@
 #include "BaseGame/BaseGame.h"
 #include "TimeSingleton.h"
 
-Animation::Animation(float animLength, unsigned int framesQty)
+#include <iostream>
+
+Animation::Animation(float animLength, unsigned int textureWidth, unsigned int textureHeight, std::vector<Frame> frameData)
 {
 	length = animLength;
 	currentFrame = 0;
 	timer = 0;
 
-	for (unsigned int i = 0; i < framesQty; i++)
+	for (unsigned int i = 0; i < frameData.size(); i++)
 	{
 		//Calculate left and right of frame
-		Vector2 frameCoords;
-		frameCoords.x = (float)i / framesQty;
-		frameCoords.y = (float)(i + 1) / framesQty;
+		Coord frameCoords;
+		frameCoords.x1 = (float)frameData[i].GetLeftX() / textureWidth;
+		frameCoords.y1 = (float)(frameData[i].GetTopY()) / textureHeight;
+
+		frameCoords.x2 = (float)frameData[i].GetRightX() / textureWidth;
+		frameCoords.y2 = (float)(frameData[i].GetBotY()) / textureHeight;
 
 		//Send frame U coordinates to the vector
 		AddFrame(frameCoords);
@@ -36,7 +41,7 @@ void Animation::Update()
 	currentFrame = static_cast<int>(timer / frameLength);
 }
 
-void Animation::AddFrame(Vector2 _uCoords)
+void Animation::AddFrame(Coord _uCoords)
 {
 	uCoords.push_back(_uCoords);
 }
@@ -46,12 +51,12 @@ void Animation::SetDuration(float _length)
 	length = _length;
 }
 
-Vector2 Animation::GetCurrentFrame()
+Coord Animation::GetCurrentFrame()
 {
 	return uCoords[currentFrame];
 }
 
-Vector2 Animation::GetFrame(int frame)
+Coord Animation::GetFrame(int frame)
 {
 	return uCoords[frame];
 }

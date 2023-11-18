@@ -10,6 +10,9 @@ private:
 	float botY;
 
 public:
+	/// <summary> Frame Constructor.
+	/// <para>Left 'x' pixel, Right 'x' pixel, texture height - bottom 'y' pixel, texture height - top 'y' pixel </para>
+	/// </summary>
 	Frame(int mLeftX, int mRightX, int mBotY, int mTopY) {
 		leftX = mLeftX;
 		rightX = mRightX;
