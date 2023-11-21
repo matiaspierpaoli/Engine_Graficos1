@@ -7,10 +7,9 @@
 class Game : public BaseGame
 {
 private:
-	Entity2D* link;
-
-	Entity2D* sonicIdleEntity;
-	Entity2D* sonicRunEntity;
+	Entity2D* cartel;
+	Entity2D* sonic;
+	Entity2D* background;
 
 	float traslateX;
 	float traslateY;
@@ -29,12 +28,9 @@ private:
 	bool isMovingLeft;
 	bool isMovingRight;
 	
-	std::vector<Frame> linkForwardFrames = std::vector<Frame>();
-	std::vector<Frame> linkBackwardFrames = std::vector<Frame>();
-	std::vector<Frame> linkLeftFrames = std::vector<Frame>();
-	std::vector<Frame> linkRightFrames = std::vector<Frame>();
-	std::vector<Frame> sonicIdleFrames = std::vector<Frame>();
+	std::vector<Frame> cartelFrames = std::vector<Frame>();
 	std::vector<Frame> sonicRunFrames = std::vector<Frame>();
+	std::vector<Frame> sonicIdleFrames = std::vector<Frame>();
 
 	void checkCollisions(Entity2D* player1, Entity2D* player2);
 

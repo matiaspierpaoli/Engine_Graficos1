@@ -48,128 +48,75 @@ void Game::Init()
 	defaultScale.x = 10.0f;
 	defaultScale.y = 10.0f;
 
+#pragma endregion 
 
-	#pragma region Link - Forward
+	int sonicSpriteSheetWidth = 830;
+	int sonicSpriteSheetHeight = 465;
 
-	linkForwardFrames.push_back(Frame(0,   24,  221, 256));
-	linkForwardFrames.push_back(Frame(24,  48,  221, 256));
-	linkForwardFrames.push_back(Frame(48,  72,  221, 256));
-	linkForwardFrames.push_back(Frame(72,  96,  221, 256));
-	linkForwardFrames.push_back(Frame(96,  120, 221, 256));
-	linkForwardFrames.push_back(Frame(120, 144, 221, 256));
-	linkForwardFrames.push_back(Frame(144, 168, 221, 256));
-	linkForwardFrames.push_back(Frame(168, 192, 221, 256));
-	linkForwardFrames.push_back(Frame(192, 216, 221, 256));
-	linkForwardFrames.push_back(Frame(216, 240, 221, 256));
-	linkForwardFrames.push_back(Frame(240, 264, 221, 256));
-	linkForwardFrames.push_back(Frame(264, 288, 221, 256));
+	#pragma region Cartel
+
+	cartelFrames.push_back(Frame(140,     190.57, sonicSpriteSheetHeight - 356, sonicSpriteSheetHeight - 302));
+	cartelFrames.push_back(Frame(190.57,  239.45, sonicSpriteSheetHeight - 356, sonicSpriteSheetHeight - 302));
+	cartelFrames.push_back(Frame(239.45,  288.70, sonicSpriteSheetHeight - 356, sonicSpriteSheetHeight - 302));
+	cartelFrames.push_back(Frame(288.70,  338,    sonicSpriteSheetHeight - 356, sonicSpriteSheetHeight - 302));
+	cartelFrames.push_back(Frame(338,     387,    sonicSpriteSheetHeight - 356, sonicSpriteSheetHeight - 302));
 
 #pragma endregion 
 
-	#pragma region Link - Backward
+	cartel = new Sprite("res/Sonic_Mania_Sprite_Sheet.png", 5, cartelFrames.at(0));
+	cartel->Scale(100, 100);
+	cartel->Translate(250, 400);
 
-	linkBackwardFrames.push_back(Frame(0,   24,  158, 186));
-	linkBackwardFrames.push_back(Frame(24,  48,  158, 186));
-	linkBackwardFrames.push_back(Frame(48,  72,  158, 186));
-	linkBackwardFrames.push_back(Frame(72,  96,  158, 186));
-	linkBackwardFrames.push_back(Frame(96,  120, 158, 186));
-	linkBackwardFrames.push_back(Frame(120, 144, 158, 186));
-	linkBackwardFrames.push_back(Frame(144, 168, 158, 186));
-	linkBackwardFrames.push_back(Frame(168, 192, 158, 186));
-	linkBackwardFrames.push_back(Frame(192, 216, 158, 186));
-	linkBackwardFrames.push_back(Frame(216, 240, 158, 186));
-	linkBackwardFrames.push_back(Frame(240, 264, 158, 186));
-	linkBackwardFrames.push_back(Frame(264, 288, 158, 186));
+	Animation* cartelAnim = new Animation(2, sonicSpriteSheetWidth, sonicSpriteSheetHeight, cartelFrames);
 
-#pragma endregion 
+	static_cast<Sprite*>(cartel)->AddAnimation(cartelAnim);
 
-	#pragma region Link - Left
-
-	linkLeftFrames.push_back(Frame(0,   24,  126, 155));
-	linkLeftFrames.push_back(Frame(24,  48,  126, 155));
-	linkLeftFrames.push_back(Frame(48,  72,  126, 155));
-	linkLeftFrames.push_back(Frame(72,  96,  126, 155));
-	linkLeftFrames.push_back(Frame(96,  120, 126, 155));
-	linkLeftFrames.push_back(Frame(120, 144, 126, 155));
-	linkLeftFrames.push_back(Frame(144, 168, 126, 155));
-	linkLeftFrames.push_back(Frame(168, 192, 126, 155));
-	linkLeftFrames.push_back(Frame(192, 216, 126, 155));
-	linkLeftFrames.push_back(Frame(216, 240, 126, 155));
-	linkLeftFrames.push_back(Frame(240, 264, 126, 155));
-	linkLeftFrames.push_back(Frame(264, 288, 126, 155));
-
-#pragma endregion 
-
-	#pragma region Link - Right
-
-	linkRightFrames.push_back(Frame(0,   24,  189, 219));
-	linkRightFrames.push_back(Frame(24,  48,  189, 219));
-	linkRightFrames.push_back(Frame(48,  72,  189, 219));
-	linkRightFrames.push_back(Frame(72,  96,  189, 219));
-	linkRightFrames.push_back(Frame(96,  120, 189, 219));
-	linkRightFrames.push_back(Frame(120, 144, 189, 219));
-	linkRightFrames.push_back(Frame(144, 168, 189, 219));
-	linkRightFrames.push_back(Frame(168, 192, 189, 219));
-	linkRightFrames.push_back(Frame(192, 216, 189, 219));
-	linkRightFrames.push_back(Frame(216, 240, 189, 219));
-	linkRightFrames.push_back(Frame(240, 264, 189, 219));
-	linkRightFrames.push_back(Frame(264, 288, 189, 219));
-
-#pragma endregion 
-
-	link = new Sprite("res/linkSpriteSheet.jpg", 12, linkForwardFrames.at(0));
-	link->Scale(100, 100);
-	link->Translate(250, 200);
-
-	Animation* linkForwardAnim = new Animation(1, 288, 256, linkForwardFrames);
-	Animation* linkBackwardAnim = new Animation(1, 288, 256, linkBackwardFrames);
-	Animation* linkLeftAnim = new Animation(1, 288, 256, linkLeftFrames);
-	Animation* linkRightAnim = new Animation(1, 288, 256, linkRightFrames);
-
-	static_cast<Sprite*>(link)->AddAnimation(linkForwardAnim);
-	static_cast<Sprite*>(link)->AddAnimation(linkBackwardAnim);
-	static_cast<Sprite*>(link)->AddAnimation(linkLeftAnim);
-	static_cast<Sprite*>(link)->AddAnimation(linkRightAnim);
-
-	#pragma region Idle - Horizontal
-	sonicIdleFrames.push_back(Frame(275, 410, 830, 1000));
-	sonicIdleFrames.push_back(Frame(410, 545, 830, 1000));
-	sonicIdleFrames.push_back(Frame(545, 670, 830, 1000));
-	sonicIdleFrames.push_back(Frame(670, 780, 830, 1000));
-	sonicIdleFrames.push_back(Frame(780, 890, 830, 1000));
-	sonicIdleFrames.push_back(Frame(895, 1005, 830, 1000));
-
-#pragma endregion 
-
-	#pragma region Run - Horizontal and Vertical
-	sonicRunFrames.push_back(Frame(620, 760, 1020 - 470, 1020 - 275));
-	sonicRunFrames.push_back(Frame(760, 875, 1020 - 470, 1020 - 275));
-	sonicRunFrames.push_back(Frame(875, 994, 1020 - 470, 1020 - 275));
-	sonicRunFrames.push_back(Frame(994, 1150, 1020 - 470, 1020 - 275));
-	sonicRunFrames.push_back(Frame(620, 760, 1020 - 660, 1020 - 470));
-	sonicRunFrames.push_back(Frame(760, 890, 1020 - 660, 1020 - 470));
-	sonicRunFrames.push_back(Frame(890, 1028, 1020 - 660, 1020 - 470));
-	sonicRunFrames.push_back(Frame(1028, 1200, 1020 - 660, 1020 - 470));
-	sonicRunFrames.push_back(Frame(610, 753, 1020 - 835, 1020 - 660));
-	sonicRunFrames.push_back(Frame(753, 900, 1020 - 835, 1020 - 660));
-	sonicRunFrames.push_back(Frame(900, 1050, 1020 - 835, 1020 - 660));
-	sonicRunFrames.push_back(Frame(1050, 1188, 1020 - 835, 1020 - 660));
-#pragma endregion 
-
-
-	sonicIdleEntity = new Sprite("res/sonicSpriteSheet.png",  6, sonicIdleFrames.at(0));
-	sonicIdleEntity->Scale(100, 100);
-	sonicIdleEntity->Translate(350, 400);
-
-	sonicRunEntity = new Sprite("res/sonicSpriteSheet.png", 12, sonicRunFrames.at(0));
-	sonicRunEntity->Scale(100, 100);
-	sonicRunEntity->Translate(100, 400);
-
-	Animation* sonicIdleAnim = new Animation(3, 1200, 1020, sonicIdleFrames);
-	Animation* sonicRunAnim = new Animation(0.8, 1200, 1020, sonicRunFrames);
+	#pragma region Idle 
+	sonicIdleFrames.push_back(Frame(55,  83,  sonicSpriteSheetHeight - 50, sonicSpriteSheetHeight - 5));
+	sonicIdleFrames.push_back(Frame(83,  115, sonicSpriteSheetHeight - 50, sonicSpriteSheetHeight - 5));
+	sonicIdleFrames.push_back(Frame(115, 146, sonicSpriteSheetHeight - 50, sonicSpriteSheetHeight - 5));
+	sonicIdleFrames.push_back(Frame(146, 177, sonicSpriteSheetHeight - 50, sonicSpriteSheetHeight - 5));
+	sonicIdleFrames.push_back(Frame(177, 209, sonicSpriteSheetHeight - 50, sonicSpriteSheetHeight - 5));
+	sonicIdleFrames.push_back(Frame(209, 239, sonicSpriteSheetHeight - 50, sonicSpriteSheetHeight - 5));
+	sonicIdleFrames.push_back(Frame(239, 270, sonicSpriteSheetHeight - 50, sonicSpriteSheetHeight - 5));
+	sonicIdleFrames.push_back(Frame(30,  63,  sonicSpriteSheetHeight - 97, sonicSpriteSheetHeight - 54));
+	sonicIdleFrames.push_back(Frame(63,  91,  sonicSpriteSheetHeight - 97, sonicSpriteSheetHeight - 54));
+	sonicIdleFrames.push_back(Frame(91,  126, sonicSpriteSheetHeight - 97, sonicSpriteSheetHeight - 54));
+	sonicIdleFrames.push_back(Frame(126, 160, sonicSpriteSheetHeight - 97, sonicSpriteSheetHeight - 54));
+	sonicIdleFrames.push_back(Frame(160, 189, sonicSpriteSheetHeight - 97, sonicSpriteSheetHeight - 54));
 	
-	static_cast<Sprite*>(sonicIdleEntity)->AddAnimation(sonicIdleAnim);
-	static_cast<Sprite*>(sonicRunEntity)->AddAnimation(sonicRunAnim);
+
+#pragma endregion 
+
+	#pragma region Run 
+	sonicRunFrames.push_back(Frame(284, 316, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(316, 346, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(346, 386, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(386, 426, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(426, 465, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(465, 498, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(498, 530, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(530, 563, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(563, 602, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(602, 642, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(642, 681, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+	sonicRunFrames.push_back(Frame(681, 716, sonicSpriteSheetHeight - 145, sonicSpriteSheetHeight - 100));
+#pragma endregion 
+
+
+	sonic = new Sprite("res/Sonic_Mania_Sprite_Sheet.png",  12, sonicIdleFrames.at(0));
+	sonic->Scale(100, 100);
+	sonic->Translate(250, 100);
+
+	Animation* sonicIdleAnim = new Animation(3, sonicSpriteSheetWidth, sonicSpriteSheetHeight, sonicIdleFrames);
+	Animation* sonicRunAnim = new Animation(0.8, sonicSpriteSheetWidth, sonicSpriteSheetHeight, sonicRunFrames);
+	
+	static_cast<Sprite*>(sonic)->AddAnimation(sonicIdleAnim);
+	static_cast<Sprite*>(sonic)->AddAnimation(sonicRunAnim);
+
+	background = new Sprite("res/background.png", 1, Frame(0, 512, 0, 257));
+	background->Translate(250, 257);
+	background->Scale(800, 530);
 
 	isMovingForward = false;
 	isMovingBackward = false;
@@ -179,29 +126,28 @@ void Game::Init()
 
 void Game::DeInit()
 {
-	if (link != nullptr)
+	if (cartel != nullptr)
 	{
-		delete link;
-		link = nullptr;
+		delete cartel;
+		cartel = nullptr;
 	}
 
-	if (sonicIdleEntity != nullptr)
+	if (sonic != nullptr)
 	{
-		delete sonicIdleEntity;
-		sonicIdleEntity = nullptr;
+		delete sonic;
+		sonic = nullptr;
 	}
 
-	if (sonicRunEntity != nullptr)
+	if (background != nullptr)
 	{
-		delete sonicRunEntity;
-		sonicRunEntity = nullptr;
+		delete background;
+		background = nullptr;
 	}
 }
 
 void Game::Update()
 {	
-	static_cast<Sprite*>(sonicIdleEntity)->UpdateFrame(0);
-	static_cast<Sprite*>(sonicRunEntity)->UpdateFrame(0);
+	static_cast<Sprite*>(cartel)->UpdateFrame(0);
 
 	#pragma region Input
 
@@ -225,6 +171,8 @@ void Game::Update()
 	else
 	{
 		moveVectorPlayer1.y = 0;
+		isMovingForward = false;
+		isMovingBackward = false;
 	}
 
 	if (IsKeyPressed(KEY_A))
@@ -246,13 +194,15 @@ void Game::Update()
 	else
 	{
 		moveVectorPlayer1.x = 0;
+		isMovingLeft = false;
+		isMovingRight = false;
 	}
 	
 	if (IsKeyPressed(KEY_Q))
-		link->Rotate(defaultRotation * time->GetDeltaTime());
+		sonic->Rotate(defaultRotation * time->GetDeltaTime());
 
 	if (IsKeyPressed(KEY_E))
-		link->Rotate(-defaultRotation * time->GetDeltaTime());
+		sonic->Rotate(-defaultRotation * time->GetDeltaTime());
 
 	if (IsKeyPressed(KEY_X))
 		scaleVectorPlayer1 = 1;
@@ -264,23 +214,14 @@ void Game::Update()
 	#pragma endregion
 
 	if (!moveVectorPlayer1.x == 0 || !moveVectorPlayer1.y == 0)
-	{
-		if (isMovingForward)
-			static_cast<Sprite*>(link)->UpdateFrame(0);
-		if (isMovingBackward)
-			static_cast<Sprite*>(link)->UpdateFrame(1);
-		if (isMovingLeft)
-			static_cast<Sprite*>(link)->UpdateFrame(2);
-		if (isMovingRight)
-			static_cast<Sprite*>(link)->UpdateFrame(3);
-
+	{		
+		static_cast<Sprite*>(sonic)->UpdateFrame(1);
 
 		traslateX = moveVectorPlayer1.x * defaultTranslation.x * time->GetDeltaTime();
 		traslateY = moveVectorPlayer1.y * defaultTranslation.y * time->GetDeltaTime();
 
-		link->Translate(traslateX, traslateY);
-		checkCollisions(link, sonicIdleEntity);
-		checkCollisions(link, sonicRunEntity);
+		sonic->Translate(traslateX, traslateY);
+		checkCollisions(sonic, cartel);
 	}
 
 	if (!scaleVectorPlayer1 == 0)
@@ -288,14 +229,18 @@ void Game::Update()
 		scaleX = scaleVectorPlayer1 * defaultScale.x * time->GetDeltaTime();
 		scaleY = scaleVectorPlayer1 * defaultScale.y * time->GetDeltaTime();
 
-		link->Scale(scaleX, scaleY);
-		checkCollisions(link, sonicIdleEntity);
-		checkCollisions(link, sonicRunEntity);
+		sonic->Scale(scaleX, scaleY);
+		checkCollisions(sonic, cartel);
 	}
 	
-	static_cast<Sprite*>(sonicIdleEntity)->Draw();
-	static_cast<Sprite*>(sonicRunEntity)->Draw();
-	static_cast<Sprite*>(link)->Draw();
+	if (!isMovingForward && !isMovingBackward && !isMovingLeft && !isMovingRight)
+	{
+		static_cast<Sprite*>(sonic)->UpdateFrame(0);
+	}
+
+	static_cast<Sprite*>(background)->Draw();
+	static_cast<Sprite*>(cartel)->Draw();
+	static_cast<Sprite*>(sonic)->Draw();
 }
 
 void Game::checkCollisions(Entity2D* player1, Entity2D* player2)
