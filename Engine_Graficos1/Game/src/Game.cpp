@@ -171,6 +171,30 @@ void Game::Init()
 	static_cast<Sprite*>(sonicIdleEntity)->AddAnimation(sonicIdleAnim);
 	static_cast<Sprite*>(sonicRunEntity)->AddAnimation(sonicRunAnim);
 
+	float vertexCol1[4][4] =
+	{
+		 0.0f,  1.0f, 0.0f, 1.0f,
+		 0.0f,  1.0f, 0.0f, 1.0f,
+		 0.0f,  1.0f, 0.0f, 1.0f,
+		 0.0f,  1.0f, 0.0f, 1.0f,
+	};
+
+	float vertexCol2[4][4] =
+	{
+		 0.0f,  0.0f, 1.0f, 1.0f,
+		 0.0f,  0.0f, 1.0f, 1.0f,
+		 0.0f,  0.0f, 1.0f, 1.0f,
+		 0.0f,  0.0f, 1.0f, 1.0f,
+	};
+
+	/*square1 = new Square(vertexCol1);
+	square1->Scale(100, 100);
+	square1->Translate(50, 270);
+
+	square2 = new Square(vertexCol2);
+	square2->Scale(100, 100);
+	square2->Translate(100, 50);*/
+
 	isMovingForward = false;
 	isMovingBackward = false;
 	isMovingLeft = false;
@@ -196,6 +220,18 @@ void Game::DeInit()
 		delete sonicRunEntity;
 		sonicRunEntity = nullptr;
 	}
+
+	/*if (square1 != nullptr)
+	{
+		delete square1;
+		square1 = nullptr;
+	}
+
+	if (square2 != nullptr)
+	{
+		delete square2;
+		square2 = nullptr;
+	}*/
 }
 
 void Game::Update()
@@ -296,6 +332,9 @@ void Game::Update()
 	static_cast<Sprite*>(sonicIdleEntity)->Draw();
 	static_cast<Sprite*>(sonicRunEntity)->Draw();
 	static_cast<Sprite*>(link)->Draw();
+
+	/*static_cast<Square*>(square1)->Draw();
+	static_cast<Square*>(square2)->Draw();*/
 }
 
 void Game::checkCollisions(Entity2D* player1, Entity2D* player2)

@@ -12,6 +12,9 @@ private:
 	Entity2D* sonicIdleEntity;
 	Entity2D* sonicRunEntity;
 
+	//Entity2D* square1;
+	//Entity2D* square2;
+
 	float traslateX;
 	float traslateY;
 	float scaleX;

@@ -18,7 +18,8 @@ Renderer::Renderer(Window* window)
 	proj = glm::ortho(0.0f, window->GetHeight(), 0.0f, window->GetWidth(), -1.0f, 1.0f);
 	view = glm::lookAt(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-	unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShader.shader"), program->ReadFile("shaders/fragmentShader.shader"));
+	//unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShader.shader"), program->ReadFile("shaders/fragmentShader.shader"));
+	unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShaderSprite.shader"), program->ReadFile("shaders/fragmentShaderSprite.shader"));
 	glUseProgram(shader);
 
 	//glGenVertexArrays(1, &vao);
