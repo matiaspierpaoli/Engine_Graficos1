@@ -220,6 +220,8 @@ void Game::Update()
 	else
 	{
 		moveVectorPlayer1.y = 0;
+		isMovingForward = false;
+		isMovingBackward = false;
 	}
 
 	if (IsKeyPressed(KEY_A))
@@ -241,6 +243,8 @@ void Game::Update()
 	else
 	{
 		moveVectorPlayer1.x = 0;
+		isMovingLeft = false;
+		isMovingRight = false;
 	}
 	
 	if (IsKeyPressed(KEY_Q))
