@@ -22,7 +22,7 @@ BaseGame::~BaseGame()
     delete collisionManager;
 }
 
-void BaseGame::OnStart(float height, float width, const char* programName)
+void BaseGame::OnStart(float width, float height, const char* programName)
 {
     /* Initialize the library */
     if (!glfwInit())
@@ -32,7 +32,7 @@ void BaseGame::OnStart(float height, float width, const char* programName)
         return;
     }
 
-    window = new Window(height, width, programName);
+    window = new Window(width, height, programName);
     Window* tempWindow = (Window*)window;
 
     renderer = new Renderer(tempWindow);

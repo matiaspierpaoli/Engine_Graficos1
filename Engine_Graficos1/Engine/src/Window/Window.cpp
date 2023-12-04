@@ -4,10 +4,10 @@
 #include "glew/include/GL/glew.h"
 #include <glfw/include/GLFW/glfw3.h>
 
-Window::Window(float height, float width, const char* programName)
+Window::Window(float width, float height, const char* programName)
 {
-	this->height = height;
 	this->width = width;
+	this->height = height;
 	this->programName = programName;
 	CreateWindow();
 }
@@ -35,7 +35,7 @@ bool Window::WindowShouldClose()
 
 void Window::CreateWindow()
 {
-	window = glfwCreateWindow(height, width, programName, NULL, NULL);
+	window = glfwCreateWindow(width, height, programName, NULL, NULL);
 
 	if (!window)
 		return;
