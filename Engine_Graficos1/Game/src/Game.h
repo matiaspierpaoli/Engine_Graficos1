@@ -8,9 +8,12 @@ class Game : public BaseGame
 {
 private:
 
+	Entity2D* pikachu;
 	Entity2D* sonic;
 	Entity2D* cartel;
 	Entity2D* background;
+	Entity2D* text;
+	Entity2D* logo;
 
 	Entity2D* square1;
 	Entity2D* square2;
@@ -27,15 +30,24 @@ private:
 	float scaleVectorPlayer1;
 	float scaleVectorPlayer2;
 
-	bool isMovingForward;
-	bool isMovingBackward;
-	bool isMovingLeft;
-	bool isMovingRight;	
+	bool isMovingForward1;
+	bool isMovingBackward1;
+	bool isMovingLeft1;
+	bool isMovingRight1;
 
+	bool isMovingForward2;
+	bool isMovingBackward2;
+	bool isMovingLeft2;
+	bool isMovingRight2;
+
+	std::vector<Frame> pikachuIdleFrames = std::vector<Frame>();
+	std::vector<Frame> pikachuRunFrames = std::vector<Frame>();
 	std::vector<Frame> sonicIdleFrames = std::vector<Frame>();
 	std::vector<Frame> sonicRunFrames = std::vector<Frame>();
 	std::vector<Frame> cartelFrames = std::vector<Frame>();
 
+	Animation* pikachuIdleAnim;
+	Animation* pikachuRunAnim;
 	Animation* sonicIdleAnim;
 	Animation* sonicRunAnim;
 	Animation* cartelAnim;
