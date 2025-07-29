@@ -35,7 +35,10 @@ Game::~Game()
 
 void Game::Init()
 {
-	OnStart(512, 257, "Game");
+	windowWidth = 1920;
+	windowHeight = 1080;
+
+	OnStart(1920, 1080, "Game");
 
 	traslateX = 0.f;
 	traslateY = 0.f;
@@ -133,8 +136,8 @@ void Game::Init()
 	static_cast<Sprite*>(sonic)->AddAnimation(sonicRunAnim);
 
 	background = new Sprite("res/background.png", 1, Frame(0, 512, 0, 257));
-	background->Translate(512 / 2, 257 / 2);
-	background->Scale(512 , 257);
+	background->Translate(windowWidth / 2, windowHeight / 2);
+	background->Scale(windowWidth, windowHeight);
 
 	text = new Sprite("res/pikachu_SpriteSheet.png", 1, Frame(593, 843, pikachuSpriteSheetHeight - 297, pikachuSpriteSheetHeight - 258));
 	text->Translate(410, 25);

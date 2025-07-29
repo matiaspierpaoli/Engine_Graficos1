@@ -18,6 +18,9 @@ private:
 	Entity2D* square1;
 	Entity2D* square2;
 
+	int windowWidth;
+	int windowHeight;
+
 	float traslateX;
 	float traslateY;
 	float scaleX;
