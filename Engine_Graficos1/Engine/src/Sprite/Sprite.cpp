@@ -8,8 +8,49 @@ Sprite::Sprite(const std::string& path)
 	mWidth = 0;
 	mHeight = 0;
 	mBPP = 0;
-	imageID = mRendererID - 1;
+	imageID = 0;
 	animations = new std::vector<Animation*>();
+
+	// 2. Cargar la textura (para obtener mWidth y mHeight)
+	RendererSingleton::GetRenderer()->GetNewSprite(mFilePath, &mWidth, &mHeight, &mBPP, &mRendererID);
+	imageID = mRendererID - 1;
+
+	// 3. Definir vertices por defecto (Cuadrado completo)
+	float vertexPos[4][2] = {
+		{-1, -1}, // Abajo Izq
+		{1, -1},  // Abajo Der
+		{1, 1},   // Arriba Der
+		{-1, 1}   // Arriba Izq
+	};
+
+	// Coordenadas UV por defecto (Toda la imagen)
+	float uvPos[4][2] = {
+		{0, 0}, {1, 0}, {1, 1}, {0, 1}
+	};
+
+	unsigned int indices[6] = { 0, 1, 2, 2, 3, 0 };
+
+	// 4. Llenar el array de vertices local de la clase
+	// Asumiendo que tu layout es: Pos(2) + UV(2) = 4 floats por vertice
+	for (unsigned short i = 0; i < 4; i++)
+	{
+		// Posicion
+		vertices[i][0] = vertexPos[i][0];
+		vertices[i][1] = vertexPos[i][1];
+		// UV
+		vertices[i][2] = uvPos[i][0];
+		vertices[i][3] = uvPos[i][1];
+	}
+
+	Bind();
+    
+	// Generar VBO inicial
+	*vBuffer = RendererSingleton::GetRenderer()->GetNewVertexBuffer(vertices, 4 * 4 * sizeof(float));
+    
+	// Generar IBO inicial
+	*iBuffer = RendererSingleton::GetRenderer()->GetNewIndexBuffer(indices, 6);
+    
+	Unbind();
 }
 
 Sprite::Sprite(const std::string& path, float vertexCol[4][4]) : mRendererID(0), mFilePath(path), mLocalBuffer(nullptr), mWidth(0), mHeight(0), mBPP(0)

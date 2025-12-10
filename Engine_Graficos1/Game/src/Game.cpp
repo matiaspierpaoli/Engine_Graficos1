@@ -53,51 +53,7 @@ void Game::Init()
 
 	int sonicSpriteSheetWidth = 830;
 	int sonicSpriteSheetHeight = 465;
-
-	int pikachuSpriteSheetWidth = 847;
-	int pikachuSpriteSheetHeight = 396;
-
-#pragma region Idle 
-	pikachuIdleFrames.push_back(Frame(133, 174, pikachuSpriteSheetHeight - 50, pikachuSpriteSheetHeight - 2));
-	pikachuIdleFrames.push_back(Frame(174, 214, pikachuSpriteSheetHeight - 50, pikachuSpriteSheetHeight - 2));
-	pikachuIdleFrames.push_back(Frame(214, 254, pikachuSpriteSheetHeight - 50, pikachuSpriteSheetHeight - 2));
-#pragma endregion 
-
-	#pragma region Run 
-	pikachuRunFrames.push_back(Frame(532, 579, pikachuSpriteSheetHeight - 98, pikachuSpriteSheetHeight - 59));
-	pikachuRunFrames.push_back(Frame(579, 631, pikachuSpriteSheetHeight - 98, pikachuSpriteSheetHeight - 59));
-	pikachuRunFrames.push_back(Frame(631, 674, pikachuSpriteSheetHeight - 98, pikachuSpriteSheetHeight - 59));
-	pikachuRunFrames.push_back(Frame(674, 721, pikachuSpriteSheetHeight - 98, pikachuSpriteSheetHeight - 59));
-#pragma endregion 
-
-
-	pikachu = new Sprite("res/pikachu_SpriteSheet.png",  3, pikachuIdleFrames.at(0));
-	pikachu->Scale(75, 75);
-	pikachu->Translate(512 / 2 - 70, 257 / 2 - 30);
-
-	pikachuIdleAnim = new Animation(0.8, pikachuSpriteSheetWidth, pikachuSpriteSheetHeight, pikachuIdleFrames);
-	pikachuRunAnim = new Animation(0.3, pikachuSpriteSheetWidth, pikachuSpriteSheetHeight, pikachuRunFrames);
 	
-	static_cast<Sprite*>(pikachu)->AddAnimation(pikachuIdleAnim);
-	static_cast<Sprite*>(pikachu)->AddAnimation(pikachuRunAnim);
-
-#pragma endregion Cartel
-
-	cartelFrames.push_back(Frame(130, 181, sonicSpriteSheetHeight - 372, sonicSpriteSheetHeight - 322));
-	cartelFrames.push_back(Frame(181, 230, sonicSpriteSheetHeight - 372, sonicSpriteSheetHeight - 322));
-	cartelFrames.push_back(Frame(230, 279, sonicSpriteSheetHeight - 372, sonicSpriteSheetHeight - 322));
-	cartelFrames.push_back(Frame(279, 328, sonicSpriteSheetHeight - 372, sonicSpriteSheetHeight - 322));
-	cartelFrames.push_back(Frame(328, 378, sonicSpriteSheetHeight - 372, sonicSpriteSheetHeight - 322));
-
-	cartel = new Sprite("res/Sonic_Mania_Sprite_Sheet.png", 5, cartelFrames.at(0));
-	cartel->Scale(75, 75);
-	cartel->Translate(512 / 2 + 70, 257 / 2 + 40);
-
-	cartelAnim = new Animation(0.8, sonicSpriteSheetWidth, sonicSpriteSheetHeight, cartelFrames);
-
-	static_cast<Sprite*>(cartel)->AddAnimation(cartelAnim);
-
-#pragma endregion
 
 	sonicIdleFrames.push_back(Frame(43, 74, sonicSpriteSheetHeight - 68, sonicSpriteSheetHeight - 22));
 	sonicIdleFrames.push_back(Frame(74, 105, sonicSpriteSheetHeight - 68, sonicSpriteSheetHeight - 22));
@@ -135,43 +91,11 @@ void Game::Init()
 	static_cast<Sprite*>(sonic)->AddAnimation(sonicIdleAnim);
 	static_cast<Sprite*>(sonic)->AddAnimation(sonicRunAnim);
 
-	background = new Sprite("res/background.png", 1, Frame(0, 512, 0, 257));
-	background->Translate(windowWidth / 2, windowHeight / 2);
-	background->Scale(windowWidth, windowHeight);
-
-	text = new Sprite("res/pikachu_SpriteSheet.png", 1, Frame(593, 843, pikachuSpriteSheetHeight - 297, pikachuSpriteSheetHeight - 258));
-	text->Translate(410, 25);
-	text->Scale(180, 30);
-
-	logo = new Sprite("res/pikachu_SpriteSheet.png", 1, Frame(351, 536, 0, pikachuSpriteSheetHeight - 246));
-	logo->Translate(50, 220);
-	logo->Scale(75, 75);
+	level1TileMap = new TileMap();
+	if (!level1TileMap->ImportTileMap("res/Dungeon/dungeon.tmx")) {
+		std::cout << "Fallo al cargar mapa" << std::endl;
+	}
 	
-
-	//float vertexCol1[4][4] =
-	//{
-	//	 0.0f,  1.0f, 0.0f, 1.0f,
-	//	 0.0f,  1.0f, 0.0f, 1.0f,
-	//	 0.0f,  1.0f, 0.0f, 1.0f,
-	//	 0.0f,  1.0f, 0.0f, 1.0f,
-	//};
-
-	//float vertexCol2[4][4] =
-	//{
-	//	 0.0f,  0.0f, 1.0f, 1.0f,
-	//	 0.0f,  0.0f, 1.0f, 1.0f,
-	//	 0.0f,  0.0f, 1.0f, 1.0f,
-	//	 0.0f,  0.0f, 1.0f, 1.0f,
-	//};
-
-	//square1 = new Square(vertexCol1);
-	//square1->Scale(100, 100);
-	//square1->Translate(200, 257 / 2);
-
-	//square2 = new Square(vertexCol2);
-	//square2->Scale(100, 100);
-	//square2->Translate(512 - 200, 257 / 2);
-
 	isMovingForward1 = false;
 	isMovingBackward1 = false;
 	isMovingLeft1 = false;
@@ -185,78 +109,21 @@ void Game::Init()
 
 void Game::DeInit()
 {
-	if (pikachu != nullptr)
-	{
-		delete pikachu;
-		pikachu = nullptr;
-	}
-
 	if (sonic != nullptr)
 	{
 		delete sonic;
 		sonic = nullptr;
 	}
 
-
-	if (cartel != nullptr)
+	if (level1TileMap != nullptr)
 	{
-		delete cartel;
-		cartel = nullptr;
-	}
-
-	if (background != nullptr)
-	{
-		delete background;
-		background = nullptr;
-	}
-
-	if (text != nullptr)
-	{
-		delete text;
-		text = nullptr;
-	}
-
-	if (logo != nullptr)
-	{
-		delete logo;
-		logo = nullptr;
-	}
-
-	if (pikachuIdleAnim != nullptr)
-	{
-		delete pikachuIdleAnim;
-		pikachuIdleAnim = nullptr;
-	}
-
-	if (pikachuRunAnim != nullptr)
-	{
-		delete pikachuRunAnim;
-		pikachuRunAnim = nullptr;
-	}
-
-	if (cartelAnim != nullptr)
-	{
-		delete cartelAnim;
-		cartelAnim = nullptr;
-	}
-
-	if (square1 != nullptr)
-	{
-		delete square1;
-		square1 = nullptr;
-	}
-
-	if (square2 != nullptr)
-	{
-		delete square2;
-		square2 = nullptr;
+		delete level1TileMap;
+		level1TileMap = nullptr;
 	}
 }
 
 void Game::Update()
 {	
-	static_cast<Sprite*>(cartel)->UpdateFrame(0);
-
 	#pragma region Input Player 1
 
 	if (IsKeyPressed(KEY_W))
@@ -326,8 +193,8 @@ void Game::Update()
 		traslateY = moveVectorPlayer1.y * defaultTranslation.y * time->GetDeltaTime();
 
 		sonic->Translate(traslateX, traslateY);
-		checkCollisions(sonic, cartel);
-		checkCollisions(sonic, pikachu);
+		// checkCollisions(sonic, cartel);
+		// checkCollisions(sonic, pikachu);
 	}
 
 	if (!scaleVectorPlayer1 == 0)
@@ -336,8 +203,8 @@ void Game::Update()
 		scaleY = scaleVectorPlayer1 * defaultScale.y * time->GetDeltaTime();
 
 		sonic->Scale(scaleX, scaleY);
-		checkCollisions(sonic, cartel);
-		checkCollisions(sonic, pikachu);
+		// checkCollisions(sonic, cartel);
+		// checkCollisions(sonic, pikachu);
 	}
 
 	if (!isMovingForward1 && !isMovingBackward1 && !isMovingLeft1 && !isMovingRight1)
@@ -395,57 +262,29 @@ void Game::Update()
 		isMovingRight2 = false;
 	}
 
-	if (IsKeyPressed(KEY_U))
-		pikachu->Rotate(defaultRotation * time->GetDeltaTime());
-
-	if (IsKeyPressed(KEY_O))
-		pikachu->Rotate(-defaultRotation * time->GetDeltaTime());
-
 	if (IsKeyPressed(KEY_N))
 		scaleVectorPlayer2 = 1;
 	else if (IsKeyPressed(KEY_M))
 		scaleVectorPlayer2 = -1;
 	else
 		scaleVectorPlayer2 = 0;
-
+	
 	if (!moveVectorPlayer2.x == 0 || !moveVectorPlayer2.y == 0)
 	{
-		static_cast<Sprite*>(pikachu)->UpdateFrame(1);
-
 		traslateX = moveVectorPlayer2.x * defaultTranslation.x * time->GetDeltaTime();
 		traslateY = moveVectorPlayer2.y * defaultTranslation.y * time->GetDeltaTime();
-
-		pikachu->Translate(traslateX, traslateY);
-		checkCollisions(pikachu, cartel);
-		checkCollisions(pikachu, sonic);
 	}
 
 	if (!scaleVectorPlayer2 == 0)
 	{
 		scaleX = scaleVectorPlayer2 * defaultScale.x * time->GetDeltaTime();
 		scaleY = scaleVectorPlayer2 * defaultScale.y * time->GetDeltaTime();
-
-		pikachu->Scale(scaleX, scaleY);
-		checkCollisions(pikachu, cartel);
-		checkCollisions(pikachu, sonic);
-	}
-
-	if (!isMovingForward2 && !isMovingBackward2 && !isMovingLeft2 && !isMovingRight2)
-	{
-		static_cast<Sprite*>(pikachu)->UpdateFrame(0);
 	}
 
 #pragma endregion
 
-	static_cast<Sprite*>(background)->Draw();
-	static_cast<Sprite*>(cartel)->Draw();
-	static_cast<Sprite*>(pikachu)->Draw();
+	level1TileMap->Draw();
 	static_cast<Sprite*>(sonic)->Draw();
-	static_cast<Sprite*>(text)->Draw();
-	static_cast<Sprite*>(logo)->Draw();
-
-	/*static_cast<Square*>(square1)->Draw();
-	static_cast<Square*>(square2)->Draw();*/
 }
 
 void Game::checkCollisions(Entity2D* player1, Entity2D* player2)

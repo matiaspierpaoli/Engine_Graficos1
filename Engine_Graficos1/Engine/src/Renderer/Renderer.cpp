@@ -15,7 +15,12 @@ Renderer::Renderer(Window* window)
 
 	program = new Program();
 
-	proj = glm::ortho(0.0f, window->GetWidth(), 0.0f, window->GetHeight(), -1.0f, 1.0f);
+	float zoom = 2.0f;
+
+	float cameraWidth = window->GetWidth() / zoom;
+	float cameraHeight = window->GetHeight() / zoom;
+	
+	proj = glm::ortho(0.0f, cameraWidth, 0.0f, cameraHeight, -1.0f, 1.0f);
 	view = glm::lookAt(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	//unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShader.shader"), program->ReadFile("shaders/fragmentShader.shader"));

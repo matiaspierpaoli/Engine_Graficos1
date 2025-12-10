@@ -19,7 +19,6 @@ private:
 	std::vector<Animation*>* animations;
 	unsigned int spriteQty;
 
-	void ChangeSprite(Coord coord);
 	void Bind(unsigned int slot = 0) const;
 	void Unbind();
 
@@ -35,6 +34,7 @@ public:
 	inline int GetImgHeight() const { return mHeight; }
 	inline int GetWidth()const { return mWidth / spriteQty; }
 	inline int GetHeight()const { return mHeight; }
+	void ChangeSprite(Coord coord);
 
 	void AddAnimation(Animation* _anim);
 	void UpdateFrame(int frameIndex);

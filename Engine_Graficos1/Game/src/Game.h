@@ -3,20 +3,13 @@
 #include "Entity\Entity2D\Shape\Square\Square.h"
 #include "Entity\Entity2D\Shape\Triangle\Triangle.h"
 #include "Sprite/Sprite.h"
+#include "TileMap/TileMap.h"
 
 class Game : public BaseGame
 {
 private:
 
-	Entity2D* pikachu;
 	Entity2D* sonic;
-	Entity2D* cartel;
-	Entity2D* background;
-	Entity2D* text;
-	Entity2D* logo;
-
-	Entity2D* square1;
-	Entity2D* square2;
 
 	int windowWidth;
 	int windowHeight;
@@ -43,18 +36,14 @@ private:
 	bool isMovingLeft2;
 	bool isMovingRight2;
 
-	std::vector<Frame> pikachuIdleFrames = std::vector<Frame>();
-	std::vector<Frame> pikachuRunFrames = std::vector<Frame>();
 	std::vector<Frame> sonicIdleFrames = std::vector<Frame>();
 	std::vector<Frame> sonicRunFrames = std::vector<Frame>();
-	std::vector<Frame> cartelFrames = std::vector<Frame>();
 
-	Animation* pikachuIdleAnim;
-	Animation* pikachuRunAnim;
 	Animation* sonicIdleAnim;
 	Animation* sonicRunAnim;
-	Animation* cartelAnim;
 
+	TileMap* level1TileMap;
+	
 	void checkCollisions(Entity2D* player1, Entity2D* player2);
 
 public:

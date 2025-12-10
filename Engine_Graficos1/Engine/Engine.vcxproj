@@ -198,10 +198,6 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="res\fragmentShader.shader" />
-    <None Include="res\vertexShader.shader" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="src\Animation\Animation.h" />
     <ClInclude Include="src\BaseGame\BaseGame.h" />
     <ClInclude Include="src\Buffers\IndexBuffer.h" />
@@ -213,6 +209,7 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClInclude Include="src\Entity\Entity2D\Entity2D.h" />
     <ClInclude Include="src\Entity\Entity2D\Shape\Shape.h" />
     <ClInclude Include="src\Entity\Entity2D\Shape\Square\Square.h" />
+    <ClInclude Include="src\Entity\Entity2D\Shape\Tile\Tile.h" />
     <ClInclude Include="src\Entity\Entity2D\Shape\Triangle\Triangle.h" />
     <ClInclude Include="src\Exports.h" />
     <ClInclude Include="src\Frame\Frame.h" />
@@ -222,6 +219,7 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Sprite\Sprite.h" />
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\TileMap\TileMap.h" />
     <ClInclude Include="src\TimeSingleton.h" />
     <ClInclude Include="src\Time\Time.h" />
     <ClInclude Include="src\Vector2.h" />
@@ -229,6 +227,7 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClInclude Include="src\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="libs\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="src\Animation\Animation.cpp" />
     <ClCompile Include="src\BaseGame\BaseGame.cpp" />
     <ClCompile Include="src\Buffers\IndexBuffer.cpp" />
@@ -240,15 +239,95 @@ xcopy "$(ProjectDir)shaders" "$(SolutionDir)Game\shaders" /e /s /y /r /i
     <ClCompile Include="src\Entity\Entity2D\Entity2D.cpp" />
     <ClCompile Include="src\Entity\Entity2D\Shape\Shape.cpp" />
     <ClCompile Include="src\Entity\Entity2D\Shape\Square\Square.cpp" />
+    <ClCompile Include="src\Entity\Entity2D\Shape\Tile\Tile.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\obj\Win32\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformation>false</BrowseInformation>
+      <BrowseInformationFile>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\obj\Win32\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>true</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExpandAttributedSource>false</ExpandAttributedSource>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <GenerateModuleDependencies>false</GenerateModuleDependencies>
+      <GenerateSourceDependencies>false</GenerateSourceDependencies>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ModuleDependenciesFile>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\obj\Win32\Debug\</ModuleDependenciesFile>
+      <ModuleOutputFile>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\obj\Win32\Debug\</ModuleOutputFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ObjectFileName>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\obj\Win32\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <ProgramDataBaseFileName>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\obj\Win32\Debug\vc142.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\obj\Win32\Debug\Engine.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\obj\Win32\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <SpectreMitigation>false</SpectreMitigation>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\obj\Win32\Debug\Engine.tlog\</TrackerLogDirectory>
+      <TranslateIncludes>false</TranslateIncludes>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\obj\Win32\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
+      <PreprocessorDefinitions>GLEW_STATIC;_DEBUG;_CONSOLE;GraficosEngine_API;_WINDLL;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <EnablePREfast>false</EnablePREfast>
+      <OmitFramePointers>false</OmitFramePointers>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\libs\;D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\src;</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>D:\Users\Matias\Documents\Image Campus\2 Año\2do cuatrimestre\Graficos 1\2023\Engine_Graficos1\Engine_Graficos1\Engine\src;</AdditionalUsingDirectories>
+      <LinkCompiled>true</LinkCompiled>
+    </ClCompile>
     <ClCompile Include="src\Entity\Entity2D\Shape\Triangle\Triangle.cpp" />
     <ClCompile Include="src\Input\InputManager.cpp" />
     <ClCompile Include="src\Program\Program.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Sprite\Sprite.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
+    <ClCompile Include="src\TileMap\TileMap.cpp" />
     <ClCompile Include="src\Time\Time.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="res\shaders\" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
