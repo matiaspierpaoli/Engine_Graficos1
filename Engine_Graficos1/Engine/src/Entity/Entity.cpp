@@ -43,6 +43,29 @@ void Entity::Scale(float x, float y)
 	UpdateModel(true);
 }
 
+void Entity::SetTranslation(float x, float y)
+{
+	translation.x = x;
+	translation.y = y;
+
+	UpdateModel(true);
+}
+
+void Entity::SetRotation(float angle)
+{
+	rotation = angle;
+
+	UpdateModel(true);
+}
+
+void Entity::SetScale(float x, float y)
+{
+	scale.x = x;
+	scale.y = y;
+
+	UpdateModel(true);
+}
+
 Vector2 Entity::GetTranslation()
 {
 	return translation;

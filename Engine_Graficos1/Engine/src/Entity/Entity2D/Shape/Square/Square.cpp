@@ -4,10 +4,10 @@
 Square::Square(float vertexCol[4][4])
 {
 	float vertexPos[4][2] = {
-		-0.5f, -0.5f,
-		 0.5f, -0.5f,
-		 0.5f,  0.5f,
-		-0.5f,  0.5f,
+		-1.0f, -1.0f,
+		 1.0f, -1.0f,
+		 1.0f,  1.0f,
+		-1.0f,  1.0f,
 	};
 
 	unsigned int tempIndices[6] = {
@@ -28,7 +28,7 @@ Square::Square(float vertexCol[4][4])
 		}
 	}
 
-	*vBuffer = RendererSingleton::GetRenderer()->GetNewVertexBuffer(tempVertices, 4 * (sizeof(float) * 2 + sizeof(float) * 4)  );
+	*vBuffer = RendererSingleton::GetRenderer()->GetNewDebugVertexBuffer(tempVertices, 4 * (sizeof(float) * 2 + sizeof(float) * 4)  );
 	*iBuffer = RendererSingleton::GetRenderer()->GetNewIndexBuffer(tempIndices, 6);
 
 }
@@ -40,5 +40,8 @@ Square::~Square()
 
 void Square::Draw()
 {
-	RendererSingleton::GetRenderer()->Draw(*vBuffer, *iBuffer, modelId);
+	Renderer* renderer = RendererSingleton::GetRenderer();
+	renderer->SetProgram(renderer->GetDefaultProgram());
+	
+	renderer->Draw(*vBuffer, *iBuffer, modelId);
 }

@@ -89,3 +89,8 @@ bool BaseGame::IsKeyPressed(unsigned int keyCode)
 {
     return ((InputManager*)inputManager)->IsKeyPressed(keyCode);
 }
+
+bool BaseGame::IsKeyJustReleased(unsigned int keyCode)
+{
+    return ((InputManager*)inputManager)->IsKeyJustReleased(keyCode);
+}

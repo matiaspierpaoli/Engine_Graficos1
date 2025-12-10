@@ -29,5 +29,8 @@ Triangle::~Triangle()
 
 void Triangle::Draw()
 {
-	RendererSingleton::GetRenderer()->Draw(*vBuffer, *iBuffer, modelId);
+	Renderer* renderer = RendererSingleton::GetRenderer();
+	renderer->SetProgram(renderer->GetDefaultProgram());
+	
+	renderer->Draw(*vBuffer, *iBuffer, modelId);
 }

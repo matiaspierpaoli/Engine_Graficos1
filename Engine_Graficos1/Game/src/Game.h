@@ -1,7 +1,5 @@
 #pragma once
 #include "BaseGame/BaseGame.h"
-#include "Entity\Entity2D\Shape\Square\Square.h"
-#include "Entity\Entity2D\Shape\Triangle\Triangle.h"
 #include "Sprite/Sprite.h"
 #include "TileMap/TileMap.h"
 
@@ -31,11 +29,17 @@ private:
 	bool isMovingLeft1;
 	bool isMovingRight1;
 
+	bool debugCollisionSquares = false;
+	
 	bool isMovingForward2;
 	bool isMovingBackward2;
 	bool isMovingLeft2;
 	bool isMovingRight2;
 
+	float gravity = 1500.0f; // Gravity force
+	float verticalVelocity = 0.0f; // Current fall velocity
+	bool isGrounded = false; // Boolean to check if player touches the ground
+	
 	std::vector<Frame> sonicIdleFrames = std::vector<Frame>();
 	std::vector<Frame> sonicRunFrames = std::vector<Frame>();
 
@@ -45,6 +49,7 @@ private:
 	TileMap* level1TileMap;
 	
 	void checkCollisions(Entity2D* player1, Entity2D* player2);
+	void checkCollisionsWithWindow(Entity2D* player1);
 
 public:
 	Game();

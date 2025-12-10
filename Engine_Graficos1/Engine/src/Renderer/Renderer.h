@@ -17,6 +17,9 @@ private:
 	glm::mat4 view;
 	glm::mat4 proj;
 
+	unsigned int defaultShader;
+	unsigned int spriteShader;
+	
 	std::vector<VertexBuffer*> vertexBuffers;
 	std::vector<IndexBuffer*> indexBuffers;
 	std::vector<VertexArray*> vertexArrays;
@@ -31,6 +34,7 @@ public:
 	void Draw(unsigned int vertexBuffer, unsigned int indexBuffer, unsigned int modelId);
 
 	unsigned int GetNewVertexBuffer(const void* data, unsigned int size);
+	unsigned int GetNewDebugVertexBuffer(const void* data, unsigned int size);
 	void GetNewVertexBuffer(unsigned int bufferID, const void* data, unsigned int dataSize);
 	unsigned int GetNewIndexBuffer(unsigned int* indices, unsigned int count);
 
@@ -42,4 +46,8 @@ public:
 	void BindSprite(unsigned int slot, unsigned int spriteID);
 	void UnbindSprite();
 	void SetUniversalSpriteSettings();
+
+	void SetProgram(unsigned int program);
+	unsigned int GetDefaultProgram();
+	unsigned int GetSpriteProgram();
 };

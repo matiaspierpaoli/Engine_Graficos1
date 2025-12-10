@@ -262,7 +262,10 @@ void Sprite::UpdateFrame(int frameIndex)
 
 void Sprite::Draw()
 {
+	Renderer* renderer = RendererSingleton::GetRenderer();
+	renderer->SetProgram(renderer->GetSpriteProgram());
+	
 	Bind();
-	RendererSingleton::GetRenderer()->Draw(*vBuffer, *iBuffer, modelId);
+	renderer->Draw(*vBuffer, *iBuffer, modelId);
 	Unbind();
 }

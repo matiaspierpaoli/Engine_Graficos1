@@ -23,9 +23,9 @@ Renderer::Renderer(Window* window)
 	proj = glm::ortho(0.0f, cameraWidth, 0.0f, cameraHeight, -1.0f, 1.0f);
 	view = glm::lookAt(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-	//unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShader.shader"), program->ReadFile("shaders/fragmentShader.shader"));
-	unsigned int shader = program->CreateShader(program->ReadFile("shaders/vertexShaderSprite.shader"), program->ReadFile("shaders/fragmentShaderSprite.shader"));
-	glUseProgram(shader);
+	defaultShader = program->CreateShader(program->ReadFile("shaders/vertexShader.shader"), program->ReadFile("shaders/fragmentShader.shader"));
+	spriteShader = program->CreateShader(program->ReadFile("shaders/vertexShaderSprite.shader"), program->ReadFile("shaders/fragmentShaderSprite.shader"));
+	glUseProgram(spriteShader);
 
 	//glGenVertexArrays(1, &vao);
 	//glBindVertexArray(vao);
@@ -89,6 +89,25 @@ unsigned int Renderer::GetNewVertexBuffer(const void* data, unsigned int size)
 	//layout.Push<float>(4); // Color
 	layout.Push<float>(2); // UV 
 	//layout.Push<float>(4); //Color
+
+	VertexArray* va = new VertexArray();
+	va->AddBuffer(vb, layout);
+
+	vertexArrays.push_back(va);
+
+	return bufferID;
+}
+
+unsigned int Renderer::GetNewDebugVertexBuffer(const void* data, unsigned int size)
+{
+	unsigned int bufferID = vertexArrays.size();
+
+	VertexBuffer* vb = new VertexBuffer(data, size, true);
+	vertexBuffers.push_back(vb);
+
+	VertexBufferLayout layout;
+	layout.Push<float>(2); // Position (x, y)
+	layout.Push<float>(4); // Color (r, g, b, a)
 
 	VertexArray* va = new VertexArray();
 	va->AddBuffer(vb, layout);
@@ -194,4 +213,19 @@ void Renderer::SetUniversalSpriteSettings()
 	//Enable blending, so images with transparency can be draw
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void Renderer::SetProgram(unsigned int program)
+{
+	glUseProgram(program);
+}
+
+unsigned int Renderer::GetDefaultProgram()
+{
+	return defaultShader;
+}
+
+unsigned int Renderer::GetSpriteProgram()
+{
+	return spriteShader;
 }

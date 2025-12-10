@@ -82,8 +82,8 @@ void Game::Init()
 	sonicRunFrames.push_back(Frame(672, 705, sonicSpriteSheetHeight - 162, sonicSpriteSheetHeight - 117));
 
 	sonic = new Sprite("res/Sonic_Mania_Sprite_Sheet.png", 12, sonicIdleFrames.at(0));
-	sonic->Scale(75, 75);
-	sonic->Translate(512 / 2 - 160, 257 / 2 - 30);
+	sonic->Scale(35, 35);
+	sonic->Translate(100.0f, 200.0f);
 
 	sonicIdleAnim = new Animation(3, sonicSpriteSheetWidth, sonicSpriteSheetHeight, sonicIdleFrames);
 	sonicRunAnim = new Animation(0.8, sonicSpriteSheetWidth, sonicSpriteSheetHeight, sonicRunFrames);
@@ -123,31 +123,27 @@ void Game::DeInit()
 }
 
 void Game::Update()
-{	
-	#pragma region Input Player 1
+{
+	float rawDltaTime = time->GetDeltaTime();
+	float deltaTime = (rawDltaTime > 0.05f) ? 0.05f : rawDltaTime;
 
-	if (IsKeyPressed(KEY_W))
-	{
-		moveVectorPlayer1.y = 1;
-		isMovingForward1 = true;
-		isMovingBackward1 = false;
-		isMovingLeft1 = false;
-		isMovingRight1 = false;
-	}
-	else if (IsKeyPressed(KEY_S))
-	{
-		moveVectorPlayer1.y = -1;
-		isMovingForward1 = false;
-		isMovingBackward1 = true;
-		isMovingLeft1 = false;
-		isMovingRight1 = false;
-	}
-	else
-	{
-		moveVectorPlayer1.y = 0;
-		isMovingForward1 = false;
-		isMovingBackward1 = false;
-	}
+	// Apply gravity
+	// If not grounded, fall velocity increases
+	verticalVelocity -= gravity * deltaTime;
+	// Speed limit
+	if (verticalVelocity < -1000.0f) verticalVelocity = -1000.0f;
+
+	// Move player in Y
+	float moveY = verticalVelocity * deltaTime;
+	sonic->Translate(0, moveY);
+    
+	// Reset floor state before checking
+	isGrounded = false; 
+
+	// Check collisions (This fixes position if player goes through ground)
+	level1TileMap->CheckCollision(sonic, &verticalVelocity, &isGrounded);
+	
+	#pragma region Input Player 1
 
 	if (IsKeyPressed(KEY_A))
 	{
@@ -173,10 +169,10 @@ void Game::Update()
 	}
 	
 	if (IsKeyPressed(KEY_Q))
-		sonic->Rotate(defaultRotation * time->GetDeltaTime());
+		sonic->Rotate(defaultRotation * deltaTime);
 
 	if (IsKeyPressed(KEY_E))
-		sonic->Rotate(-defaultRotation * time->GetDeltaTime());
+		sonic->Rotate(-defaultRotation * deltaTime);
 
 	if (IsKeyPressed(KEY_X))
 		scaleVectorPlayer1 = 1;
@@ -189,22 +185,18 @@ void Game::Update()
 	{
 		static_cast<Sprite*>(sonic)->UpdateFrame(1);
 
-		traslateX = moveVectorPlayer1.x * defaultTranslation.x * time->GetDeltaTime();
-		traslateY = moveVectorPlayer1.y * defaultTranslation.y * time->GetDeltaTime();
+		traslateX = moveVectorPlayer1.x * defaultTranslation.x * deltaTime;
+		traslateY = moveVectorPlayer1.y * defaultTranslation.y * deltaTime;
 
 		sonic->Translate(traslateX, traslateY);
-		// checkCollisions(sonic, cartel);
-		// checkCollisions(sonic, pikachu);
 	}
 
 	if (!scaleVectorPlayer1 == 0)
 	{
-		scaleX = scaleVectorPlayer1 * defaultScale.x * time->GetDeltaTime();
-		scaleY = scaleVectorPlayer1 * defaultScale.y * time->GetDeltaTime();
+		scaleX = scaleVectorPlayer1 * defaultScale.x * deltaTime;
+		scaleY = scaleVectorPlayer1 * defaultScale.y * deltaTime;
 
 		sonic->Scale(scaleX, scaleY);
-		// checkCollisions(sonic, cartel);
-		// checkCollisions(sonic, pikachu);
 	}
 
 	if (!isMovingForward1 && !isMovingBackward1 && !isMovingLeft1 && !isMovingRight1)
@@ -214,76 +206,14 @@ void Game::Update()
 
 	#pragma endregion
 
-	#pragma region Input Player 2
-
-	if (IsKeyPressed(KEY_I))
+	if (IsKeyJustReleased(KEY_O))
 	{
-		moveVectorPlayer2.y = 1;
-		isMovingForward2 = true;
-		isMovingBackward2 = false;
-		isMovingLeft2 = false;
-		isMovingRight2 = false;
+		debugCollisionSquares = !debugCollisionSquares;
 	}
-	else if (IsKeyPressed(KEY_K))
-	{
-		moveVectorPlayer2.y = -1;
-		isMovingForward2 = false;
-		isMovingBackward2 = true;
-		isMovingLeft2 = false;
-		isMovingRight2 = false;
-	}
-	else
-	{
-		moveVectorPlayer2.y = 0;
-		isMovingForward2 = false;
-		isMovingBackward2 = false;
-	}
-
-	if (IsKeyPressed(KEY_J))
-	{
-		moveVectorPlayer2.x = -1;
-		isMovingForward2 = false;
-		isMovingBackward2 = false;
-		isMovingLeft2 = true;
-		isMovingRight2 = false;
-	}
-	else if (IsKeyPressed(KEY_L))
-	{
-		moveVectorPlayer2.x = 1;
-		isMovingForward2 = false;
-		isMovingBackward2 = false;
-		isMovingLeft2 = false;
-		isMovingRight2 = true;
-	}
-	else
-	{
-		moveVectorPlayer2.x = 0;
-		isMovingLeft2 = false;
-		isMovingRight2 = false;
-	}
-
-	if (IsKeyPressed(KEY_N))
-		scaleVectorPlayer2 = 1;
-	else if (IsKeyPressed(KEY_M))
-		scaleVectorPlayer2 = -1;
-	else
-		scaleVectorPlayer2 = 0;
 	
-	if (!moveVectorPlayer2.x == 0 || !moveVectorPlayer2.y == 0)
-	{
-		traslateX = moveVectorPlayer2.x * defaultTranslation.x * time->GetDeltaTime();
-		traslateY = moveVectorPlayer2.y * defaultTranslation.y * time->GetDeltaTime();
-	}
-
-	if (!scaleVectorPlayer2 == 0)
-	{
-		scaleX = scaleVectorPlayer2 * defaultScale.x * time->GetDeltaTime();
-		scaleY = scaleVectorPlayer2 * defaultScale.y * time->GetDeltaTime();
-	}
-
-#pragma endregion
-
-	level1TileMap->Draw();
+	checkCollisionsWithWindow(sonic);
+	
+	level1TileMap->Draw(debugCollisionSquares);
 	static_cast<Sprite*>(sonic)->Draw();
 }
 
@@ -298,7 +228,10 @@ void Game::checkCollisions(Entity2D* player1, Entity2D* player2)
 		if (!scaleVectorPlayer1 == 0 || !scaleVectorPlayer2 == 0)
 			player1->Scale(-scaleX, -scaleY);
 	}
+}
 
+void Game::checkCollisionsWithWindow(Entity2D* player1)
+{
 	while (collisionManager->checkEntityToWindowCollision(player1, (Window*)window))
 	{
 		if (!moveVectorPlayer1.x == 0 || !moveVectorPlayer1.y == 0 ||

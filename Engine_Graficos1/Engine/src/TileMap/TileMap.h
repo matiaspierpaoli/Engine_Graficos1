@@ -11,6 +11,8 @@ class GraficosEngine_API TileMap
     // 3 dimentional tilemap
     // Layer   < Row      < Column     < Tile* > > >
     std::vector<std::vector<std::vector<Tile*>>> _mapLayers;
+
+	Entity2D* debugSquare;
 	
     std::string _imagePath;
     float _mapWidth;  
@@ -26,10 +28,11 @@ class GraficosEngine_API TileMap
     ~TileMap();
 
     bool ImportTileMap(std::string filePath);
-    void Draw();
+    void Draw(bool shouldDrawCollisionSquares);
+	void CheckCollision(Entity2D* object, float* velocityY, bool* isGrounded);
    
 
     private:
-    void CreateTile(int layerIndex, int id, int x, int y, bool walkable);
     void ClearMap();
+    void CreateTile(int layerIndex, int id, int x, int y, bool walkable);
 };

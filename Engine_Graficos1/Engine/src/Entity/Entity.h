@@ -20,6 +20,10 @@ public:
 	void Translate(float x, float y);
 	void Rotate(float angle);
 	void Scale(float x, float y);
+	
+	void SetTranslation(float x, float y);
+	void SetRotation(float angle);
+	void SetScale(float x, float y);
 
 	Vector2 GetTranslation();
 	float GetRotation();
