@@ -39,7 +39,17 @@ void TileMap::ClearMap() {
 }
 
 void TileMap::Draw(bool shouldDrawCollisionSquares) {
-	for (size_t i = 0; i < _mapLayers.size(); i++) {           // Axis 1: Layer
+	DrawLayers(0, _mapLayers.size(), shouldDrawCollisionSquares);
+}
+
+void TileMap::DrawLayers(size_t start, size_t endInclusive, bool shouldDrawCollisionSquares)
+{
+	if (_mapLayers.empty()) return;
+	if (endInclusive >= _mapLayers.size())
+		endInclusive = _mapLayers.size() - 1;
+
+	
+	for (size_t i = start; i <= endInclusive; i++) {           // Axis 1: Layer
 		for (size_t y = 0; y < _mapLayers[i].size(); y++) {    // Axis 2: Row (Y)
 			for (size_t x = 0; x < _mapLayers[i][y].size(); x++) { // Axis 3: Column (X)
 				Tile* tile = _mapLayers[i][y][x];
@@ -109,6 +119,7 @@ bool TileMap::ImportTileMap(std::string filePath) {
         // By default assume layer is not solid but wakable
 
 		const char* layerName = pLayer->Attribute("name");
+		_layerNames.push_back(layerName);
 		std::string nameStr = layerName ? std::string(layerName) : "";
 		
         bool layerIsSolid = false; 
@@ -341,6 +352,19 @@ void TileMap::CheckCollision(Entity2D* object, float* velocityY, bool* isGrounde
             }
         }
     }
+}
+
+int TileMap::FindLayerIndex(const std::string& name) const {
+	for (int i = 0; i < (int)_mapLayers.size(); i++) {
+		if (_layerNames[i] == name)   // tenés que guardar los nombres al importar
+			return i;
+	}
+	return -1;
+}
+
+int TileMap::GetLayerCount() const
+{
+	return _mapLayers.size();
 }
 
 void TileMap::SetPlayerHorizontalVelocity(float vel)

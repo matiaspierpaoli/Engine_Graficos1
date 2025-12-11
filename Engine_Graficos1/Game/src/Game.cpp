@@ -130,6 +130,9 @@ void Game::Init()
 	if (!level1TileMap->ImportTileMap("res/Dungeon/dungeon.tmx")) {
 		std::cout << "Fallo al cargar mapa" << std::endl;
 	}
+
+	pilarsLayer = level1TileMap->FindLayerIndex("Pilars");
+	decorationsLayer = level1TileMap->FindLayerIndex("Decorations");
 	
 	isMovingForward1 = false;
 	isMovingBackward1 = false;
@@ -330,8 +333,9 @@ void Game::Update()
 		debugCollisionSquares = !debugCollisionSquares;
 	}
 	
-	level1TileMap->Draw(debugCollisionSquares);
+	level1TileMap->DrawLayers(0, pilarsLayer, debugCollisionSquares);
 	static_cast<Sprite*>(sonic)->Draw();
+	level1TileMap->DrawLayers(decorationsLayer,level1TileMap->GetLayerCount(), debugCollisionSquares);
 }
 
 void Game::checkCollisions(Entity2D* player1, Entity2D* player2)

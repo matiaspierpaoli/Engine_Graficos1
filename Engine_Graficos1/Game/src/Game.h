@@ -59,6 +59,8 @@ private:
 	Animation* sonicJumpAnim;
 
 	TileMap* level1TileMap;
+	int decorationsLayer;
+	int pilarsLayer;
 	
 	void checkCollisions(Entity2D* player1, Entity2D* player2);
 	void checkCollisionsWithWindow(Entity2D* player1);
