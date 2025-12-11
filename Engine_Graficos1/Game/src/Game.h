@@ -8,7 +8,6 @@ class Game : public BaseGame
 private:
 
 	Entity2D* sonic;
-
 	
 	int windowWidth;
 	int windowHeight;
@@ -24,8 +23,7 @@ private:
 	Vector2 moveVectorPlayer2;
 	float scaleVectorPlayer1;
 	float scaleVectorPlayer2;
-	float jumpForce = 800.0f; // Upwards force
-
+	
 	bool isMovingForward1;
 	bool isMovingBackward1;
 	bool isMovingLeft1;
@@ -47,6 +45,10 @@ private:
 	float gravity = 1500.0f;
 	float verticalVelocity = 0.0f; 
 	bool isGrounded = false; // Boolean to check if player touches the ground
+	float jumpForce = 800.0f; // Upwards force
+	float coyoteTimeCounter = 0.0f;
+	const float COYOTE_TIME_DURATION = 0.15f;
+	bool wasGrounded = false;
 	
 	std::vector<Frame> sonicIdleFrames = std::vector<Frame>();
 	std::vector<Frame> sonicRunFrames = std::vector<Frame>();

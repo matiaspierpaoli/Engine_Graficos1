@@ -165,16 +165,32 @@ void Game::Update()
 	float rawDltaTime = time->GetDeltaTime();
 	float deltaTime = (rawDltaTime > 0.05f) ? 0.05f : rawDltaTime;
 
+	wasGrounded = isGrounded;
+	
 	// Apply gravity
 	// If not grounded, fall velocity increases
 	verticalVelocity -= gravity * deltaTime;
 	// Speed limit
 	if (verticalVelocity < -1000.0f) verticalVelocity = -1000.0f;
 
-	if (IsKeyJustReleased(KEY_SPACE) && isGrounded)
+	// Update coyote time
+	if (isGrounded) {
+		// While on ground, reset counter to full duration
+		coyoteTimeCounter = COYOTE_TIME_DURATION;
+	} else if (wasGrounded && verticalVelocity <= 0) {
+		// Just left the gound and falling (not jumping)
+		coyoteTimeCounter = COYOTE_TIME_DURATION;
+	} else {
+		// Reduce conter
+		coyoteTimeCounter -= deltaTime;
+		if (coyoteTimeCounter < 0) coyoteTimeCounter = 0;
+	}
+	
+	if (IsKeyJustReleased(KEY_SPACE) && (isGrounded || coyoteTimeCounter > 0.0f))
 	{
 		verticalVelocity = jumpForce; // Instant upwards impulse
 		isGrounded = false; // Inmediately fly
+		coyoteTimeCounter = 0.0f; // Reset coyote time
 	}
 	
 	// Move player in Y
@@ -182,7 +198,7 @@ void Game::Update()
 	sonic->Translate(0, moveY);
     
 	// Reset floor state before checking
-	//isGrounded = false; 
+	isGrounded = false; 
 
 	// Check collisions (This fixes position if player goes through ground)
 	level1TileMap->CheckCollision(sonic, &verticalVelocity, &isGrounded);
