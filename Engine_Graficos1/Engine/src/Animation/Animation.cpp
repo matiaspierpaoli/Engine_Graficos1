@@ -6,10 +6,11 @@
 
 Animation::Animation(float animLength, unsigned int textureWidth, unsigned int textureHeight, std::vector<Frame> frameData)
 {
-	length = animLength;
 	currentFrame = 0;
 	timer = 0;
+	speedMultiplier = 1.0f;
 
+	float defaultFrameDuration = animLength / (float)frameData.size();
 	for (unsigned int i = 0; i < frameData.size(); i++)
 	{
 		//Calculate left and right of frame
@@ -22,6 +23,7 @@ Animation::Animation(float animLength, unsigned int textureWidth, unsigned int t
 
 		//Send frame U coordinates to the vector
 		AddFrame(frameCoords);
+		frameDurations.push_back(defaultFrameDuration);
 	}
 }
 
@@ -31,24 +33,40 @@ Animation::~Animation()
 
 void Animation::Update()
 {
-	timer += TimeSingleton::GetTime()->GetDeltaTime();
+	timer += TimeSingleton::GetTime()->GetDeltaTime()* speedMultiplier;
 
-	while (timer >= length) {
-		timer -= length;
+	while (timer >= frameDurations[currentFrame]) {
+		timer -= frameDurations[currentFrame];
+		currentFrame++;
+
+		if (currentFrame >= uCoords.size()) {
+			currentFrame = 0;
+		}
 	}
+}
 
-	float frameLength = length / uCoords.size();
-	currentFrame = static_cast<int>(timer / frameLength);
+void Animation::Reset()
+{
+	currentFrame = 0;
+	timer = 0.0f;
+}
+
+
+void Animation::SetFrameDuration(int frameIndex, float duration)
+{
+	if (frameIndex >= 0 && frameIndex < frameDurations.size()) {
+		frameDurations[frameIndex] = duration;
+	}
+}
+
+void Animation::SetSpeed(float speed)
+{
+	speedMultiplier = speed;
 }
 
 void Animation::AddFrame(Coord _uCoords)
 {
 	uCoords.push_back(_uCoords);
-}
-
-void Animation::SetDuration(float _length)
-{
-	length = _length;
 }
 
 Coord Animation::GetCurrentFrame()

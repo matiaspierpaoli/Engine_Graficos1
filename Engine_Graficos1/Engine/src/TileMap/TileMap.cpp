@@ -236,99 +236,114 @@ void TileMap::CreateTile(int layerIndex, int id, int x, int y, bool walkable) {
 }
 
 
-void TileMap::CheckCollision(Entity2D* object, float* velocityY, bool* isGrounded) {
-	
-	// Get position and scale from player
-	Vector2 pos = object->GetTranslation();
-	Vector2 scale = object->GetScale();
+void TileMap::CheckCollision(Entity2D* object, float* velocityY, bool* isGrounded) 
+{
+    // --- Retrieve player position and size ---
+    Vector2 pos   = object->GetTranslation();
+    Vector2 scale = object->GetScale();
 
-	// Convert world position to grid coords
-	// Assuming (0,0) bottom left in world.
-	
-	// Player bounding box
-	float playerLeft = pos.x - (scale.x / 2.0f);
-	float playerRight = pos.x + (scale.x / 2.0f);
-	float playerBottom = pos.y - (scale.y / 2.0f); // OpenGL Y up
-	float playerTop = pos.y + (scale.y / 2.0f);
+    float playerWidth  = std::abs(scale.x);
+    float playerHeight = std::abs(scale.y);
 
-	// Convert to tile index
-	
-	int left_tile = floor(playerLeft / _tileWidth);
-	int right_tile = floor(playerRight / _tileWidth);
-	
-	// Invert Y logic if posY was obtained from above in CreateTile (height - y...)
-	int bottom_tile_idx = (_mapHeight - 1) - floor(playerBottom / _tileHeight);
-	int top_tile_idx = (_mapHeight - 1) - floor(playerTop / _tileHeight);
+    // Half extents of player's bounding box
+    float halfW = playerWidth  / 2.0f;
+    float halfH = playerHeight / 2.0f;
 
-	// Clamp
-	if (left_tile < 0) left_tile = 0;
-	if (right_tile >= _mapWidth) right_tile = _mapWidth - 1;
-	if (top_tile_idx < 0) top_tile_idx = 0;
-	if (bottom_tile_idx >= _mapHeight) bottom_tile_idx = _mapHeight - 1;
+    // World-space AABB for the player
+    float playerLeft   = pos.x - halfW;
+    float playerRight  = pos.x + halfW;
+    float playerBottom = pos.y - halfH;
+    float playerTop    = pos.y + halfH;
 
-	// Iterating only through player neighbour tiles
-	// Iterate Y indices from top to bottom
-	for (int k = 0; k < _mapLayers.size(); k++) {
+    // Custom (smaller) hitbox to avoid snagging on walls
+    float hitBoxW = playerWidth  * 0.4f;
+    float hitBoxH = playerHeight * 0.8f;
+
+    // Convert world coordinates to tile indices
+    int left_tile  = (int)floor(playerLeft  / _tileWidth);
+    int right_tile = (int)floor(playerRight / _tileWidth);
+
+    // Convert Y to Tiled’s coordinate system (origin at top-left)
+    int bottom_tile_idx = (_mapHeight - 1) - (int)floor(playerBottom / _tileHeight);
+    int top_tile_idx    = (_mapHeight - 1) - (int)floor(playerTop    / _tileHeight);
+
+    // Ensure ranges are ordered properly
+    if (left_tile > right_tile) std::swap(left_tile, right_tile);
+    if (top_tile_idx > bottom_tile_idx) std::swap(top_tile_idx, bottom_tile_idx);
+
+    // Clamp indices to tilemap bounds
+    left_tile  = std::max(0, left_tile);
+    right_tile = std::min((int)_mapWidth - 1, right_tile);
+
+    top_tile_idx    = std::max(0, top_tile_idx);
+    bottom_tile_idx = std::min((int)_mapHeight - 1, bottom_tile_idx);
+
+    // If clamped indices are invalid, no collision check is needed
+    if (left_tile > right_tile) return;
+    if (top_tile_idx > bottom_tile_idx) return;
+
+    // --- Iterate only through nearby tiles inside bounding area ---
+    for (int k = 0; k < _mapLayers.size(); k++) {
         for (int y = top_tile_idx; y <= bottom_tile_idx; y++) {
             for (int x = left_tile; x <= right_tile; x++) {
+
+                Tile* tile = _mapLayers[k][y][x];
                 
-                if (y >= 0 && y < _mapLayers[k].size() && x >= 0 && x < _mapLayers[k][y].size()) {
-                    Tile* tile = _mapLayers[k][y][x];
+                // Skip empty or walkable tiles
+                if (!tile || tile->IsWalkable()) continue;
+
+                // --- Compute separation between player and tile ---
+                Vector2 playerPos = object->GetTranslation();
+                Vector2 tilePos   = tile->GetTranslation();
+                Vector2 tileScale = tile->GetScale();
+
+                float dx = playerPos.x - tilePos.x;
+                float dy = playerPos.y - tilePos.y;
+
+                // Minimum distance to NOT be colliding
+                float minDirectX = (hitBoxW / 2.0f) + (tileScale.x / 2.0f);
+                float minDirectY = (hitBoxH / 2.0f) + (tileScale.y / 2.0f);
+
+                // Penetration amount on each axis
+                float penetrationX = minDirectX - std::abs(dx);
+                float penetrationY = minDirectY - std::abs(dy);
+
+                // --- Ground detection ("sticky feet") ---
+                // If player is almost touching the floor but not deeply colliding
+                if (penetrationX > 0 && penetrationY > -2.0f && penetrationY <= 0 && dy > 0)
+                    *isGrounded = true;
+
+                // --- Collision resolution ---
+                if (penetrationX > 0 && penetrationY > 0) {
                     
-                    if (tile != nullptr && !tile->IsWalkable()) {
-                        
-                        // --- Collision resolution ---
-                        
-                        // Get center and size
-                        Vector2 playerPos = object->GetTranslation();
-                        Vector2 playerScale = object->GetScale();
-                        Vector2 tilePos = tile->GetTranslation();
-                        Vector2 tileScale = tile->GetScale(); // Should be 32x32
+                    // Resolve on the axis with smaller penetration (standard AABB behavior)
+                    if (penetrationX < penetrationY) {
+                        // Horizontal collision (walls)
+                        float sign = (dx > 0) ? 1.0f : -1.0f;
+                        object->Translate(penetrationX * sign, 0);
+                    } 
+                    else {
+                        // Vertical collision (floor or ceiling)
+                        float sign = (dy > 0) ? 1.0f : -1.0f;
+                        object->Translate(0, penetrationY * sign);
 
-                        // Get distance from centers
-                        float dx = playerPos.x - tilePos.x;
-                        float dy = playerPos.y - tilePos.y;
-
-                        // Get "Penetration" (the amount inside other tile)
-                        // The sum of half the widths - Real distance
-                        float minDirectX = (playerScale.x / 2.0f) + (tileScale.x / 2.0f);
-                        float minDirectY = (playerScale.y / 2.0f) + (tileScale.y / 2.0f);
-
-                        float penetrationX = minDirectX - abs(dx);
-                        float penetrationY = minDirectY - abs(dy);
-
-                        // If there is penetration in both axis, there is collision 
-                        if (penetrationX > 0 && penetrationY > 0) {
-                            
-                            // Resolve in axis with the lesser penetration 
-                            // (Shortest route to exit)
-                            
-                            if (penetrationX < penetrationY) {
-                                // --  HORIZONTAL COLLISION --
-                                // If dx is positive, Sonic is to the right -> traslate right
-                                // If dx is negative, Sonic is to the left -> traslate left
-                                float sign = (dx > 0) ? 1.0f : -1.0f;
-                                object->Translate(penetrationX * sign, 0);
-                            }
-                            else {
-                                // -- VERTICAL COLLISION --
-                                float sign = (dy > 0) ? 1.0f : -1.0f;
-                                object->Translate(0, penetrationY * sign);
-
-                                // If sign is 1, Sonic is above of tile
-                                if (sign > 0) {
-                                    *isGrounded = true;
-                                    *velocityY = 0; // Stop the fall
-                                }
-                                // If sign is -1, Sonic is below of tile
-                                else {
-                                    *velocityY = 0; // Stop the jump
-                                }
-                            }
+                        if (sign > 0) {
+                            // Tile is below player → landed on floor
+                            *isGrounded = true;
+                            *velocityY  = 0;
+                        }
+                        else {
+                            // Hit the ceiling
+                            *velocityY = 0;
                         }
                     }
                 }
             }
         }
     }
+}
+
+void TileMap::SetPlayerHorizontalVelocity(float vel)
+{
+	_playerVelX = vel;
 }

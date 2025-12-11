@@ -15,16 +15,22 @@ class GraficosEngine_API Animation
 {
 private:
 	std::vector<Coord> uCoords; //use only left U and right U
+	std::vector<float> frameDurations;
 	float timer;
-	float length;
 	int currentFrame;
+
+	float speedMultiplier;
 
 public:
 	Animation(float animLength, unsigned int textureWidth, unsigned int textureHeight, std::vector<Frame> frameData);
 	~Animation();
 	void Update();
+	void Reset();
+
+	void SetFrameDuration(int frameIndex, float duration);
+	void SetSpeed(float speed);
+	
 	void AddFrame(Coord _uCoords);
-	void SetDuration(float _length);
 	Coord GetCurrentFrame();
 	Coord GetFrame(int frame);
 };

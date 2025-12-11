@@ -9,6 +9,7 @@ private:
 
 	Entity2D* sonic;
 
+	
 	int windowWidth;
 	int windowHeight;
 
@@ -23,12 +24,19 @@ private:
 	Vector2 moveVectorPlayer2;
 	float scaleVectorPlayer1;
 	float scaleVectorPlayer2;
+	float jumpForce = 800.0f; // Upwards force
 
 	bool isMovingForward1;
 	bool isMovingBackward1;
 	bool isMovingLeft1;
 	bool isMovingRight1;
 
+	float horizontalVelocity = 0.0f;
+	float acceleration = 800.0f;
+	float friction = 600.0f;
+	float maxSpeedRun = 200.0f;
+	float maxSpeedSprint = 400.0f;
+	
 	bool debugCollisionSquares = false;
 	
 	bool isMovingForward2;
@@ -36,15 +44,19 @@ private:
 	bool isMovingLeft2;
 	bool isMovingRight2;
 
-	float gravity = 1500.0f; // Gravity force
-	float verticalVelocity = 0.0f; // Current fall velocity
+	float gravity = 1500.0f;
+	float verticalVelocity = 0.0f; 
 	bool isGrounded = false; // Boolean to check if player touches the ground
 	
 	std::vector<Frame> sonicIdleFrames = std::vector<Frame>();
 	std::vector<Frame> sonicRunFrames = std::vector<Frame>();
+	std::vector<Frame> sonicSprintFrames = std::vector<Frame>();
+	std::vector<Frame> sonicJumpFrames = std::vector<Frame>();
 
 	Animation* sonicIdleAnim;
 	Animation* sonicRunAnim;
+	Animation* sonicSprintAnim;
+	Animation* sonicJumpAnim;
 
 	TileMap* level1TileMap;
 	

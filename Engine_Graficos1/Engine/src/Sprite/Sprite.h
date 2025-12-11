@@ -19,20 +19,20 @@ private:
 	std::vector<Animation*>* animations;
 	unsigned int spriteQty;
 
+	int currentAnimIndex = -1;
+	
 	void Bind(unsigned int slot = 0) const;
 	void Unbind();
 
 public:
 	Sprite(const std::string& path);
 	Sprite(const std::string& path, float vertexCol[4][4]);
-	Sprite(const std::string& path, int spriteQuantity, Frame firstFrame);
+	Sprite(const std::string& path, Frame firstFrame);
 	~Sprite();
 
 	unsigned int GetImageID();
-	inline int GetSpriteQty() const { return spriteQty; }
 	inline int GetImgWidth() const { return mWidth; }
 	inline int GetImgHeight() const { return mHeight; }
-	inline int GetWidth()const { return mWidth / spriteQty; }
 	inline int GetHeight()const { return mHeight; }
 	void ChangeSprite(Coord coord);
 

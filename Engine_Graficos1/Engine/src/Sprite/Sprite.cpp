@@ -111,14 +111,13 @@ Sprite::Sprite(const std::string& path, float vertexCol[4][4]) : mRendererID(0),
 	Unbind();
 }
 
-Sprite::Sprite(const std::string& path, int spriteQuantity, Frame firstFrame)
+Sprite::Sprite(const std::string& path, Frame firstFrame)
 {
 	mRendererID = 0;
 	mFilePath = path;
 	mWidth = 0;
 	mHeight = 0;
 	mBPP = 0;
-	spriteQty = spriteQuantity;
 	animations = new std::vector<Animation*>();
 
 	Renderer* tempRenderer = RendererSingleton::GetRenderer();
@@ -244,9 +243,15 @@ void Sprite::AddAnimation(Animation* _anim)
 
 void Sprite::UpdateFrame(int frameIndex)
 {
-	//Get old coords
-	Coord oldCoords = animations->at(frameIndex)->GetCurrentFrame();
-
+	if (!animations || frameIndex < 0 || frameIndex >= animations->size())
+		return;
+	
+	if (frameIndex != currentAnimIndex)
+	{
+		currentAnimIndex = frameIndex;
+		animations->at(frameIndex)->Reset();
+	}
+	
 	//Update animation timer
 	animations->at(frameIndex)->Update();
 
@@ -254,7 +259,7 @@ void Sprite::UpdateFrame(int frameIndex)
 	Coord uCoords = animations->at(frameIndex)->GetCurrentFrame();
 
 	//If frame didn't change, exit
-	if (oldCoords.x1 == uCoords.x1) return;
+	//if (oldCoords.x1 == uCoords.x1) return;
 
 	//If it's in new frame, update sprite
 	ChangeSprite(uCoords);
