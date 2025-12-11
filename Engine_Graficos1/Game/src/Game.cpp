@@ -184,7 +184,6 @@ void Game::Update()
 	// Reset floor state before checking
 	//isGrounded = false; 
 
-	level1TileMap->SetPlayerHorizontalVelocity(horizontalVelocity);
 	// Check collisions (This fixes position if player goes through ground)
 	level1TileMap->CheckCollision(sonic, &verticalVelocity, &isGrounded);
 

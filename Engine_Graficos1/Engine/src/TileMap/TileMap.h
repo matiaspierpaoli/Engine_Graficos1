@@ -12,8 +12,10 @@ class GraficosEngine_API TileMap
     // Layer   < Row      < Column     < Tile* > > >
     std::vector<std::vector<std::vector<Tile*>>> _mapLayers;
     std::vector<std::string> _layerNames;
-	float _playerVelX;
-	
+
+	std::vector<float> _layerOffsetX;
+	std::vector<float> _layerOffsetY;
+
 	Entity2D* debugSquare;
 	
     std::string _imagePath;
@@ -39,7 +41,6 @@ class GraficosEngine_API TileMap
 	float GetTileWidth() const { return _tileWidth; }
 	float GetWorldWidth() const { return _mapWidth * _tileWidth; }
 	int GetLayerCount() const;
-	void SetPlayerHorizontalVelocity(float vel);
 	
     private:
     void ClearMap();

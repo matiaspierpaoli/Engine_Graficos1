@@ -127,6 +127,15 @@ bool TileMap::ImportTileMap(std::string filePath) {
 		if (nameStr.find("Interactable") != std::string::npos) {
 			layerIsSolid = true;
 		}
+
+		// --- Offset collection ---
+		// TinyXML2 resolves 0.0f if there is no such attribute
+		float offsetX = pLayer->FloatAttribute("offsetx");
+		float offsetY = pLayer->FloatAttribute("offsety");
+
+		// Store vectors in internal variables
+		_layerOffsetX.push_back(offsetX);
+		_layerOffsetY.push_back(offsetY);
 		
         // Look for element <properties> inside layer
         tinyxml2::XMLElement* pProperties = pLayer->FirstChildElement("properties");
@@ -221,17 +230,20 @@ void TileMap::CreateTile(int layerIndex, int id, int x, int y, bool walkable) {
 
 	// Position in world
 	newTile->Scale(_tileWidth, _tileHeight);
+
+	// Get specific layer offsets
+	float layerOffX = _layerOffsetX[layerIndex];
+	float layerOffY = _layerOffsetY[layerIndex];
 	
 	// In this engine, sprite entity (0,0) is in the center.
 	// Knowing Tiled uses coords Top-Left.
 	// Adjust to center tile:
-
 	// Half right
 	float posX = (x * _tileWidth) + (_tileWidth / 2.0f);
 	// Inverint Y, half up
 	float posY = (_mapHeight * _tileHeight) - (y * _tileHeight) - (_tileHeight / 2.0f);
 
-	newTile->Translate(posX, posY);
+	newTile->Translate(posX + layerOffX, posY + layerOffY);
 
 	if (x == 0 && y == 0 && layerIndex == 0) {
 		std::cout << "--- DIAGNOSTICO TILEMAP ---" << std::endl;
@@ -365,9 +377,4 @@ int TileMap::FindLayerIndex(const std::string& name) const {
 int TileMap::GetLayerCount() const
 {
 	return _mapLayers.size();
-}
-
-void TileMap::SetPlayerHorizontalVelocity(float vel)
-{
-	_playerVelX = vel;
 }
