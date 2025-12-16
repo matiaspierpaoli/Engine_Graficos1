@@ -279,7 +279,7 @@ void TileMap::CheckCollision(Entity2D* object, float* velocityY, bool* isGrounde
     float playerTop    = pos.y + halfH;
 
     // Custom (smaller) hitbox to avoid snagging on walls
-    float hitBoxW = playerWidth  * 0.4f;
+		float hitBoxW = playerWidth  * 0.8f;
     float hitBoxH = playerHeight * 0.8f;
 
     // Convert world coordinates to tile indices

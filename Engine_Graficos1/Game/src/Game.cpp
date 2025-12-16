@@ -105,7 +105,7 @@ void Game::Init()
 	sonicJumpFrames.push_back(Frame(51, 83, sonicSpriteSheetHeight - 213, sonicSpriteSheetHeight - 175));
 	
 	sonic = new Sprite("res/Sonic_Mania_Sprite_Sheet.png", sonicIdleFrames.at(0));
-	sonic->Scale(32, 32);
+	sonic->Scale(30, 40);
 	sonic->Translate(100.0f, 200.0f);
 
 	sonicIdleAnim = new Animation(3, sonicSpriteSheetWidth, sonicSpriteSheetHeight, sonicIdleFrames);
@@ -202,7 +202,7 @@ void Game::Update()
 
 	// Check collisions (This fixes position if player goes through ground)
 	level1TileMap->CheckCollision(sonic, &verticalVelocity, &isGrounded);
-
+	
 	Vector2 pos   = sonic->GetTranslation();
 	Vector2 scale = sonic->GetScale();
 
@@ -301,16 +301,26 @@ void Game::Update()
 		}
 	}
 
+	if (scaleVectorPlayer1 != 0)
+	{
+		float growthX = scaleVectorPlayer1 * defaultScale.x * time->GetDeltaTime();
+		float growthY = scaleVectorPlayer1 * defaultScale.y * time->GetDeltaTime();
+		sonic->Scale(growthX, growthY);
+	}
+	
 	// --- Apply movement ---
 
 	if (horizontalVelocity != 0)
 	{
 		float moveX = horizontalVelocity * deltaTime;
 		sonic->Translate(moveX, 0);
-    
+		
+		float currentScaleX = std::abs(sonic->GetScale().x); 
+		float currentScaleY = sonic->GetScale().y;
+		
 		// FLIP (Look left/right according to real speed, not input)
-		if (horizontalVelocity > 0) sonic->SetScale(32, 32);  
-		if (horizontalVelocity < 0) sonic->SetScale(-32, 32); 
+		if (horizontalVelocity > 0) sonic->SetScale(currentScaleX, currentScaleY);  
+		if (horizontalVelocity < 0) sonic->SetScale(-currentScaleX, currentScaleY); 
 	}
 
 	// --- (ANIMATION STATE MACHINE) ---
