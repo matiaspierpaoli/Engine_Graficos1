@@ -19,7 +19,7 @@ public:
 	BaseGame();
 	~BaseGame();
 
-	void OnStart(float height, float width, const char* programName);
+	void OnStart(float height, float width, const char* programName, float zoomX, float zoomY);
 
 	void Loop();
 	virtual void Init() = 0;

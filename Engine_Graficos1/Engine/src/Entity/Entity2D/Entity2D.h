@@ -1,6 +1,6 @@
 #pragma once
-#include "Entity/Entity.h"
-#include "Exports.h"
+#include "../src/Entity/Entity.h"
+#include "../src/Exports.h"
 
 class  GraficosEngine_API Entity2D : public Entity
 {

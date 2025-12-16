@@ -1,6 +1,6 @@
 #pragma once
-#include "Sprite/Sprite.h"
-#include "Exports.h"
+#include "../src/Sprite/Sprite.h"
+#include "../src/Exports.h"
 
 class GraficosEngine_API Tile : public Sprite
 {

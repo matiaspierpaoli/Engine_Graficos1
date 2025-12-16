@@ -1,6 +1,6 @@
 #pragma once
-#include "Vector2.h"
-#include "Exports.h"
+#include "../src/Vector2.h"
+#include "../src/Exports.h"
 
 class GraficosEngine_API Entity
 {

@@ -1,10 +1,10 @@
-#include "TileMap/TileMap.h"
+#include "TileMap.h"
 #include <iostream>
 #include <cmath>
 #include "../libs/tinyxml2/tinyxml2.h"
 #include "Entity/Entity2D/Shape/Square/Square.h"
 
-TileMap::TileMap() {
+TileMap::TileMap(CollisionManager collision_manager) {
 	_mapWidth = 0;
 	_mapHeight = 0;
 	_tileWidth = 0;
@@ -19,6 +19,8 @@ TileMap::TileMap() {
 		{1.0f, 0.0f, 0.0f, 0.5f}
 	};
 	debugSquare = new Square(color);
+
+	collision_manager = collision_manager;
 }
 
 TileMap::~TileMap() {
@@ -100,7 +102,7 @@ bool TileMap::ImportTileMap(std::string filePath) {
 		std::string source = imageNode->Attribute("source");
 		size_t lastSlash = source.find_last_of("/\\");
 		std::string fileName = source.substr(lastSlash + 1);
-		_imagePath = "res/Dungeon/" + fileName;
+		_imagePath = "res/Battle City/" + fileName;
 		_tilesetWidth = imageNode->IntAttribute("width");
 		_tilesetHeight = imageNode->IntAttribute("height");
 	}
@@ -124,9 +126,9 @@ bool TileMap::ImportTileMap(std::string filePath) {
 		
         bool layerIsSolid = false; 
 
-		if (nameStr.find("Interactable") != std::string::npos) {
-			layerIsSolid = true;
-		}
+		// if (nameStr.find("Interactable") != std::string::npos) {
+		// 	layerIsSolid = true;
+		// }
 
 		// --- Offset collection ---
 		// TinyXML2 resolves 0.0f if there is no such attribute
@@ -245,21 +247,11 @@ void TileMap::CreateTile(int layerIndex, int id, int x, int y, bool walkable) {
 
 	newTile->Translate(posX + layerOffX, posY + layerOffY);
 
-	if (x == 0 && y == 0 && layerIndex == 0) {
-		std::cout << "--- DIAGNOSTICO TILEMAP ---" << std::endl;
-		std::cout << "Tile Size (XML): " << _tileWidth << " x " << _tileHeight << std::endl;
-		std::cout << "Map Height (Tiles): " << _mapHeight << std::endl;
-		std::cout << "Posicion Calculada (X, Y): " << posX << ", " << posY << std::endl;
-		std::cout << "Textura ID: " << newTile->GetImageID() << std::endl;
-		std::cout << "---------------------------" << std::endl;
-	}
-	
-	// Store in grid
 	_mapLayers[layerIndex][y][x] = newTile;
 }
 
 
-void TileMap::CheckCollision(Entity2D* object, float* velocityY, bool* isGrounded) 
+void TileMap::CheckCollision(Entity2D* object, float* velocityY = nullptr, bool* isGrounded = nullptr) 
 {
     // --- Retrieve player position and size ---
     Vector2 pos   = object->GetTranslation();
@@ -279,7 +271,7 @@ void TileMap::CheckCollision(Entity2D* object, float* velocityY, bool* isGrounde
     float playerTop    = pos.y + halfH;
 
     // Custom (smaller) hitbox to avoid snagging on walls
-		float hitBoxW = playerWidth  * 0.8f;
+	float hitBoxW = playerWidth  * 0.8f;
     float hitBoxH = playerHeight * 0.8f;
 
     // Convert world coordinates to tile indices
@@ -315,6 +307,8 @@ void TileMap::CheckCollision(Entity2D* object, float* velocityY, bool* isGrounde
                 // Skip empty or walkable tiles
                 if (!tile || tile->IsWalkable()) continue;
 
+            	if (!_collisionManager.checkEntityToEntityCollision(tile, object)) return;
+            	
                 // --- Compute separation between player and tile ---
                 Vector2 playerPos = object->GetTranslation();
                 Vector2 tilePos   = tile->GetTranslation();
@@ -334,7 +328,10 @@ void TileMap::CheckCollision(Entity2D* object, float* velocityY, bool* isGrounde
                 // --- Ground detection ("sticky feet") ---
                 // If player is almost touching the floor but not deeply colliding
                 if (penetrationX > 0 && penetrationY > -2.0f && penetrationY <= 0 && dy > 0)
-                    *isGrounded = true;
+                {
+                	if (isGrounded)
+						*isGrounded = true;
+                }
 
                 // --- Collision resolution ---
                 if (penetrationX > 0 && penetrationY > 0) {
@@ -352,12 +349,15 @@ void TileMap::CheckCollision(Entity2D* object, float* velocityY, bool* isGrounde
 
                         if (sign > 0) {
                             // Tile is below player → landed on floor
-                            *isGrounded = true;
-                            *velocityY  = 0;
+							if (isGrounded)
+                        		*isGrounded = true;
+                        	if (velocityY)
+								*velocityY  = 0;
                         }
                         else {
                             // Hit the ceiling
-                            *velocityY = 0;
+                        	if (velocityY)
+								*velocityY = 0;
                         }
                     }
                 }

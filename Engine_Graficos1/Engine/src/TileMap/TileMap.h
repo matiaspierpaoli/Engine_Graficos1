@@ -3,7 +3,7 @@
 #include "Exports.h"
 #include <vector>
 #include <string>
-
+#include "../Collisions/CollisionManager.h"
 
 class GraficosEngine_API TileMap
 {
@@ -27,8 +27,10 @@ class GraficosEngine_API TileMap
     int _tilesetWidth; 
     int _tilesetHeight;
 
+	CollisionManager _collisionManager;
+	
     public:
-    TileMap();
+    TileMap(CollisionManager collisionManager);
     ~TileMap();
 
     bool ImportTileMap(std::string filePath);

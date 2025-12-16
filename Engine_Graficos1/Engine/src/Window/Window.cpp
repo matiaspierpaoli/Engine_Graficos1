@@ -4,11 +4,13 @@
 #include "glew/include/GL/glew.h"
 #include <glfw/include/GLFW/glfw3.h>
 
-Window::Window(float width, float height, const char* programName)
+Window::Window(float width, float height, const char* programName, float zoomX, float zoomY)
 {
 	this->width = width;
 	this->height = height;
 	this->programName = programName;
+	this->zoomX = zoomX;
+	this->zoomY = zoomY;
 	CreateWindow();
 }
 
@@ -60,4 +62,14 @@ float Window::GetHeight()
 float Window::GetWidth()
 {
 	return width;
+}
+
+float Window::GetZoomX()
+{
+	return zoomX;
+}
+
+float Window::GetZoomY()
+{
+	return zoomY;
 }

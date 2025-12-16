@@ -1,4 +1,4 @@
-#include "Entity/Entity2D/Shape/Tile/Tile.h"
+#include "../src/Entity/Entity2D/Shape/Tile/Tile.h"
 
 Tile::Tile(const std::string& path, int id, bool walkable) 
     : Sprite(path)

@@ -1,5 +1,5 @@
 #pragma once
-#include "Exports.h"
+#include "../src/Exports.h"
 
 class  GraficosEngine_API Frame
 {

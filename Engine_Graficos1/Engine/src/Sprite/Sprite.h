@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
-#include "Entity/Entity2D/Entity2D.h"
-#include "Exports.h"
-#include "Animation/Animation.h"
-#include "Frame/Frame.h"
+#include "../src/Entity/Entity2D/Entity2D.h"
+#include "../src/Exports.h"
+#include "../src/Animation/Animation.h"
+#include "../src/Frame/Frame.h"
 
 class GraficosEngine_API Sprite : public Entity2D
 {

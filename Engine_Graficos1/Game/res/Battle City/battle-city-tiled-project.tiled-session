@@ -1,0 +1,96 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "battle-city.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "Todos los archivos (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "Battle City Atlas.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 3
+        },
+        "C:/Users/Aula 2/Desktop/Engine_Graficos1/Engine_Graficos1/Game/res/Dungeon/Dungeon.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/Aula 2/Desktop/Engine_Graficos1/Engine_Graficos1/Game/res/Dungeon/dungeon.tmx": {
+            "scale": 0.7313492063492063,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 488.13890396093325,
+                "y": 287.14053174172545
+            }
+        },
+        "C:/Users/Aula 2/Desktop/Engine_Graficos1/Engine_Graficos1/Game/res/Dungeon/dungeon.tmx#The Sidescroller's Dungeon Tiles 32x32": {
+            "scaleInDock": 1
+        },
+        "battle city..tmx": {
+            "scale": 0.6254166666666666,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 618.7874750166555,
+                "y": 414.12391738840773
+            }
+        },
+        "battle city.tmx": {
+            "scale": 1.5635416666666666,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 239.84010659560292,
+                "y": 15.349766822118568
+            }
+        },
+        "battle city.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "battle-city.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 193.33333333333334,
+                "y": 165.33333333333334
+            }
+        },
+        "battle-city.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/Aula 2/Desktop/Engine_Graficos1/Engine_Graficos1/Game/res/Battle City",
+    "last.externalTilesetPath": "C:/Users/Aula 2/Desktop/Engine_Graficos1/Engine_Graficos1/Game/res/Battle City",
+    "last.imagePath": "C:/Users/Aula 2/Desktop/Engine_Graficos1/Engine_Graficos1/Game/res/Battle City",
+    "lastUsedTilesetExportFilter": "Todos los archivos (*)",
+    "map.lastUsedExportFilter": "Archivos de mapas de Tiled (*.tmx *.xml)",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "battle-city.tmx",
+        "Battle City Atlas.tsx",
+        "C:/Users/Aula 2/Desktop/Engine_Graficos1/Engine_Graficos1/Game/res/Dungeon/dungeon.tmx",
+        "C:/Users/Aula 2/Desktop/Engine_Graficos1/Engine_Graficos1/Game/res/Dungeon/Dungeon.tsx"
+    ],
+    "project": "battle-city-tiled-project.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "battle city.tmx",
+        "battle city.tsx",
+        "battle-city.tmx",
+        "battle-city.tsx",
+        "C:/Users/Aula 2/Desktop/Engine_Graficos1/Engine_Graficos1/Game/res/Dungeon/dungeon.tmx",
+        "Battle City Atlas.tsx",
+        "battle city..tmx",
+        "C:/Users/Aula 2/Desktop/Engine_Graficos1/Engine_Graficos1/Game/res/Dungeon/Dungeon.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

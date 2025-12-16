@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
-#include "Vector2.h"
-#include "Frame/Frame.h"
+#include "../src/Frame/Frame.h"
 
 struct Coord
 {
